@@ -7,7 +7,7 @@ const browserSync = require('browser-sync').create();
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 var smartgrid = require('smart-grid');
-const cssFiles = ['./node_modules/normalize.css/normalize.css',
+const cssFiles = [//
 	// './src/css/header.css',
 	'./src/css/style.min.css'
 

@@ -14,7 +14,7 @@ window.onload = function () {
         let iconMenu = d.querySelectorAll('.menuTop__line')
         iconMenu.forEach((el, i) => {
             iconMenu[i].classList.toggle('menuTop__line-activ')
-        }) 
+        })
         // close cart
         d.querySelector('.menuTop__CartSvg').classList.remove('menuTop__CartSvg-active')
         d.querySelector('.contCartProducts').classList.remove('contCartProducts-active')
@@ -38,7 +38,7 @@ window.onload = function () {
         let iconMenu = d.querySelectorAll('.menuTop__line')
         iconMenu.forEach((el, i) => {
             iconMenu[i].classList.remove('menuTop__line-activ')
-        }) 
+        })
 
     }
 
@@ -132,29 +132,31 @@ window.onload = function () {
     // ********************************* Create HTML *************************************** //
     // ********************************* Create HTML *************************************** //
 
-    let name = [] //list names
-    let id = [] //list id
-    let brand = [] // brands list
-    let price = [] // prices list
-    let country = [] // countrys list
-    let ship = [] //ships list
-    let img = [] // img list
+    let name = ['product1', 'product2', 'product3', 'product4', 'product5', 'product6', 'product7', 'product8', 'product9', 'product10', 'product11', 'product12'] //list names
+    let id = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] //list id
+    let brand = ['samsung', 'aplle', 'aser', 'asus', 'boshc', 'philids', 'viteck', 'nokia', 'huawei', 'sony', 'aser', 'samsung'] // brands list
+    let price = ['10', '20', '33', '15', '12', '44', '28', '62', '17', '50', '35', '30'] // prices list
+    let country = ['USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA'] // countrys list
+    let ship = ['free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free'] //ships list
+    let img = ['build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png'] // img list
 
     class product {
-        constructor(title, price, brand, country, ship, img) {
+        constructor(title, price, brand, country, ship, img, id) {
             this.name = title;
             this.price = price;
             this.brand = brand;
             this.country = country;
             this.ship = ship;
-            this.img = img
+            this.img = img;
+            this.id = id;
+            this.quantity = 1
         }
         render() {
             return `<div class="contItem">
                         <img src="${this.img}" width="198" height="180" alt="imgProduct" class="contItem__img">
                         <span class="contItem__name">${this.name}</span>
-                        <span class="contItem__price">${this.price}</span>
-                        <button class="contItem__button">add to cart</button>
+                        <span class="contItem__price">$${this.price}</span>
+                        <button class="contItem__button" data-id="${this.id}">add to cart</button>
                     </div>`
         }
     }
@@ -163,45 +165,113 @@ window.onload = function () {
         constructor(className) {
             this.className = className;
             this.arrElems = [];
+            this.CartElems = [];
         }
-
-        fetchProduct(url,callback) {
-            var xhr = null
+        fetchProduct(arrTitle, arrPrice, arrBrand, arrCountry, aarShip, aarImg, arrId) {
             let arr = []
-            let context = this
-            if (window.XMLHttpRequest) {
-                xhr = new XMLHttpRequest()
-            } else if (window.ActiveXObject) {
-                xhr = new ActiveXObject('Microsoft.XMLHTTP')
-            }
-            xhr.open('GET', url, true)
-            xhr.send()
-            xhr.onreadystatechange = function () {              
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    let objProduct = JSON.parse(xhr.responseText)
-                    objProduct.forEach(el => {
-                        arr.push(el)
-                    })
-                    callback.call(context,arr)
-                }
-            }
-
+            arrTitle.forEach((e, i) => {
+                arr.push({
+                    name: arrTitle[i],
+                    price: arrPrice[i],
+                    brand: arrBrand[i],
+                    counrty: arrCountry[i],
+                    ship: aarShip[i],
+                    img: aarImg[i],
+                    id: arrId[i],
+                    quantity: 1
+                })
+            })
+            this.arrElems = arr
         }
-        render(mas) {
-            this.arrElems = mas
+        render() {
             for (let i = 0; i < this.arrElems.length; i++) {
                 let Product = new product(
-                    this.arrElems[i].name + (i + 1),
+                    this.arrElems[i].name + (i),
                     this.arrElems[i].price,
                     this.arrElems[i].brand,
                     this.arrElems[i].country,
                     this.arrElems[i].ship,
-                    this.arrElems[i].img)
+                    this.arrElems[i].img,
+                    this.arrElems[i].id)
                 d.querySelector(this.className).innerHTML += Product.render()
             }
         }
     }
 
+
+    class productCart extends product {
+        render() {
+            return `<div class="contCartProducts__contItem" data-id="${this.id}">
+                            <img src="${this.img}" width="198" height="180" alt="imgProduct"
+                                class="contCartProducts__img">
+                            <span class="contCartProducts__name">${this.name}</span>
+                            <span class="contCartProducts__price">$ ${this.price}</span>
+                            <span class="contCartProducts__quantity">${this.quantity}</span>
+                            <div class="contCartProducts__buttons">
+                                <button class="contCartProducts__add">&#9650</button>
+                                <button class="contCartProducts__del">&#9660</button>
+                            </div>
+                    </div>`
+        }
+    }
+
+    class Cart extends contProduct {
+        render() {
+            let arr = []
+
+            for (let i = 0; i < this.CartElems.length; i++) {
+                let Product = new productCart(
+                    this.CartElems[i].name,
+                    this.CartElems[i].price,
+                    this.CartElems[i].brand,
+                    this.CartElems[i].country,
+                    this.CartElems[i].ship,
+                    this.CartElems[i].img,
+                    this.CartElems[i].id)
+                Product.quantity = this.CartElems[i].quantity
+
+                arr += Product.render()
+            }
+            d.querySelector(this.className).innerHTML = arr
+        }
+        addToCart(className) {
+            super.fetchProduct(name, price, brand, country, ship, img, id)
+            let context = this
+            d.querySelector(className).addEventListener('click', clickHendler)
+            function clickHendler(evt) {
+                if (evt.target.dataset.id) {
+                    let id = evt.target.dataset.id
+                    let el = context.arrElems.find(item => item.id == id)
+                    let elInCart = context.CartElems.find(item => item == el)
+                    if (elInCart) {
+                        elInCart.quantity++
+
+                        console.log(context.arrElems)
+                        console.log(context.CartElems)
+                        context.render()
+
+                    } else {
+                        context.CartElems.push(el)
+                        let prodCart = new productCart(el.name, el.price, el.brand, el.country, el.ship, el.img, el.id)
+                        d.querySelector(context.className).innerHTML += prodCart.render()
+                    }
+                }
+            }
+        }
+    }
+
+
     let pageShop = new contProduct('.productsPage')
-  // pageShop.fetchProduct('http://localhost/jsonFiles/responses/catalogData.json', pageShop.render)
+    pageShop.fetchProduct(name, price, brand, country, ship, img, id)
+    pageShop.render()
+
+    let Cartt = new Cart('.contCartProducts__bodyCart')
+    Cartt.addToCart('.productsPage')
+
+
 }
+
+
+
+
+

@@ -235,15 +235,35 @@ window.onload = function () {
             d.querySelector(this.className).innerHTML = arr
         }
         addToCart(className) {
-            
-            super.fetchProduct(name, price, brand, country, ship, img, id)
             let context = this
-            d.querySelector(className).addEventListener('click', clickHendler)
+            super.fetchProduct(name, price, brand, country, ship, img, id)
+            d.querySelector(className).addEventListener('click', clickHendler) //  обработчик добавления элемента в корзину
+            d.querySelector(this.className).parentNode.addEventListener('click', clickDell) // обработчки полной очистки корзины
+
+            function calcCart() {
+                let allSumm = null
+                let allQuantity = null
+                // расcчет суммы корзины  и общеого количества корзины
+                context.CartElems.forEach(e => {
+                    allSumm += e.price * e.quantity
+                    allQuantity += e.quantity
+                })
+                // вывод суммы и общего количества корзины
+                d.querySelector('.contCartProducts__allSumm').innerHTML = '$' + allSumm
+                d.querySelector('.contCartProducts__allQuantity').innerHTML = allQuantity
+                d.querySelector('.menuTop__countCart').innerHTML = allQuantity
+            }
+
+            function dell() {
+                d.querySelector('.contCartProducts__allSumm').innerHTML = '$' + 0
+                d.querySelector('.contCartProducts__allQuantity').innerHTML = 0
+                d.querySelector('.menuTop__countCart').innerHTML = 0
+                context.CartElems = []
+                d.querySelector(context.className).innerHTML = ''
+            }
 
             function clickHendler(evt) {
                 if (evt.target.dataset.id) {
-                    let allSumm = null
-                    let allQuantity = null
                     let id = evt.target.dataset.id
                     let el = context.arrElems.find(item => item.id == id)
                     let elInCart = context.CartElems.find(item => item == el)
@@ -255,14 +275,40 @@ window.onload = function () {
                         let prodCart = new productCart(el.name, el.price, el.brand, el.country, el.ship, el.img, el.id)
                         d.querySelector(context.className).innerHTML += prodCart.render()
                     }
-                    // расчет суммы корзины  и общеого количества корзины
-                    context.CartElems.forEach(e => {
-                        allSumm += e.price*e.quantity
-                        allQuantity+= e.quantity
-                    })
-                    d.querySelector('.contCartProducts__allSumm').innerHTML ='$' + allSumm
-                    d.querySelector('.contCartProducts__allQuantity').innerHTML = allQuantity
+                    calcCart()
                 }
+
+            }
+
+            function clickDell(evt) {
+                if (evt.target.className == 'contCartProducts__allClean') {
+                    dell()
+                }
+                if (evt.target.className == 'contCartProducts__add') {
+                    let parent = evt.target.parentNode
+                    let id = parent.parentNode.dataset.id - 1
+                    parent.parentNode.childNodes[7].innerHTML++
+                    context.CartElems[id].quantity++
+                    parent.parentNode.childNodes[5].innerHTML = '$' + context.CartElems[id].quantity * context.CartElems[id].price
+                    calcCart()
+                }
+                if (evt.target.className == 'contCartProducts__del') {
+                    let parent = evt.target.parentNode
+                    let id = parent.parentNode.dataset.id - 1
+                    parent.parentNode.childNodes[7].innerHTML--
+                    context.CartElems[id].quantity--
+                    parent.parentNode.childNodes[5].innerHTML = '$' + context.CartElems[id].quantity * context.CartElems[id].price
+                    calcCart()
+                    if (context.CartElems.length === 0) {
+                        context.CartElems = []
+                        d.querySelector(context.className).innerHTML = ''
+                    }
+                    if (context.CartElems[id].quantity == 0) {
+                        context.CartElems.splice(id, 1)
+                        context.render()
+                    }
+                }
+
             }
         }
     }

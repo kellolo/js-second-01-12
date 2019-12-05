@@ -186,7 +186,7 @@ window.onload = function () {
         render() {
             for (let i = 0; i < this.arrElems.length; i++) {
                 let Product = new product(
-                    this.arrElems[i].name + (i),
+                    this.arrElems[i].name,
                     this.arrElems[i].price,
                     this.arrElems[i].brand,
                     this.arrElems[i].country,
@@ -205,7 +205,7 @@ window.onload = function () {
                             <img src="${this.img}" width="198" height="180" alt="imgProduct"
                                 class="contCartProducts__img">
                             <span class="contCartProducts__name">${this.name}</span>
-                            <span class="contCartProducts__price">$ ${this.price}</span>
+                            <span class="contCartProducts__price">$ ${this.price * this.quantity}</span>
                             <span class="contCartProducts__quantity">${this.quantity}</span>
                             <div class="contCartProducts__buttons">
                                 <button class="contCartProducts__add">&#9650</button>
@@ -235,26 +235,33 @@ window.onload = function () {
             d.querySelector(this.className).innerHTML = arr
         }
         addToCart(className) {
+            
             super.fetchProduct(name, price, brand, country, ship, img, id)
             let context = this
             d.querySelector(className).addEventListener('click', clickHendler)
+
             function clickHendler(evt) {
                 if (evt.target.dataset.id) {
+                    let allSumm = null
+                    let allQuantity = null
                     let id = evt.target.dataset.id
                     let el = context.arrElems.find(item => item.id == id)
                     let elInCart = context.CartElems.find(item => item == el)
                     if (elInCart) {
                         elInCart.quantity++
-
-                        console.log(context.arrElems)
-                        console.log(context.CartElems)
                         context.render()
-
                     } else {
                         context.CartElems.push(el)
                         let prodCart = new productCart(el.name, el.price, el.brand, el.country, el.ship, el.img, el.id)
                         d.querySelector(context.className).innerHTML += prodCart.render()
                     }
+                    // расчет суммы корзины  и общеого количества корзины
+                    context.CartElems.forEach(e => {
+                        allSumm += e.price*e.quantity
+                        allQuantity+= e.quantity
+                    })
+                    d.querySelector('.contCartProducts__allSumm').innerHTML ='$' + allSumm
+                    d.querySelector('.contCartProducts__allQuantity').innerHTML = allQuantity
                 }
             }
         }
@@ -270,8 +277,3 @@ window.onload = function () {
 
 
 }
-
-
-
-
-

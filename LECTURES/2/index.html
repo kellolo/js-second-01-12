@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#">
+        <fieldset>
+            <caption>
+                <input type="text" name="name"> Name
+            </caption>
+        </fieldset>
+
+        <fieldset>
+            <caption>
+                <input type="text" name="age"> Age
+            </caption>
+        </fieldset>
+
+        <fieldset>
+            <caption>
+                <input type="text" name="salary"> Salary per hour
+            </caption>
+        </fieldset>
+
+        <fieldset>
+            <caption>
+                <input type="radio" name="gender" value="male"> M
+            </caption>
+            <caption>
+                <input type="radio" name="gender" value="female"> F
+            </caption>
+        </fieldset>
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="hobbie" value="ski"> Ski
+            </caption>
+            <caption>
+                <input type="checkbox" name="hobbie" value="draw"> Draw
+            </caption>
+            <caption>
+                <input type="checkbox" name="hobbie" value="int"> Internet
+            </caption>
+            <caption>
+                <input type="checkbox" name="hobbie" value="sleep"> Sleep
+            </caption>
+        </fieldset>
+    </form>
+    <button id="ok-btn">Add</button>
+
+    <script>
+        class People {
+            constructor (nam, ag, salaryPerHour ,gen = 1) {
+                this.name = nam
+                this.age = ag
+                this.gender = gen ? 'male' : 'female'
+                this.salary = salaryPerHour
+            }
+            goWork (hrs = 8) {
+                console.log (`${this.name} goes work and receives ${this._calcSalary (hrs)}`)
+            }
+            //инкапсулирование
+            _calcSalary (h) {
+                return h * this.salary / 62 + '$'
+            }
+        }
+
+        class User {
+            constructor (nam, ag, sal, gen, hob) {
+                this.Name = this._input (nam)
+                this.Age = +this._input (ag)
+                this.Salary = +this._input (sal)
+                this.Gender = this._inputRadio (gen)
+                this.Hobbies = this._inputCheck (hob)
+            }
+            _input (domElementName) {
+                return document.querySelector (`input[name="${domElementName}"]`).value
+            }
+            _inputRadio (domElementName) {
+                return document.querySelector (`input[name="${domElementName}"]:checked`).value
+            }
+            _inputCheck (domElementName) {
+                let hobs = []
+                let arr = [...document.querySelectorAll (`input[name="${domElementName}"]:checked`)]
+                arr.forEach (el => {
+                    hobs.push (el.value)
+                })
+                return hobs
+            }
+        }
+
+
+        let users = []
+
+        let okBtn = document.querySelector ('#ok-btn')
+        okBtn.addEventListener ('click', addUser)
+
+        function addUser () {
+            let newUser = new User ('name', 'age', 'salary', 'gender', 'hobbie')
+            users.push (newUser)
+            console.log (users)
+        }
+
+
+         // ООП
+        // function () {
+        //     return {
+
+        //     }
+        // }
+
+        // class MyClass {
+        //     constructor () {
+        //         this.newProp = 'New Object'
+        //         //this.sayHi = function () {console.log ('Hi')}
+        //     }
+        //     sayHi () {
+        //         alert ('Я вас категорически Hello')
+        //     }
+        // }
+        
+        // class People {
+        //     constructor (nam, ag, salaryPerHour ,gen = 1) {
+        //         this.name = nam
+        //         this.age = ag
+        //         this.gender = gen ? 'male' : 'female'
+        //         this.salary = salaryPerHour
+        //     }
+        //     goWork (hrs = 8) {
+        //         console.log (`${this.name} goes work and receives ${this._calcSalary (hrs)}`)
+        //     }
+        //     //инкапсулирование
+        //     _calcSalary (h) {
+        //         return h * this.salary / 62 + '$'
+        //     }
+        // }
+
+        // let oleg = new People ('Oleg', 32, 100)
+        // let anna = new People ('Anna', 28, 300, 0)
+    </script>
+</body>
+</html>

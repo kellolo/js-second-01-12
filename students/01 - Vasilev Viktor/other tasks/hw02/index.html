@@ -15,14 +15,14 @@
 </head>
 <body>
   <div class="wrapper">
-    <form class="custom-form" action="#">
+    <form action="#">
       <div class="form-check">
         <h6 class="form-check-h6">Choose hamburger size</h6>
-        <input class="form-check-input" type="radio" name="size" id="smallSize" value="option1" checked>
+        <input class="form-check-input" type="radio" name="burgerSize" id="smallSize" value="small">
         <label class="form-check-label" for="smallSize">
           Small
         </label>
-        <input class="form-check-input" type="radio" name="size" id="bigSize" value="option1" checked>
+        <input class="form-check-input" type="radio" name="burgerSize" id="bigSize" value="big">
         <label class="form-check-label" for="bigSize">
           Big
         </label>
@@ -30,15 +30,15 @@
 
       <div class="form-check">
         <h6 class="form-check-h6">Choose stuffing</h6>
-        <input class="form-check-input" type="radio" name="stuff" id="cheeseStuff" value="option1" checked>
+        <input class="form-check-input" type="radio" name="stuffing" id="cheeseStuff" value="cheese">
         <label class="form-check-label" for="cheeseStuff">
           Cheese
         </label>
-        <input class="form-check-input" type="radio" name="stuff" id="saladStuff" value="option1" checked>
+        <input class="form-check-input" type="radio" name="stuffing" id="saladStuff" value="salad">
         <label class="form-check-label" for="saladStuff">
           Salad
         </label>
-        <input class="form-check-input" type="radio" name="stuff" id="potatoStuff" value="option1" checked>
+        <input class="form-check-input" type="radio" name="stuffing" id="potatoStuff" value="potato">
         <label class="form-check-label" for="potatoStuff">
           Potato
         </label>
@@ -46,22 +46,22 @@
 
       <div class="form-check">
         <h6 class="form-check-h6">Choose topping</h6>
-        <input class="form-check-input" type="checkbox" value="" id="spiceTop">
+        <input class="form-check-input" type="checkbox" name="topping" id="spiceTop" value="spice">
         <label class="form-check-label" for="spiceTop">
           Spice
         </label>
-        <input class="form-check-input" type="checkbox" value="" id="sauceTop">
+        <input class="form-check-input" type="checkbox" name="topping" id="sauceTop" value="sauce">
         <label class="form-check-label" for="sauceTop">
           Sauce
         </label>
       </div>
-
-      <button class="btn btn-primary calc-btn">Calculate</button>
     </form>
 
+    <button class="btn btn-primary calc-btn">Calculate</button>
+
     <div class="totals">
-      <h6 class="totals-h6">Price: 0</h6>
-      <h6 class="totals-h6">Calories: 0</h6>
+      <h6 class="totals-h6">Price: <span class="price">0</span>$</h6>
+      <h6 class="totals-h6">Calories: <span class="calories">0</span> cal.</h6>
     </div>
   </div>
 

@@ -17,14 +17,12 @@
 
 'use strict';
 
-const secret = new WeakMap();
-
 class Hamburger {
   constructor (burgerSize, stuffing, topping) {
     this.burgerSize = Hamburger._getDataFromRadio(burgerSize);
     this.stuffing = Hamburger._getDataFromRadio(stuffing);
     this.topping = this._getDataFromCheckboxes(topping);
-    secret.set(this, {_burgerParts: this._setAllBurgerParts()});
+    this._burgerParts = this._setAllBurgerParts();
   }
 
   static _getDataFromRadio(domElementName) {
@@ -38,11 +36,11 @@ class Hamburger {
     return data;
   }
 
-  calculatePrice() {
+  get totalPrice() {
     return this._getDesiredData('price');
   }
 
-  calculateCalories() {
+  get totalCalories() {
     return this._getDesiredData('calories');
   }
 
@@ -97,6 +95,6 @@ document.querySelector('.calc-btn').addEventListener('click', () => calcBtnClick
 const calcBtnClickHandler = function () {
   let burger = new Hamburger('burgerSize', 'stuffing', 'topping');
 
-  document.querySelector('.price').innerText = burger.calculatePrice();
-  document.querySelector('.calories').innerText = burger.calculateCalories();
+  document.querySelector('.price').innerText = burger.totalPrice;
+  document.querySelector('.calories').innerText = burger.totalCalories;
 };

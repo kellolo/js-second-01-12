@@ -17,12 +17,14 @@
 
 'use strict';
 
+const secret = new WeakMap();
+
 class Hamburger {
   constructor (burgerSize, stuffing, topping) {
     this.burgerSize = Hamburger._getDataFromRadio(burgerSize);
     this.stuffing = Hamburger._getDataFromRadio(stuffing);
     this.topping = this._getDataFromCheckboxes(topping);
-    this._burgerParts = this._setAllBurgerParts();
+    secret.set(this, {_burgerParts: this._setAllBurgerParts()});
   }
 
   static _getDataFromRadio(domElementName) {

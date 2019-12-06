@@ -94,7 +94,6 @@ class Hamburger {
 document.querySelector('.calc-btn').addEventListener('click', () => calcBtnClickHandler());
 
 const calcBtnClickHandler = function () {
-  debugger;
   let burger = new Hamburger('burgerSize', 'stuffing', 'topping');
 
   document.querySelector('.price').innerText = burger.calculatePrice();

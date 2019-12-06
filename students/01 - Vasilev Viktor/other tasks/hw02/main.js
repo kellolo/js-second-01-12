@@ -59,7 +59,6 @@ class Hamburger {
   }
 
   _getDataFromBurgerPart(partName, desiredData) {
-    // let allBurgerParts = this._getAllBurgerParts();
     let burgerPartIdx = this._burgerParts.findIndex(burgerPart => burgerPart.name === partName);
     return this._burgerParts[burgerPartIdx][desiredData];
   }

@@ -1,5 +1,9 @@
+node_modules/
+Psd/
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json
 .vs/js-second-01-12/v16/.suo
 students/.DS_Store
+
+.idea

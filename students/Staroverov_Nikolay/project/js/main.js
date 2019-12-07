@@ -1,3 +1,4 @@
+'use strict';
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
@@ -19,13 +20,13 @@ document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
         removeProduct (evt.target);
     }
-})
+});
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         addProduct (evt.target);
     }
-})
+});
 
 //создание массива объектов - имитация загрузки данных с сервера
 function fetchData () {
@@ -33,8 +34,8 @@ function fetchData () {
     for (let i = 0; i < items.length; i++) {
         arr.push (createProduct (i));
     }
-    return arr
-};
+    return arr;
+}
 
 //создание товара
 function createProduct (i) {
@@ -56,21 +57,21 @@ function createProduct (i) {
                             data-image="${this.img}"
                             data-price="${this.price}">Купить</button>
                         </div>
-                    </div>`
+                    </div>`;
         },
 
         add: function() {
-            this.quantity++
+            this.quantity++;
         }
-    }
-};
+    };
+}
 
 //рендер списка товаров (каталога)
 function renderProducts () {
     //let arr = [];
-    let str = ''
+    let str = '';
     for (item of list) {
-        str += item.createTemplate()
+        str += item.createTemplate();
     }
     document.querySelector('.products').innerHTML = str;
 }
@@ -90,11 +91,11 @@ function addProduct (product) {
             img: cartImage,
             price: +product.dataset['price'],
             quantity: 1
-        })
+        });
     }  else {
-        find.quantity++
+        find.quantity++;
     }
-    renderCart ()
+    renderCart ();
 }
 
 //удаление товаров
@@ -105,7 +106,7 @@ function removeProduct (product) {
         find.quantity--;
     } else {
         userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+        document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
     }
     renderCart ();
 }
@@ -127,7 +128,7 @@ function renderCart () {
                                 <p class="product-price">${el.quantity * el.price}</p>
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
-                        </div>`
+                        </div>`;
     }
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;

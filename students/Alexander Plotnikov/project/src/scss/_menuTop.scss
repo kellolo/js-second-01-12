@@ -1,8 +1,14 @@
 .menuTop {
-  max-width: 100%;
+  max-width: 1400px;
+  width: 100%;
   @include row-flex();
-  margin: 0;
-  position: relative;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  z-index: 800;
+ 
+  
 
   @include lg-block() {
     padding: 0 20px;

@@ -1,7 +1,7 @@
 .menuBottom {
   max-width: 100%;
   @include row-flex();
-  margin: 0;
+  margin: 90px 0 0 0;
 
   @include lg-block() {
     padding: 0 20px;
@@ -13,6 +13,7 @@
   border-left: 1px solid $colBor;
   border-right: 1px solid $colBor;
   box-sizing: border-box;
+  margin: 90px 0 0 0;
 
   &__contFirts {
     display: flex;

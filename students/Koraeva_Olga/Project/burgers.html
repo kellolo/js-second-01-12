@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Les 2</title>
+</head>
+
+<body>
+	<form action="#">
+		<fieldset>
+			<caption>
+				<input type="radio" data-price="50" data-calories="20" name="size" value="small"> Small Burger
+			</caption>
+		</fieldset>
+		<fieldset>
+			<caption>
+				<input type="radio" data-price="100" data-calories="40" name="size" value="big"> Big Burger
+			</caption>
+		</fieldset>
+		<fieldset>
+			<caption>
+				<span>Choose filling</span><br>
+				<input type="radio" data-price="10" data-calories="20" name="filling" value="cheese"> Cheese
+			</caption>
+			<caption>
+				<input type="radio" data-price="20" data-calories="5" name="filling" value="salad"> Salad
+			</caption>
+			<caption>
+				<input type="radio" data-price="15" data-calories="10" name="filling" value="potato"> Potato
+			</caption>
+		</fieldset>
+		<fieldset>
+			<caption>
+				<span>Extra</span><br>
+				<input type="checkbox" data-price="15" data-calories="0" name="topping" value="spice"> Spice
+			</caption>
+			<caption>
+				<input type="checkbox" data-price="20" data-calories="5" name="topping" value="mayonnaise"> Mayonnaise
+			</caption>
+		</fieldset>
+		<button id="button">Buy</button>
+	</form>
+
+	<script>
+		'use strict';
+		class Burger {
+			constructor(size, filling, topping) {
+				this.size = +this._inputPrice(size)
+				this.filling = +this._inputPrice(filling)
+				this.topping = +this._inputCheckbox(topping)
+				this.burgCal = +this._inputCal(size)
+				this.fillingCal = +this._inputCal(filling)
+				this.toppingCal = +this._inputCheckboxCal(topping)
+			}
+			_inputPrice(elem) {
+				return document.querySelector(`input[name="${elem}"]:checked`).dataset.price
+			}
+			_inputCal(elem) {
+				return document.querySelector(`input[name="${elem}"]:checked`).dataset.calories
+			}
+			_inputCheckbox(elem) {
+				let topp = []
+				let arr = [...document.querySelectorAll(`input[name="${elem}"]:checked`)]
+				arr.forEach(el => {
+					topp.push(el.dataset.price)
+				})
+				return topp
+			}
+			_inputCheckboxCal(elem) {
+				let topp = []
+				let arr = [...document.querySelectorAll(`input[name="${elem}"]:checked`)]
+				arr.forEach(el => {
+					topp.push(el.dataset.calories)
+				})
+				return topp
+			}
+			calculate() {
+				return ('Sum: ' + (this.size + this.filling + this.topping) +
+					' Calories: ' + (this.burgCal + this.fillingCal + this.toppingCal))
+			}
+		}
+		let button = document.getElementById('button')
+		button.addEventListener('click', calc)
+
+		function calc() {
+			let order = new Burger('size', 'filling', 'topping')
+			alert(order.calculate())
+		}
+
+	</script>
+</body>
+
+</html>

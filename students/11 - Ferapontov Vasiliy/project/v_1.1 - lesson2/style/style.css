@@ -169,3 +169,6 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+.total-price {
+    font-size: 0.8em;
+}

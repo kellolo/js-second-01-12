@@ -845,7 +845,7 @@ body {
   background-color: #b4b0b0;
   border-radius: 5px;
   padding: 5px;
-  transition: transform 400ms;
+  transition: transform 300ms;
   transform-origin: 0 0;
   transform: scaleY(0);
   font-size: 14px;
@@ -869,6 +869,9 @@ body {
   align-items: center;
   margin-bottom: 5px;
   border-bottom: 1px solid grey;
+  transform: scaleY(0);
+  transform: scaleY(1);
+  transition: transform 500ms 200ms;
 }
 
 .contCartProducts__img {

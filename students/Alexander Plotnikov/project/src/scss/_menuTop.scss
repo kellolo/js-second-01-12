@@ -7,8 +7,8 @@
   top: 0;
   background-color: #fff;
   z-index: 800;
- 
-  
+
+
 
   @include lg-block() {
     padding: 0 20px;
@@ -89,6 +89,7 @@
     margin-right: 29px;
     position: relative;
   }
+
   &__CartSvg {
     @include hovAct();
   }
@@ -96,6 +97,7 @@
   &__CartSvg-active {
     fill: transparent;
     position: relative;
+
     &:before {
       position: absolute;
       content: "X";
@@ -113,6 +115,7 @@
       border: 1px solid rgb(197, 197, 197);
       border-radius: 50%;
     }
+
     &:hover::before {
       color: $colBlue;
       background-color: rgb(233, 233, 233);
@@ -181,6 +184,7 @@
     &__logo {
       order: 2;
     }
+
     &__nav {
       transition: transform 300ms;
       transform-origin: 0 0;
@@ -283,10 +287,11 @@
   background-color: rgb(180, 176, 176);
   border-radius: 5px;
   padding: 5px;
-  transition: transform 400ms;
+  transition: transform 300ms;
   transform-origin: 0 0;
   transform: scaleY(0);
   font-size: 14px;
+
   &::before {
     content: "";
     display: block;
@@ -297,6 +302,8 @@
     border-left: 15px solid transparent;
     border-bottom: 15px solid rgb(180, 176, 176);
   }
+
+ 
   &__contItem {
     padding: 0 0 5px 0;
     display: flex;
@@ -304,16 +311,23 @@
     align-items: center;
     margin-bottom: 5px;
     border-bottom: 1px solid grey;
+    transform: scaleY(0);
+    transform: scaleY(1);
+    transition: transform 500ms 200ms;
+
   }
+
   &__img {
     width: 70px;
     border-radius: 2px;
   }
+
   &__name {
     width: 80px;
     margin-left: 10px;
     display: flex;
   }
+
   &__price {
     width: 50px;
     margin-left: 10px;
@@ -322,6 +336,7 @@
     display: flex;
     justify-content: center;
   }
+
   &__quantity {
     width: 20px;
     margin-left: 10px;
@@ -329,12 +344,14 @@
     display: flex;
     justify-content: center;
   }
+
   &__buttons {
     width: 50px;
     display: flex;
     align-items: center;
     flex-direction: column;
   }
+
   &__add,
   &__del {
     display: flex;
@@ -344,10 +361,12 @@
     border-radius: 3px;
     border: none;
     margin: 3px;
+
     &:hover {
       background-color: $colBlue;
       color: white;
     }
+
     &:active {
       background-color: $colBlueA;
       color: rgb(37, 36, 36);
@@ -363,6 +382,7 @@
     font-weight: 700;
     width: 80px;
   }
+
   &__allSumm {
     display: flex;
     width: 50px;
@@ -370,6 +390,7 @@
     display: flex;
     justify-content: center;
   }
+
   &__allQuantity {
     display: flex;
     width: 20px;
@@ -377,6 +398,7 @@
     display: flex;
     justify-content: center;
   }
+
   &__allClean {
     display: flex;
     width: 20px;
@@ -390,6 +412,7 @@
       background-color: $colBlue;
       color: white;
     }
+
     &:active {
       background-color: $colBlueA;
       color: rgb(37, 36, 36);
@@ -400,6 +423,7 @@
 .contCartProducts-active {
   transform: scaleY(1);
 }
+
 @include to(850px) {
   .contCartProducts {
     display: flex;
@@ -413,6 +437,7 @@
     border-radius: 5px;
     padding: 5px;
     transition: transform 400ms;
+
     &::before {
       content: "";
       display: block;
@@ -423,6 +448,7 @@
       border-left: 15px solid transparent;
       border-bottom: 15px solid rgb(180, 176, 176);
     }
+
     &__allClean {
       margin: 0 13px;
     }

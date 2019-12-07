@@ -19,13 +19,13 @@ document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
         removeProduct (evt.target);
     }
-})
+});
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         addProduct (evt.target);
     }
-})
+});
 
 //создание массива объектов - имитация загрузки данных с сервера
 function fetchData () {
@@ -34,7 +34,7 @@ function fetchData () {
         arr.push (createProduct (i));
     }
     return arr
-};
+}
 
 //создание товара
 function createProduct (i) {
@@ -63,12 +63,11 @@ function createProduct (i) {
             this.quantity++
         }
     }
-};
+}
 
 //рендер списка товаров (каталога)
 function renderProducts () {
-    //let arr = [];
-    let str = ''
+    let str = '';
     for (item of list) {
         str += item.createTemplate()
     }
@@ -131,4 +130,83 @@ function renderCart () {
     }
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
+}
+
+// 1. Добавьте пустые классы для Корзины товаров и Элемента корзины товаров. Продумайте,
+// какие методы понадобятся для работы с этими сущностями.
+
+// 2. Добавьте для GoodsList метод, определяющий суммарную стоимость всех товаров.
+// ***добавил этот метод для класса корзины, потому что на мой взгляд тотал прайс логичнее считать для корзины
+
+class Cart {
+  constructor() {
+    this.cartItems = [];
+  }
+
+  fetchCart() {
+
+  }
+
+  add() {
+
+  }
+
+  update() {
+
+  }
+
+  delete() {
+
+  }
+
+  render() {
+
+  }
+
+  get totalPrice() {
+    return this.cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
+  }
+
+  get totalCount() {
+
+  }
+}
+
+class CartItem {
+  constructor() {
+    this.price = null;
+    this.name = null;
+    this.id = null;
+    this.qty = null;
+  }
+
+  render() {
+
+  }
+}
+
+class Goods {
+  constructor() {
+    this.goods = [];
+  }
+
+  fetchGoods() {
+
+  }
+
+  render() {
+
+  }
+}
+
+class Good {
+  constructor() {
+    this.price = null;
+    this.name = null;
+    this.id = null;
+  }
+
+  render() {
+
+  }
 }

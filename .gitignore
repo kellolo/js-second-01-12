@@ -10,3 +10,5 @@ gulpfile.js
 .vs/VSWorkspaceState.json
 .vs/js-second-01-12/v16/.suo
 students/.DS_Store
+
+.idea

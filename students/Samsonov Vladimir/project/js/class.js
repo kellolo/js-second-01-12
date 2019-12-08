@@ -108,6 +108,3 @@ document.querySelector('.btn-cart').addEventListener('click', () => {
 //     new Cart().goods.push (cartItem);
 //     console.log(new Cart);
 // }
-
-
-

@@ -1,0 +1,21 @@
+{{tab}}height{{:}}100vh{{;}}
+{{tab}}position{{:}}fixed{{;}}
+{{tab}}width{{:}}100%{{;}}
+{{tab}}
+{{tab}}> div{{brace}}
+{{tab}}{{tab}}height{{:}}inherit{{;}}
+{{tab}}{{tab}}{{call}}{{mixinNames.container}}(){{;}}
+{{tab}}{{tab}}
+{{tab}}{{tab}}> div{{brace}}
+{{tab}}{{tab}}{{tab}}height{{:}}inherit{{;}}
+{{tab}}{{tab}}{{tab}}{{call}}{{mixinNames.row-flex}}(){{;}}
+{{tab}}{{tab}}{{tab}}
+{{tab}}{{tab}}{{tab}}> div{{brace}}
+{{tab}}{{tab}}{{tab}}{{tab}}{{call}}{{mixinNames.col}}(){{;}}
+{{sizes}}
+{{tab}}{{tab}}{{tab}}{{tab}}height{{:}}inherit{{;}}
+{{tab}}{{tab}}{{tab}}{{tab}}outline{{:}}{{var}}outline{{;}}
+{{tab}}{{tab}}{{tab}}{{tab}}background{{:}}{{var}}background{{;}}
+{{tab}}{{tab}}{{tab}}{{/brace}}
+{{tab}}{{tab}}{{/brace}}
+{{tab}}{{/brace}}

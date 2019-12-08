@@ -1,5 +1,4 @@
-node_modules/
-Psd/
+
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json

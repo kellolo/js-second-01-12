@@ -1,4 +1,11 @@
 node_modules/
+students/Alexander Plotnikov/project/img/
+students/Alexander Plotnikov/ather tasks/img/
+gulpfile.js
+package-lock.json
+.gitattributes
+README.md
+README.txt
 Psd/
 src/
 .vs/ProjectSettings.json

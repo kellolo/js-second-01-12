@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        <fieldset>
+            <p>Hamburger</p>
+            <label>
+                <input type="radio" name="size" value="big" data-price="100" data-calories="40">Big
+            </label>
+            <label>
+                <input type="radio" name="size" value="small" data-price="50" data-calories="20">Small
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <p>AdditiveE</p>
+            <label>
+                <input type="radio" name="additive" value="cheese" data-price="10" data-calories="20">Cheese
+            </label>
+            <label>
+                <input type="radio" name="additive" value="salad" data-price="20" data-calories="5">Salad
+            </label>
+            <label>
+                <input type="radio" name="additive" value="potato" data-price="15" data-calories="10">Potato
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <p>Seasonings</p>
+            <label>
+                <input type="checkbox" name="seasoning" value="condiment" data-price="15" data-calories="0">Condiment
+            </label>
+            <label>
+                <input type="checkbox" name="seasoning" value="mayonnaise" data-price="20" data-calories="5">Mayonnaise
+            </label>
+        </fieldset>
+
+        <button id="add-button">Add To Cart</button>
+
+        <div>
+            <p>Price: <span id="price"></span></p>
+            <p>Calories: <span id="calories"></span></p>
+        </div>
+    </form>
+
+    <script>
+        window.onload = () => {
+            document.querySelector('#add-button').addEventListener('click', function () {
+                let burger = new Burger('size', 'additive', 'seasoning')
+                burger.showTotal('#price', '#calories')
+            })
+
+        }
+
+        class Burger {
+            constructor(size, additive, seasonings) {
+                this.size = new Parameter(this._select(size))
+                this.additive = new Parameter(this._select(additive))
+                this.seasonings = this._getDomArray(seasonings)
+            }
+
+            _select(attrName) {
+                return document.querySelector(`input[name = "${attrName}"]:checked`)
+            }
+
+            _selectAll(attrName) {
+                return [...document.querySelectorAll(`input[name = "${attrName}"]:checked`)]
+            }
+
+            _getDomArray(attrName) {
+                let arr = []
+                this.selectorAll(attrName).forEach(item => {
+                    arr.push(new Parameter(item))
+                })
+                return arr
+            }
+
+            _calc(paramPropName) {
+                let res = this.size[paramPropName] + this.additive[paramPropName]
+                this.seasonings.forEach(top => {
+                    res += top[paramPropName]
+                })
+                return res
+            }
+
+            showTotal(price, cals) {
+                document.querySelector(price).innerText = this._calc('price')
+                document.querySelector(cals).innerText = this._calc('calories')
+
+            }
+        }
+
+        class Parameter {
+            constructor(domEl) {
+                this.name = domEl.value
+                this.price = +domEl.dataset['price']
+                this.calories = +domEl.dataset['calories']
+            }
+        }
+    </script>
+</body>
+
+</html>

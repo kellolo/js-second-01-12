@@ -8,23 +8,18 @@ window.onload = function () {
     // ********************************* Create HTML *************************************** //
     // ********************************* Create HTML *************************************** //
 
-    let name = ['product1', 'product2', 'product3', 'product4', 'product5', 'product6', 'product7', 'product8', 'product9', 'product10', 'product11', 'product12'] //list names
-    let id = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] //list id
-    let brand = ['samsung', 'aplle', 'aser', 'asus', 'boshc', 'philids', 'viteck', 'nokia', 'huawei', 'sony', 'aser', 'samsung'] // brands list
-    let price = ['10', '20', '33', '15', '12', '44', '28', '62', '17', '50', '35', '30'] // prices list
-    let country = ['USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA', 'USA'] // countrys list
-    let ship = ['free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free', 'free'] //ships list
-    let img = ['build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png', 'build/img/Photo1.png'] // img list
+  
+    let catURL = 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/lesson3/students/Alexander_Plotnikov/project/responses/catalogData.json'
 
     class Product { // класс для создания товара магазина
-        constructor(title, price, brand, country, ship, img, id) {
-            this.name = title;
-            this.price = price;
-            this.brand = brand;
-            this.country = country;
-            this.ship = ship;
-            this.img = img;
-            this.id = id;
+        constructor(obj) {
+            this.name = obj.title;
+            this.price = obj.price;
+            this.brand = obj.brand;
+            this.country = obj.country;
+            this.ship = obj.ship;
+            this.img = obj.img;
+            this.id = obj.id;
             this.quantity = 1
         }
         render() {
@@ -40,42 +35,41 @@ window.onload = function () {
     class ContProduct { // класс страници магазина
         constructor(className) {
             this.className = className;
-            this.arrElems = this._createPageShopObj(name, price, brand, country, ship, img, id);;
+            this.arrElems = []
             this.CartElems = [];
         }
-        render(mas, ClassProduct) {
-            let arr = []
-            for (let i = 0; i < mas.length; i++) {
-                let Prod = new ClassProduct(
-                    mas[i].name,
-                    mas[i].price,
-                    mas[i].brand,
-                    mas[i].country,
-                    mas[i].ship,
-                    mas[i].img,
-                    mas[i].id)
-                Prod.quantity = mas[i].quantity
-                arr += Prod.render()
-            }
-            d.querySelector(this.className).innerHTML = arr
+        init() {
+            let cont = this
+            this._getCatalog(catURL, cont._render(cont))
+
         }
-        _createPageShopObj(arrTitle, arrPrice, arrBrand, arrCountry, aarShip, aarImg, arrId) {
-            let arr = []
-            arrTitle.forEach((e, i) => {
-                arr.push({
-                    name: arrTitle[i],
-                    price: arrPrice[i],
-                    brand: arrBrand[i],
-                    counrty: arrCountry[i],
-                    ship: aarShip[i],
-                    img: aarImg[i],
-                    id: arrId[i],
-                    quantity: 1
-                })
-            })
-            return arr
+        _render(cont) {
+            return function () {
+                let mas = cont.arrElems
+                let arr = []
+                for (let i = 0; i < mas.length; i++) {
+                    let Prod = new Product(mas[i])
+                    Prod.quantity = mas[i].quantity
+                    arr += Prod.render()
+                }
+                  d.querySelector(cont.className).innerHTML = arr
+            }
+        }
+        _getCatalog(url, callback) {
+            let cont = this
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET', url, true)
+            xhr.send()
+            xhr.onreadystatechange = function () {
+                console.log(xhr.readyState)
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    cont.arrElems = JSON.parse(xhr.responseText)
+                    callback()
+                }
+            }
         }
     }
+
 
 
     class ProductCart extends Product { // класс товара в корзине
@@ -167,7 +161,7 @@ window.onload = function () {
             let allSumm = 0
             let allQuantity = 0
             // расcчет суммы корзины  и общеого количества корзины
-            console.log(this.CartElems)
+            // console.log(this.CartElems)
             this.CartElems.forEach(e => {
                 allSumm += e.price * e.quantity
                 allQuantity += e.quantity
@@ -192,9 +186,10 @@ window.onload = function () {
 
 
     let pageShop = new ContProduct('.productsPage')
-    pageShop.render(pageShop.arrElems, Product)
-    let Cartt = new Cart('.contCartProducts__bodyCart')
-    Cartt.addToCart('.productsPage')
+    pageShop.init()
+    // pageShop.render(pageShop.arrElems, Product)
+    // let Cartt = new Cart('.contCartProducts__bodyCart')
+    //  Cartt.addToCart('.productsPage')
 
-
+    // console.log(pageShop.arrElems)
 }

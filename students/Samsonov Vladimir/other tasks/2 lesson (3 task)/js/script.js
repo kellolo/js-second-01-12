@@ -7,10 +7,6 @@ class Burger {
         this.sizeCal = +this._inputRadioCalories(size)
         this.stuffingCal = +this._inputRadioCalories(stuffing)
         this.spiceCal = +this._inputCheckCal(spice)
-
-
-        
- 
     }
 
     _inputRadioPrice (domElementName) {

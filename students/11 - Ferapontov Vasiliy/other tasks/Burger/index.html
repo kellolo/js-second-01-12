@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BURGER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<form action="#">
+  <h3>Соберите свой бургер!</h3>
+  <fieldset>
+    <h4>Выберете размер бургера:</h4>
+    <label>
+      <input value="small" type="radio" data-calories="20" data-price="50" name="size"> Маленький бургер
+    </label>
+    <label>
+      <input value="big" type="radio" data-calories="40" data-price="100" name="size"> Большой бургер
+    </label>
+  </fieldset>
+  <fieldset>
+    <h4>Выберете начинку бургера:</h4>
+    <label>
+      <input value="salad" type="radio" data-calories="5" data-price="20" name="stuffing"> Салат
+    </label>
+    <label>
+      <input value="cheese" type="radio" data-calories="20" data-price="10" name="stuffing"> Сыр
+    </label>
+    <label>
+      <input value="potato" type="radio" data-calories="10" data-price="15" name="stuffing"> Картофель
+    </label>
+  </fieldset>
+  <fieldset>
+    <h4>Добавьте на свой вкус:</h4>
+    <label>
+      <input value="flav" type="checkbox" data-calories="0" data-price="15" name="flavoring"> Приправа
+    </label>
+    <label>
+      <input value="mayonnaise" type="checkbox" data-calories="5" data-price="20" name="flavoring"> Майонез
+    </label>
+  </fieldset>
+  <button>Заказать</button>
+</form>
+
+
+<div class="list">
+  <h2>Ваш заказ:</h2>
+  <div class="wrapper2">
+    <div class="wrapper">
+      <ul class="list-head">
+        <li>Размер</li>
+        <li>Начинка</li>
+        <li>Доп.опции</li>
+        <li>Калорийность</li>
+        <li>Стоимость</li>
+      </ul>
+    </div>
+    <div class="total-wrapper">
+      <div class="total">ИТОГО</div>
+      <div class="total-calory">0</div>
+      <div class="total-price">0</div>
+    </div>
+  </div>
+</div>
+<script src="burger.js"></script>
+</body>
+</html>

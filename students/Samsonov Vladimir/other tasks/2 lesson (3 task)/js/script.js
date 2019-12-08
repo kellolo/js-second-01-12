@@ -4,12 +4,12 @@ class Burger {
         this.stuffingPrice = +this._inputRadioPrice (stuffing)
         this.spicePrice = +this._inputCheckPrice (spice)
 
-        this.sizeCal = +this._inputCalories(size)
-        this.stuffingCal = +this._inputCalories(stuffing)
-        this.spiceCal = +this._inputCalories(spice)
+        this.sizeCal = +this._inputRadioCalories(size)
+        this.stuffingCal = +this._inputRadioCalories(stuffing)
+        this.spiceCal = +this._inputCheckCal(spice)
 
-        this.price = this.sizePrice + this.stuffingPrice + this.spicePrice
-        this.calories = this.sizeCal + this.stuffingCal + this.spiceCal
+
+        
  
     }
 
@@ -17,7 +17,7 @@ class Burger {
         return document.querySelector (`input[name="${domElementName}"]:checked`).dataset.price
     }
 
-    _inputCalories (domElementName) {
+    _inputRadioCalories (domElementName) {
         return document.querySelector (`input[name="${domElementName}"]:checked`).dataset.calories
     }
 
@@ -41,11 +41,11 @@ class Burger {
     }
 
     setPrice() {
-        return document.querySelector('.price').innerText = +this.price;
+        return document.querySelector('.price').innerText = this.sizePrice + this.stuffingPrice + this.spicePrice;
     }
 
     setCalories() {
-        return document.querySelector('.calories').innerText = +this.calories;
+        return document.querySelector('.calories').innerText = this.calories = this.sizeCal + this.stuffingCal + this.spiceCal;
     }
 }
 

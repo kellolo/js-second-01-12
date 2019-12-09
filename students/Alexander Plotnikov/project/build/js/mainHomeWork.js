@@ -43,10 +43,10 @@ window.onload = function () {
             this.arrElems = this._createPageShopObj(name, price, brand, country, ship, img, id);;
             this.CartElems = [];
         }
-        render(mas) {
+        render(mas, ClassProduct) {
             let arr = []
             for (let i = 0; i < mas.length; i++) {
-                let Prod = new Product(
+                let Prod = new ClassProduct(
                     mas[i].name,
                     mas[i].price,
                     mas[i].brand,
@@ -54,6 +54,7 @@ window.onload = function () {
                     mas[i].ship,
                     mas[i].img,
                     mas[i].id)
+                Prod.quantity = mas[i].quantity
                 arr += Prod.render()
             }
             d.querySelector(this.className).innerHTML = arr
@@ -96,14 +97,78 @@ window.onload = function () {
     class Cart extends ContProduct { // класс для корзины
         addToCart(className) {
             let context = this
-            d.querySelector(className).addEventListener('click', this._addToCart(context)) //  обработчик добавления элемента в корзину
-            // d.querySelector(this.className).parentNode.addEventListener('click', context._clickDell) // обработчки полной очистки корзины
+            //  обработчик добавления элемента в корзину
+            d.querySelector(className).addEventListener('click', this._addToCart(context))
+            // обработчки очистки корзины и регулировки количества отдельных товаров
+            d.querySelector(this.className).parentNode.addEventListener('click', this._chengeContentCart(context))
         }
-        _calcCart() {
-            let allSumm = null
-            let allQuantity = null
+        _addToCart(cont) {
+            return function (evt) {
+                if (evt.target.dataset.id) {
+                    let id = evt.target.dataset.id
+                    let el = cont.arrElems.find(item => item.id == id)
+                    let elInCart = cont.CartElems.find(item => item == el)
+                    if (elInCart) {
+                        elInCart.quantity++
+                        cont.render(cont.CartElems, ProductCart)
+                    } else {
+                        cont.CartElems.push(el)
+                        let prodCart = new ProductCart(el.name, el.price, el.brand, el.country, el.ship, el.img, el.id)
+                        d.querySelector(cont.className).innerHTML += prodCart.render()
+                    }
+                    // console.log(cont.CartElems)
+                    cont._calcCart()
+
+                }
+            }
+        }
+        _chengeContentCart(cont) {
+            return function (evt) {
+                if (evt.target.className == 'contCartProducts__allClean') {
+                    cont._dellCart()
+                }
+                if (evt.target.className == 'contCartProducts__add') {
+                    let parent = evt.target.parentNode
+                    let id = parent.parentNode.dataset.id
+                    parent.parentNode.childNodes[7].innerHTML++
+                    cont.CartElems.forEach((e, i) => {
+                        if (e.id == id) {
+                            cont.CartElems[i].quantity++
+                            parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price
+                        }
+                    })
+                    cont._calcCart()
+
+                }
+                if (evt.target.className == 'contCartProducts__del') {
+                    let parent = evt.target.parentNode
+                    let id = parent.parentNode.dataset.id
+                    parent.parentNode.childNodes[7].innerHTML--
+                    cont.CartElems.forEach((e, i) => {
+                        if (e.id == id) {
+                            if (cont.CartElems[i].quantity == 1) {
+                                cont.CartElems.splice(i, 1)
+                                // console.log(cont.CartElems)
+                                if (cont.CartElems.length === 0) {
+                                    cont._dellCart()
+                                }
+                                cont.render(cont.CartElems, ProductCart)
+                            } else {
+                                cont.CartElems[i].quantity--
+                                parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price
+                            }
+                        }
+                    })
+                    cont._calcCart()
+                }
+            }
+        }
+        _calcCart() { // метод для расчета общей суммы ккорзины, и общего количества товаров
+            let allSumm = 0
+            let allQuantity = 0
             // расcчет суммы корзины  и общеого количества корзины
-            context.CartElems.forEach(e => {
+            console.log(this.CartElems)
+            this.CartElems.forEach(e => {
                 allSumm += e.price * e.quantity
                 allQuantity += e.quantity
             })
@@ -116,69 +181,18 @@ window.onload = function () {
             d.querySelector('.contCartProducts__allSumm').innerHTML = '$' + 0
             d.querySelector('.contCartProducts__allQuantity').innerHTML = 0
             d.querySelector('.menuTop__countCart').innerHTML = 0
-            context.CartElems = []
-            d.querySelector(context.className).innerHTML = ''
+            this.CartElems = []
+            this.arrElems.forEach(e => {
+                e.quantity = 1
+            })
+            // console.log(this.CartElems)
+            d.querySelector(this.className).innerHTML = ''
         }
-        _addToCart(cont) {
-            return function (evt) {
-                if (evt.target.dataset.id) {
-                    let id = evt.target.dataset.id
-                    console.log(this)
-                    let el = cont.arrElems.find(item => item.id == id)
-
-                    let elInCart = cont.CartElems.find(item => item == el)
-                    if (elInCart) {
-                        elInCart.quantity++
-                        cont.render()
-                    } else {
-                        cont.CartElems.push(el)
-                        let prodCart = new ProductCart(el.name, el.price, el.brand, el.country, el.ship, el.img, el.id)
-                        d.querySelector(cont.className).innerHTML += prodCart.render()
-                    }
-                    // calcCart()
-                }
-
-            }
-        }
-        _clickDell(evt) {
-            if (evt.target.className == 'contCartProducts__allClean') {
-                context.dellCart()
-            }
-            if (evt.target.className == 'contCartProducts__add') {
-                let parent = evt.target.parentNode
-                let id = parent.parentNode.dataset.id - 1
-                parent.parentNode.childNodes[7].innerHTML++
-                context.CartElems[id].quantity++
-                parent.parentNode.childNodes[5].innerHTML = '$' + context.CartElems[id].quantity * context.CartElems[id].price
-                context._calcCart()
-            }
-            if (evt.target.className == 'contCartProducts__del') {
-                let parent = evt.target.parentNode
-                let id = parent.parentNode.dataset.id - 1
-                parent.parentNode.childNodes[7].innerHTML--
-                context.CartElems[id].quantity--
-                parent.parentNode.childNodes[5].innerHTML = '$' + context.CartElems[id].quantity * context.CartElems[id].price
-                context._calcCart()
-                if (context.CartElems.length === 0) {
-                    context.CartElems = []
-                    d.querySelector(context.className).innerHTML = ''
-                }
-                if (context.CartElems[id].quantity == 0) {
-                    context.CartElems.splice(id, 1)
-                    context.render()
-                }
-            }
-        }
-
-
-
     }
 
 
     let pageShop = new ContProduct('.productsPage')
-    pageShop.render(pageShop.arrElems)
-    console.log(pageShop.arrElems)
-
+    pageShop.render(pageShop.arrElems, Product)
     let Cartt = new Cart('.contCartProducts__bodyCart')
     Cartt.addToCart('.productsPage')
 

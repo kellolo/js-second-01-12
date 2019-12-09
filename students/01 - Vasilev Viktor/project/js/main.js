@@ -13,8 +13,29 @@ class Catalog {
     this.fetchItems();
   }
 
+  // via callback
+
+  callbackGETRequest(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status !== 200) {
+          console.error('server response is not 200 OK');
+        } else {
+          const parsedData = JSON.parse(xhr.responseText);
+          callback(parsedData);
+        }
+      }
+    };
+
+    xhr.send();
+  };
+
   fetchItems() {
-    callbackGETRequest(catalogUrl, data => {
+    const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+    this.callbackGETRequest(catalogUrl, data => {
       catalog.items = data;
       this._render();
     });
@@ -56,30 +77,6 @@ class CatalogItem {
         `
   }
 }
-
-
-const URL_API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const catalogUrl = `${URL_API}/catalogData.json`;
-
-// via callback
-
-const callbackGETRequest = function (url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status !== 200) {
-        console.error('server response is not 200 OK');
-      } else {
-        const parsedData = JSON.parse(xhr.responseText);
-        callback(parsedData);
-      }
-    }
-  };
-
-  xhr.send();
-};
 
 let catalog = new Catalog('.products');
 

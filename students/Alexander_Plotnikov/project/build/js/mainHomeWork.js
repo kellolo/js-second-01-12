@@ -7,7 +7,7 @@ window.onload = function () {
     let Basket = new Cart('.contCartProducts__bodyCart')
     Basket.init()
 
-    
+
 }
 // ********************************* Create HTML *************************************** //
 // ********************************* Create HTML *************************************** //
@@ -45,9 +45,9 @@ class ContProduct { // класс страници магазина
     }
     init() {
         let cont = this
-       // this._getCatalogCallback(catURL, cont._render(cont, Product, cont.arrElems))   // получаем данные через callback
-       // this._getCatalogPromis(catURL)   // получаем данные через promis
-          this._getCatalogFetch(catURL)    // получаем данные через fetch
+        // this._getCatalogCallback(catURL, cont._render(cont, Product, cont.arrElems))   // получаем данные через callback
+        // this._getCatalogPromis(catURL)   // получаем данные через promis
+        this._getCatalogFetch(catURL) // получаем данные через fetch
     }
     _render(cont, classItem, Arr) {
         return function () {
@@ -102,10 +102,9 @@ class ContProduct { // класс страници магазина
             .then(response => response.json())
             .then(data => {
                 cont.arrElems = data
-            }) 
-            .finally(() => {           
+            })
+            .finally(() => {
                 cont._render(cont, Product, cont.arrElems)()
-                console.log(cont.arrElems)
             })
     }
 }
@@ -133,10 +132,17 @@ class Cart extends ContProduct { // класс для корзины
         this.AllQuantity = []
     }
 
-    init(){
+    init() {
+        let cont = this
         this.addToCart('.productsPage')
-    } 
-    
+        fetch(catURL)
+            .then(response => response.json())
+            .then(data => {
+                cont.arrElems = data
+            })
+        // .finally( () => )
+    }
+
     addToCart(className) {
         let context = this
         //  обработчик добавления элемента в корзину
@@ -152,12 +158,11 @@ class Cart extends ContProduct { // класс для корзины
                 let elInCart = cont.CartElems.find(item => item == el)
                 if (elInCart) {
                     elInCart.quantity++
-                    cont.render(cont, ProductCart, cont.CartElems)
+                    cont._render(cont, ProductCart, cont.CartElems)
+                    console.log(cont.CartElems)
                 } else {
                     cont.CartElems.push(el)
-                    console.log(el)
-                    let prodCart = new ProductCart(el)
-                   // console.log(el)
+                    let prodCart = new ProductCart(el)         
                     d.querySelector(cont.className).innerHTML += prodCart.render()
                 }
                 cont._calcCart()
@@ -194,7 +199,7 @@ class Cart extends ContProduct { // класс для корзины
                             if (cont.CartElems.length === 0) {
                                 cont._dellCart()
                             }
-                            cont.render(cont, ProductCart)
+                            cont._render(cont, ProductCart, cont.CartElems)
                         } else {
                             cont.CartElems[i].quantity--
                             parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price

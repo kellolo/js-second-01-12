@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 500px;
+}
+
+.calc-btn {
+    width: 100%;
+}
+
+.form-check {
+    border-bottom: 1px solid #888;
+}
+
+.form-check-h6 {
+    margin: 10px 0;
+}
+
+.form-check-label {
+    min-width: 100px;
+    margin-bottom: 10px;
+}
+
+.calc-btn {
+    margin-top: 20px;
+}
+
+.totals {
+    margin-top: 20px;
+}

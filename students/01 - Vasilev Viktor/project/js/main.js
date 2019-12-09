@@ -5,10 +5,53 @@ const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', '
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
+class Catalog {
+    constructor (container) {
+        this.container = container;
+        this.items = [];
+        this._init ();
+    }
+    _init () {
+        this.items = fetchData ();
+        this._render ();
+    }
+    _render () {
+        let block = document.querySelector (this.container);
+        let htmlStr = '';
+        this.items.forEach (item => {
+            let prod = new CatalogItem(item);
+            htmlStr += prod.render();
+        });
+        block.innerHTML = htmlStr
+    }
+}
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+class CatalogItem {
+    constructor (obj) {
+        this.product_name = obj.product_name;
+        this.price = obj.price;
+        this.id_product = obj.id_product;
+        this.img = image;
+    }
+    render () {
+        return `
+            <div class="product-item" data-id="${this.id_product}">
+                <img src="${this.img}" alt="Some img">
+                <div class="desc">
+                    <h3>${this.product_name}</h3>
+                    <p>${this.price} $</p>
+                    <button class="buy-btn" 
+                    data-id="${this.id_product}"
+                    data-name="${this.product_name}"
+                    data-image="${this.img}"
+                    data-price="${this.price}">Купить</button>
+                </div>
+            </div>
+        `
+    }
+}
+
+let catalog = new Catalog ('.products');
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -39,42 +82,12 @@ function fetchData () {
 //создание товара
 function createProduct (i) {
     return {
-        id: ids[i],
-        name: items[i],
+        id_product: ids[i],
+        product_name: items[i],
         price: prices[i],
         img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
-
-        add: function() {
-            this.quantity++
-        }
     }
 }
-
-//рендер списка товаров (каталога)
-function renderProducts () {
-    let str = '';
-    for (item of list) {
-        str += item.createTemplate()
-    }
-    document.querySelector('.products').innerHTML = str;
-}
-
-renderProducts ();
 
 //CART
 
@@ -130,83 +143,4 @@ function renderCart () {
     }
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
-
-// 1. Добавьте пустые классы для Корзины товаров и Элемента корзины товаров. Продумайте,
-// какие методы понадобятся для работы с этими сущностями.
-
-// 2. Добавьте для GoodsList метод, определяющий суммарную стоимость всех товаров.
-// ***добавил этот метод для класса корзины, потому что на мой взгляд тотал прайс логичнее считать для корзины
-
-class Cart {
-  constructor() {
-    this.cartItems = [];
-  }
-
-  fetchCart() {
-
-  }
-
-  add() {
-
-  }
-
-  update() {
-
-  }
-
-  delete() {
-
-  }
-
-  render() {
-
-  }
-
-  get totalPrice() {
-    return this.cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
-  }
-
-  get totalCount() {
-
-  }
-}
-
-class CartItem {
-  constructor() {
-    this.price = null;
-    this.name = null;
-    this.id = null;
-    this.qty = null;
-  }
-
-  render() {
-
-  }
-}
-
-class Goods {
-  constructor() {
-    this.goods = [];
-  }
-
-  fetchGoods() {
-
-  }
-
-  render() {
-
-  }
-}
-
-class Good {
-  constructor() {
-    this.price = null;
-    this.name = null;
-    this.id = null;
-  }
-
-  render() {
-
-  }
 }

@@ -13,32 +13,64 @@ class Catalog {
     this.fetchItems();
   }
 
-  // via callback
+  // // via callback
+  //
+  // callbackGETRequest(url, callback) {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('GET', url);
+  //
+  //   xhr.onreadystatechange = function () {
+  //     if (xhr.readyState === XMLHttpRequest.DONE) {
+  //       if (xhr.status !== 200) {
+  //         console.error('server response is not 200 OK');
+  //       } else {
+  //         const parsedData = JSON.parse(xhr.responseText);
+  //         callback(parsedData);
+  //       }
+  //     }
+  //   };
+  //
+  //   xhr.send();
+  // };
+  //
+  // fetchItems() {
+  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+  //   this.callbackGETRequest(catalogUrl, data => {
+  //     catalog.items = data;
+  //     this._render();
+  //   });
+  // }
 
-  callbackGETRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
+  // via promise
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status !== 200) {
-          console.error('server response is not 200 OK');
-        } else {
-          const parsedData = JSON.parse(xhr.responseText);
-          callback(parsedData);
+  promiseGETRequest(url) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status !== 200) {
+            reject('server response is not 200 OK');
+          } else {
+            resolve(xhr.responseText);
+          }
         }
-      }
-    };
+      };
 
-    xhr.send();
+      xhr.send();
+    });
   };
 
   fetchItems() {
     const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-    this.callbackGETRequest(catalogUrl, data => {
-      catalog.items = data;
-      this._render();
-    });
+    this.promiseGETRequest(catalogUrl)
+      .then(data => JSON.parse(data))
+      .then(parsedData => {
+        this.items = parsedData;
+        this._render();
+      })
+      .catch(error => console.error(error));
   }
 
   _render() {
@@ -96,25 +128,6 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     addProduct(evt.target);
   }
 });
-
-//создание массива объектов - имитация загрузки данных с сервера
-// function fetchData() {
-//   let arr = [];
-//   for (let i = 0; i < items.length; i++) {
-//     arr.push(createProduct(i));
-//   }
-//   return arr
-// }
-
-//создание товара
-// function createProduct(i) {
-//   return {
-//     id_product: ids[i],
-//     product_name: items[i],
-//     price: prices[i],
-//     img: image,
-//   }
-// }
 
 //CART
 

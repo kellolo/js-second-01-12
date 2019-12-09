@@ -1,9 +1,6 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 class Catalog {
@@ -41,31 +38,44 @@ class Catalog {
   //   });
   // }
 
-  // via promise
+  // // via promise
+  //
+  // promiseGETRequest(url) {
+  //   return new Promise((resolve, reject) => {
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open('GET', url);
+  //
+  //     xhr.onreadystatechange = function () {
+  //       if (xhr.readyState === XMLHttpRequest.DONE) {
+  //         if (xhr.status !== 200) {
+  //           reject('server response is not 200 OK');
+  //         } else {
+  //           resolve(xhr.responseText);
+  //         }
+  //       }
+  //     };
+  //
+  //     xhr.send();
+  //   });
+  // };
+  //
+  // fetchItems() {
+  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+  //   this.promiseGETRequest(catalogUrl)
+  //     .then(data => JSON.parse(data))
+  //     .then(parsedData => {
+  //       this.items = parsedData;
+  //       this._render();
+  //     })
+  //     .catch(error => console.error(error));
+  // }
 
-  promiseGETRequest(url) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url);
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status !== 200) {
-            reject('server response is not 200 OK');
-          } else {
-            resolve(xhr.responseText);
-          }
-        }
-      };
-
-      xhr.send();
-    });
-  };
+  // via fetch
 
   fetchItems() {
     const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-    this.promiseGETRequest(catalogUrl)
-      .then(data => JSON.parse(data))
+    fetch(catalogUrl)
+      .then(data => data.json())
       .then(parsedData => {
         this.items = parsedData;
         this._render();

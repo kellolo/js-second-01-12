@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/Try2_l1_q3.css">
+</head>
+<body>
+<!--
+Некая сеть фастфуда предлагает несколько видов гамбургеров:
+Маленький (50 рублей, 20 калорий).
+Большой (100 рублей, 40 калорий).
+Гамбургер может быть с одним из нескольких видов начинок (обязательно):
+С сыром (+10 рублей, +20 калорий).
+С салатом (+20 рублей, +5 калорий).
+С картофелем (+15 рублей, +10 калорий).
+Дополнительно гамбургер можно посыпать приправой (+15 рублей, +0 калорий) и полить майонезом (+20 рублей, +5 калорий). 
+Напишите программу, рассчитывающую стоимость и калорийность гамбургера. 
+Можно использовать примерную архитектуру класса из методички, 
+но можно использовать и свою.
+-->
+
+<form name="" action="" id="form">
+	<fieldset>
+		<legend>Create Hamburger</legend>
+		<div class="row">
+			<p>Choose Size:</p>
+			<div class="radio-variant">
+				<input type="radio" name="size" id="small" value="small">
+				<label for="small">Small</label>
+			</div>
+			<div class="radio-variant">
+				<input type="radio" name="size" id="large" value="large">
+				<label for="large">Large</label>
+			</div>
+		</div>
+		<div class="row additions">
+			<div class="row">
+				<p>1-of-3:</p>
+				<div class="radio-variant">
+					<input type="radio" name="add" id="cheese" value="cheese">
+					<label for="cheese">Cheese</label>
+				</div>
+				<div class="radio-variant">
+					<input type="radio" name="add" id="salad" value="salad">
+					<label for="salad">Salad</label>
+				</div>
+				<div class="radio-variant">
+					<input type="radio" name="add" id="potato" value="potato">
+					<label for="potato">Potato</label>
+				</div>
+			</div>
+			<p>Additions:</p>
+			<div class="checkbox-variant">
+				<input type="checkbox" name="add" id="dip" value="dip">
+				<label for="dip">Flavoured dip</label>
+			</div>
+			<div class="checkbox-variant">
+				<input type="checkbox" name="add" id="sauce" value="sauce">
+				<label for="sauce">Sauce</label>
+			</div>
+		</div>
+		<p1>
+		<div class="submit">
+			<input type="submit" value="Make Order">
+			<input type="reset" value="Reset Form">
+		</div>
+		<div id="result">
+			<div><b>Стоимость:</b> <span id="price">0</span> рублей</div>
+			<div><b>Калорийность:</b> <span id="calories">0</span> кКал</div>
+		</div>
+		</p1>		
+	</fieldset>
+	<br />
+	
+</form>
+<script src="js/Try2_l1_q3.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400');
+
+*, *:after, *:before {   
+     box-sizing: border-box; 
+     outline: none;
+  }
+
+body {    
+    background: #212129;    
+    font-family: 'Lato', sans-serif;
+    color: #BDBFCA;
+}
+
+#content {
+    width: 800px;
+    min-width: 800px;
+    margin: 0 auto;
+}
+
+fieldset {
+    margin: 20px 0;
+}
+
+legend {
+	font-size: 1.2em;
+    font-weight: bold;    
+}
+
+button {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+	border: none;
+	margin: 50px 0;
+	background: #27ae60;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 20px;
+	padding: 1em 2em;
+	font-weight: bold;
+	border-radius: 40px;
+    cursor: pointer;
+}
+
+#message {
+    width: 300px;
+    color: orange;
+    font-size: 1.2em;
+}

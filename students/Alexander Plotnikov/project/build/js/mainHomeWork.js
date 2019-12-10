@@ -175,10 +175,7 @@ class Cart extends ContProduct { // класс для корзины
             if (evt.target.dataset.id) {
                 let id = evt.target.dataset.id
                 let el = cont.arrElems.find(item => item.id == id)
-                console.log(el)
-                cont.CartElems.forEach(e=> {
-                    console.log(e)
-                }) 
+               
                 let elInCart = cont.CartElems.find(item => item.id == el.id)
                 if (elInCart) {
                     elInCart.quantity++

@@ -1,6 +1,6 @@
 [{
     "name": "title_1",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -9,7 +9,7 @@
   },
   {
     "name": "title_2",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -18,7 +18,7 @@
   },
   {
     "name": "title_3",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -27,7 +27,7 @@
   },
   {
     "name": "title_4",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -36,7 +36,7 @@
   },
   {
     "name": "title_5",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -45,7 +45,7 @@
   },
   {
     "name": "title_6",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -54,7 +54,7 @@
   },
   {
     "name": "title_7",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -63,7 +63,7 @@
   },
   {
     "name": "title_8",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -72,7 +72,7 @@
   },
   {
     "name": "title_9",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -81,7 +81,7 @@
   },
   {
     "name": "title_10",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -90,7 +90,7 @@
   },
   {
     "name": "title_11",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",
@@ -99,7 +99,7 @@
   },
   {
     "name": "title_12",
-    "price": "$20",
+    "price": "20",
     "brand": "samsung",
     "country": "Russa",
     "ship": "Free",

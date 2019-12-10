@@ -31,7 +31,7 @@ class Product { // класс для создания товара магази�
         return `<div class="contItem">
                         <img src="${this.img}" width="198" height="180" alt="imgProduct" class="contItem__img">
                         <span class="contItem__name">${this.name}</span>
-                        <span class="contItem__price">${this.price}</span>
+                        <span class="contItem__price">$ ${this.price}</span>
                         <button class="contItem__button" data-id="${this.id}">add to cart</button>
                     </div>`
     }
@@ -55,7 +55,7 @@ class ContProduct { // класс страници магазина
             let arr = []
             for (let i = 0; i < mas.length; i++) {
                 let Prod = new classItem(mas[i])
-                Prod.quantity = mas[i].quantity
+                //  console.log(Prod)
                 arr += Prod.render()
             }
             d.querySelector(cont.className).innerHTML = arr
@@ -90,8 +90,8 @@ class ContProduct { // класс страници магазина
             }
         })
         getData.then(rez => {
-                cont.arrElems = rez
-            })
+            cont.arrElems = rez
+        })
             .finally(() => {
                 cont._render(cont, Product, cont.arrElems)()
             })
@@ -110,6 +110,10 @@ class ContProduct { // класс страници магазина
 }
 
 class ProductCart extends Product { // класс товара в корзине
+    constructor(obj) {
+        super(obj)
+        this.quantity = obj.quantity
+    }
     render() {
         return `<div class="contCartProducts__contItem" data-id="${this.id}">
                             <img src="${this.img}" width="198" height="180" alt="imgProduct"
@@ -139,14 +143,19 @@ class Cart extends ContProduct { // класс для корзины
             .then(response => response.json())
             .then(data => {
                 cont.arrElems = data
+                this.arrElems.forEach(e => {
+                    e.quantity = 1
+                })
             })
-        // .finally( () => )
     }
 
     addToCart(className) {
         let context = this
+
         //  обработчик добавления элемента в корзину
+
         d.querySelector(className).addEventListener('click', this._addToCart(context))
+
         // обработчки очистки корзины и регулировки количества отдельных товаров
         d.querySelector(this.className).parentNode.addEventListener('click', this._chengeContentCart(context))
     }
@@ -155,14 +164,14 @@ class Cart extends ContProduct { // класс для корзины
             if (evt.target.dataset.id) {
                 let id = evt.target.dataset.id
                 let el = cont.arrElems.find(item => item.id == id)
+
                 let elInCart = cont.CartElems.find(item => item == el)
                 if (elInCart) {
                     elInCart.quantity++
-                    cont._render(cont, ProductCart, cont.CartElems)
-                    console.log(cont.CartElems)
+                    cont._render(cont, ProductCart, cont.CartElems)()
                 } else {
                     cont.CartElems.push(el)
-                    let prodCart = new ProductCart(el)         
+                    let prodCart = new ProductCart(el)
                     d.querySelector(cont.className).innerHTML += prodCart.render()
                 }
                 cont._calcCart()
@@ -195,11 +204,10 @@ class Cart extends ContProduct { // класс для корзины
                     if (e.id == id) {
                         if (cont.CartElems[i].quantity == 1) {
                             cont.CartElems.splice(i, 1)
-                            // console.log(cont.CartElems)
                             if (cont.CartElems.length === 0) {
                                 cont._dellCart()
                             }
-                            cont._render(cont, ProductCart, cont.CartElems)
+                            cont._render(cont, ProductCart, cont.CartElems)()
                         } else {
                             cont.CartElems[i].quantity--
                             parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price
@@ -217,6 +225,8 @@ class Cart extends ContProduct { // класс для корзины
         this.CartElems.forEach(e => {
             allSumm += e.price * e.quantity
             allQuantity += e.quantity
+
+             
         })
         // вывод суммы и общего количества корзины
         d.querySelector('.contCartProducts__allSumm').innerHTML = '$' + allSumm
@@ -228,9 +238,6 @@ class Cart extends ContProduct { // класс для корзины
         d.querySelector('.contCartProducts__allQuantity').innerHTML = 0
         d.querySelector('.menuTop__countCart').innerHTML = 0
         this.CartElems = []
-        this.arrElems.forEach(e => {
-            e.quantity = 1
-        })
         d.querySelector(this.className).innerHTML = ''
     }
 }

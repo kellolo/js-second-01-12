@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e64a3787-d5c0-4edb-a77a-fc348e762759" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/js/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/style/normalize.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/style/style.css" beforeDir="false" />
-    </list>
+    <list default="true" id="e64a3787-d5c0-4edb-a77a-fc348e762759" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +17,11 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/v_1.1 - lesson2/js/main.js">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1035">
+              <caret line="27" column="27" lean-forward="true" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -160,16 +158,18 @@
       <workItem from="1575392906522" duration="199000" />
       <workItem from="1575704089872" duration="17000" />
       <workItem from="1575704209597" duration="15182000" />
+      <workItem from="1575817793270" duration="1047000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15702000" />
+    <option name="totallyTimeSpent" value="16749000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26096824" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2647504" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -198,48 +198,16 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/index.html" />
     <entry file="file://$PROJECT_DIR$/../Ferapontov_Vasiliy_homework6/Ferapontov_Vasiliy_homework6/PS layout/cart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-135" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/style/normalize.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1305" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/style/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="172" column="18" selection-start-line="172" selection-start-column="18" selection-end-line="172" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="140" column="52" lean-forward="true" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
-          <folding>
-            <element signature="n#Cart#0" />
-            <element signature="n#!!block;n#removeProduct#0;n#Cart#0" />
-            <element signature="n#!!block;n#renderCart#0;n#Cart#0" />
-            <element signature="e#810#817#1" expanded="true" />
-            <element signature="n#!!block;n#calcTotalPrice#0;n#Cart#0" />
-            <element signature="n#ProductList#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/style/normalize.css" />
+    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/style/style.css" />
+    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/js/main.js" />
+    <entry file="file://$PROJECT_DIR$/PROJECT/1 - lesson2/index.html" />
     <entry file="file://$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/other tasks/Burger/style.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -268,7 +236,11 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/students/11 - Ferapontov Vasiliy/project/v_1.1 - lesson2/js/main.js">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1035">
+          <caret line="27" column="27" lean-forward="true" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

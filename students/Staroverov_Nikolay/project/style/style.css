@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    min-width: 300px;
 }
 
 .invisible{
@@ -131,7 +131,8 @@ img {
     font-size: 0.5em;
 }
 .product-price{
-    margin-left: 30px;
+    /* margin-left: 30px; */
+    min-width: 100px;
 }
 .product-desc{
     max-width: 150px;
@@ -142,6 +143,8 @@ img {
 }
 .right-block{
     text-align: right;
+    min-width: 30px;
+    padding-left: 20px;
 }
 .btn-search {
     background-color: transparent;

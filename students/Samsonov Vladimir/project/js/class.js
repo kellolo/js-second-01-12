@@ -58,30 +58,29 @@ class GoodsList {
 }
 
 //Создаём класс коризны товаров
-class Cart {
-    constructor() {
-    }
-
-    _title() {
-    }
-
+class Cart extends GoodsItem {
+    
     render() {
-        // return `<div class="cart-item" data-id="${this.id}">
-        //             <div class="product-bio">
-        //                 <img src="${this.cartimg}" alt="Some image">
-        //                 <div class="product-desc">
-        //                     <p class="product-title">${this.title}</p>
-        //                     <p class="product-quantity">Quantity: </p>
-        //                     <p class="product-single-price">$${this.price} each</p>
-        //                 </div>
-        //             </div>
-        //             <div class="right-block">
-        //                 <p class="product-price">${this.price}</p>
-        //                 <button class="del-btn" data-id="${this.id}">&times;</button>
-        //             </div>
-        //         </div>`;
+        return `<div class="cart-item" data-id="${this.id}">
+                    <div class="product-bio">
+                        <img src="${this.cartimg}" alt="Some image">
+                        <div class="product-desc">
+                            <p class="product-title">${this.title}</p>
+                            <p class="product-quantity">Quantity: </p>
+                            <p class="product-single-price">$${this.price} each</p>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">${this.price}</p>
+                        <button class="del-btn" data-id="${this.id}">&times;</button>
+                    </div>
+                </div>`;
     }
 
+}
+
+class CartItem extends GoodsList {
+    
 }
 
 const list = new GoodsList();
@@ -89,6 +88,9 @@ list.fetchGoods();
 list.render();
 console.log(list._totalPrice());
 
+const cart = new Cart();
+list.fetchGoods();
+list.render();
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -96,15 +98,15 @@ document.querySelector('.btn-cart').addEventListener('click', () => {
 });
 
 // //кнопки покупки товара (добавляется один раз)
-// let addToCartBtn = document.querySelectorAll('.buy-btn');
+let addToCartBtn = document.querySelectorAll('.buy-btn');
 
-// addToCartBtn.forEach(function (btn) {
-//     btn.addEventListener ('click', addToCart)
-// });
+addToCartBtn.forEach(function (btn) {
+    btn.addEventListener ('click', addToCart)
+});
 
 
-// function addToCart() {
-//     let cartItem = new Cart ('title', 'price', 'id');
-//     new Cart().goods.push (cartItem);
-//     console.log(new Cart);
-// }
+function addToCart() {
+    let cartItem = new Cart ();
+    new GoodsList().goods.push (cartItem);
+    console.log(new Cart);
+}

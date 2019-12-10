@@ -1,18 +1,26 @@
 {
-  "amount": 46600,
+  "amount": 40,
   "countGoods": 2,
   "contents": [
     {
-      "id_product": 123,
-      "product_name": "Ноутбук",
-      "price": 45600,
-      "quantity": 1
+      "name": "title_3",
+      "price": "20",
+      "brand": "samsung",
+      "country": "Russa",
+      "ship": "Free",
+      "img": "build/img/Photo1.png",
+      "id": "3",
+      "quantity": "1"
     },
     {
-      "id_product": 456,
-      "product_name": "Мышка",
-      "price": 1000,
-      "quantity": 1
+      "name": "title_4",
+      "price": "20",
+      "brand": "samsung",
+      "country": "Russa",
+      "ship": "Free",
+      "img": "build/img/Photo1.png",
+      "id": "4",
+      "quantity": "1"
     }
   ]
 }

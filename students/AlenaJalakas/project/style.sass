@@ -1,0 +1,94 @@
+*
+ box-sizing: border-box
+
+
+body
+ background-color: #f8f9fa
+ margin: 0
+ padding: 0
+ font-family: sans-serif
+ line-height: 1.7
+.header
+  height: 70px
+  display: flex
+  flex-direction: row
+.logo
+  font-size: 18px
+  color: darkmagenta
+  margin-left: 30px
+  margin-top: 20px
+.basket__preview
+  margin-left: 900px
+  margin-top: 20px
+  &_cart
+    border: none
+    background-color: #f8f9fa
+    position: relative
+    &:hover .basket__preview_block
+      display: flex
+  &_block
+    display: none
+    flex-direction: column
+    width: 250px
+    height: 400px
+    background-color: antiquewhite
+    position: absolute
+.order
+  width: 150px
+  height: 40px
+  background-color: rosybrown
+  font-size: 18px
+  color: white
+  margin-top: 350px
+  margin-left: 50px
+
+.fa-shopping-basket
+  font-size: 30px
+  &:hover
+   color: darkslategray
+
+
+.catalog
+ list-style-type: none
+ display: flex
+ flex-wrap: wrap
+ flex-direction: row
+ margin-left: 70px
+ margin-top: 70px
+ padding: 50px
+ &__item
+  width: 250px
+  height: 300px
+  margin: 20px
+  padding: 15px 38px
+  border-radius: .25rem
+  border: 1px solid gray
+  &_name
+   font-weight: bold
+   text-transform: uppercase
+  &_price
+    color: rosybrown
+  &_button
+    border: 1px solid lightgray
+    background-color: white
+    height: 30px
+    width: 100px
+    &:hover
+      background-color: coral
+
+  &_img
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
+
+
+.btn
+ padding: 10px 15px
+ border-radius: 3px
+ cursor: pointer
+ border: 1px solid gray
+ outline: none
+ background: none
+ font-family: inherit
+ font-size: inherit
+

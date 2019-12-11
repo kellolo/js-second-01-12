@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="content">
+        <form action="#">
+            <fieldset>
+                <legend>Choose size of your hamburger</legend>
+                <input type="radio" name="size" id="small" value="small" data-price="50" data-calories="20" checked>
+                <label for="small">Small</label>
+                <input type="radio" name="size" id="big" value="big" data-price="100" data-calories="40">
+                <label for="small">Big</label>
+            </fieldset>
+            <fieldset>
+                <legend>Choose your fillings</legend>
+                <input type="radio" name="fillings" id="cheese" value="cheese" data-price="10" data-calories="20" checked>
+                <label for="cheese">Сheese</label>
+                <input type="radio" name="fillings" id="salad" value="salad" data-price="20" data-calories="5">
+                <label for="salad">Salad</label>
+                <input type="radio" name="fillings" id="potato" value="potato" data-price="15" data-calories="10">
+                <label for="salad">Potato</label>
+            </fieldset>
+            <fieldset>
+                <legend>Add some more</legend>
+                <input type="checkbox" name="additive" id="dressing" value="dressing" data-price="15" data-calories="0">
+                <label for="dressing">Dressing</label>
+                <input type="checkbox" name="additive" id="sauce" value="sauce" data-price="20" data-calories="5">
+                <label for="salad">Sauce</label>
+            </fieldset>
+        </form>
+        <button id="calculate"">Calculate</button>
+        <div id="message"></div>
+        
+    </div>
+    <script src="src/app.js"></script>
+</body>
+
+</html>

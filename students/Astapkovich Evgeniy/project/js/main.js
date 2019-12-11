@@ -79,6 +79,24 @@ renderProducts ();
 
 //CART
 
+class Cart {
+    constructor {
+        this.products = [];
+    }
+
+    addProduct () {}
+    removeProduct() {}
+    renderCart() {}
+}
+
+class CartItem {
+    constructor {
+        this.id = null;
+        this.quantity = null;
+    }
+}
+
+
 // Добавление продуктов в корзину
 function addProduct (product) {
     let productId = +product.dataset['id']; //data-id="1"

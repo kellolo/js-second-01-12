@@ -1,51 +1,33 @@
-class Product {
-    constructor(id, name, price, img) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.img = img;
-        this.quantity = 0;
-    }
-
-    createTemplate() {
-        return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-    }
-}
-
-
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-
+const API_URL = 'https://raw.githubusercontent.com/ShutovAndrey/Study/master';
+const dataCatalog = `${API_URL}/StudyDB.json`;
 
 class ProdList {
-    fetchData() {
-        let arr = [];
-        for (let i = 0; i < items.length; i++) {
-            arr.push(new Product(ids[i], items[i], prices[i], image));
-        }
-        return arr
+
+    makeGETRequest(url) {
+        return fetch(url)
     }
 
+    renderItem(product_name, price, id_product) {
+        const img = 'https://placehold.it/200x150';
+        return ` <div class="product-item" data-id="${id_product}">
+                            <img src="${img}" alt="Some img">
+                            <div class="desc">
+                                <h3>${product_name}</h3>
+                                <p>${price} $</p>
+                                <button class="buy-btn" 
+                                data-id="${id_product}"
+                                data-name="${product_name}"
+                                data-image="${img}"
+                                data-price="${price}">Купить</button>
+                            </div>
+                        </div>`;
+    }
 
-    renderProducts() {
+    renderProducts(dataArr) {
         let str = '';
-        for (const item of this.fetchData()) {
-            str += item.createTemplate()
-        };
+        dataArr.forEach(good => {
+            str += this.renderItem(good.product_name, good.price, good.id_product);
+        });
         document.querySelector('.products').innerHTML = str;
     }
 
@@ -58,7 +40,18 @@ class ProdList {
 }
 
 const productList = new ProdList();
-productList.renderProducts();
+
+productList.makeGETRequest(dataCatalog)
+    .then(dJSON => dJSON.json())
+    .then(data => {
+        dataFromWeb = data
+    })
+    .then(() => {
+        productList.renderProducts(dataFromWeb)
+    })
+    .catch(error => {
+        console.log('error')
+    });
 
 let toByeBtn = document.querySelector('.products');
 toByeBtn.addEventListener('click', (evt) => productList.toBye(evt));
@@ -77,10 +70,11 @@ class Goodslist {
 
     addProduct(product) {
         let productId = +product.dataset['id']; //data-id="1"
+        let cartImage = 'https://placehold.it/100x80';
         let find = this.userCart.find(element => element.id === productId); //товар или false
         if (!find) {
             this.userCart.push({
-                name: product.dataset ['name'],
+                name: product.dataset['name'],
                 id: productId,
                 img: cartImage,
                 price: +product.dataset['price'],
@@ -128,7 +122,7 @@ class Goodslist {
         document.querySelector(`.cart-block`).innerHTML = allProducts + this.priceCount();
 
     }
-//подсчет стоимости корзины
+    //подсчет стоимости корзины
     priceCount() {
         let priceCount = 0;
         this.userCart.forEach(function (el) {
@@ -143,10 +137,7 @@ class Goodslist {
 let userCart = [];
 const goodsList = new Goodslist(userCart);
 goodsList.showCart();
-//goodsList.addProduct();
 goodsList.renderCart();
 
 let toDelBtn = document.querySelector('.cart-block');
 toDelBtn.addEventListener('click', (evt) => goodsList.removeProduct(evt.target));
-
-

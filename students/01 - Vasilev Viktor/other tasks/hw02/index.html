@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+  >
+  <link rel="stylesheet" href="style.css">
+  <title>Hamburger Calc</title>
+</head>
+<body>
+  <div class="wrapper">
+    <form action="#">
+      <div class="form-check">
+        <h6 class="form-check-h6">Choose hamburger size</h6>
+        <input class="form-check-input" type="radio" name="burgerSize" id="smallSize" value="small" checked>
+        <label class="form-check-label" for="smallSize">
+          Small
+        </label>
+        <input class="form-check-input" type="radio" name="burgerSize" id="bigSize" value="big">
+        <label class="form-check-label" for="bigSize">
+          Big
+        </label>
+      </div>
+
+      <div class="form-check">
+        <h6 class="form-check-h6">Choose stuffing</h6>
+        <input class="form-check-input" type="radio" name="stuffing" id="cheeseStuff" value="cheese" checked>
+        <label class="form-check-label" for="cheeseStuff">
+          Cheese
+        </label>
+        <input class="form-check-input" type="radio" name="stuffing" id="saladStuff" value="salad">
+        <label class="form-check-label" for="saladStuff">
+          Salad
+        </label>
+        <input class="form-check-input" type="radio" name="stuffing" id="potatoStuff" value="potato">
+        <label class="form-check-label" for="potatoStuff">
+          Potato
+        </label>
+      </div>
+
+      <div class="form-check">
+        <h6 class="form-check-h6">Choose topping</h6>
+        <input class="form-check-input" type="checkbox" name="topping" id="spiceTop" value="spice">
+        <label class="form-check-label" for="spiceTop">
+          Spice
+        </label>
+        <input class="form-check-input" type="checkbox" name="topping" id="sauceTop" value="sauce">
+        <label class="form-check-label" for="sauceTop">
+          Sauce
+        </label>
+      </div>
+    </form>
+
+    <button class="btn btn-primary calc-btn">Calculate</button>
+
+    <div class="totals">
+      <h6 class="totals-h6">Price: <span class="price">0</span>$</h6>
+      <h6 class="totals-h6">Calories: <span class="calories">0</span> cal.</h6>
+    </div>
+  </div>
+
+<script src="main.js"></script>
+</body>
+</html>

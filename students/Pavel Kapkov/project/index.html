@@ -3,30 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <style>
+    	* {
+    		margin: 0;
+    		padding: 0
+    	}
+		
+		body {
+			margin: 0 auto;
+		}
+
+		header {
+			height: 65px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #DDDDDD;
+			-webkit-background-size: cover;
+			background-size: cover;
+		}
+
+		.btn-cart {
+			height: 30px;
+			width: 90px;
+			margin-right: 45px;
+			background-color: #F5F5F5;	
+			border: 1px solid black;
+			outline: none;	
+			border-radius: 20px;
+		}
+
+		.btn-cart:hover {
+			background-color: #B5B5B5;
+			box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		}
+
+		.products {
+			margin-top: 45px;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.product-item {
+			padding: 10px;
+			border: 1px solid black;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		
+		.product-item h3 {
+			margin-top: 15px;
+		}
+
+		.product-item p {
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+
+		.by-btn {
+			padding: 5px;
+			background-color: #ffffff;
+			border: 1px solid black;
+			outline: none;
+			border-radius: 20px;
+			margin-left: 80px;
+		}
+
+		.by-btn:hover {
+			background-color: black;
+			color: #ffffff;
+		}
+
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-
-
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+<header>
+    <button class="btn-cart" type="button"><i class="fas fa-shopping-basket"></i></button>
+</header>
+<main>
+    <div class="products"></div>
+</main>
+<script src="js.js"></script>
 </body>
 </html>

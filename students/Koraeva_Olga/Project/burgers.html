@@ -3,90 +3,99 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Les 2</title>
+	<title>Burgers</title>
 </head>
 
 <body>
 	<form action="#">
 		<fieldset>
-			<caption>
+			<label>
 				<input type="radio" data-price="50" data-calories="20" name="size" value="small"> Small Burger
-			</caption>
+			</label>
 		</fieldset>
 		<fieldset>
-			<caption>
+			<label>
 				<input type="radio" data-price="100" data-calories="40" name="size" value="big"> Big Burger
-			</caption>
+			</label>
 		</fieldset>
 		<fieldset>
-			<caption>
+			<label>
 				<span>Choose filling</span><br>
 				<input type="radio" data-price="10" data-calories="20" name="filling" value="cheese"> Cheese
-			</caption>
-			<caption>
+			</label>
+			<label>
 				<input type="radio" data-price="20" data-calories="5" name="filling" value="salad"> Salad
-			</caption>
-			<caption>
+			</label>
+			<label>
 				<input type="radio" data-price="15" data-calories="10" name="filling" value="potato"> Potato
-			</caption>
+			</label>
 		</fieldset>
 		<fieldset>
-			<caption>
+			<label>
 				<span>Extra</span><br>
 				<input type="checkbox" data-price="15" data-calories="0" name="topping" value="spice"> Spice
-			</caption>
-			<caption>
+			</label>
+			<label>
 				<input type="checkbox" data-price="20" data-calories="5" name="topping" value="mayonnaise"> Mayonnaise
-			</caption>
+			</label>
 		</fieldset>
 		<button id="button">Buy</button>
 	</form>
 
 	<script>
 		'use strict';
-		class Burger {
-			constructor(size, filling, topping) {
+		document.addEventListener('DOMContentLoaded', function () {
+				class Burger {
+				constructor(size, filling, topping) {
 				this.size = +this._inputPrice(size)
 				this.filling = +this._inputPrice(filling)
 				this.topping = +this._inputCheckbox(topping)
 				this.burgCal = +this._inputCal(size)
 				this.fillingCal = +this._inputCal(filling)
 				this.toppingCal = +this._inputCheckboxCal(topping)
-			}
-			_inputPrice(elem) {
+				}
+				_inputPrice(elem) {
 				return document.querySelector(`input[name="${elem}"]:checked`).dataset.price
-			}
-			_inputCal(elem) {
+				}
+				_inputCal(elem) {
 				return document.querySelector(`input[name="${elem}"]:checked`).dataset.calories
-			}
-			_inputCheckbox(elem) {
+				}
+				_inputCheckbox(elem) {
 				let topp = []
 				let arr = [...document.querySelectorAll(`input[name="${elem}"]:checked`)]
 				arr.forEach(el => {
-					topp.push(el.dataset.price)
+				topp.push(el.dataset.price)
 				})
 				return topp
-			}
-			_inputCheckboxCal(elem) {
+				}
+				_inputCheckboxCal(elem) {
 				let topp = []
 				let arr = [...document.querySelectorAll(`input[name="${elem}"]:checked`)]
 				arr.forEach(el => {
-					topp.push(el.dataset.calories)
+				topp.push(el.dataset.calories)
 				})
 				return topp
-			}
-			calculate() {
-				return ('Sum: ' + (this.size + this.filling + this.topping) +
-					' Calories: ' + (this.burgCal + this.fillingCal + this.toppingCal))
-			}
-		}
-		let button = document.getElementById('button')
-		button.addEventListener('click', calc)
+				}
+				calculate() {
+				let totalPrice = this.size + this.filling + this.topping.forEach(el => {
+				totalPrice += el
+				})
+				let totalCalories = this.burgCal + this.fillingCal + this.toppingCal.forEach(el => {
+				totalPrice += el
+				})
+				alert('Sum: ' + this.totalPrice +
+				' Calories: ' + this.totalCalories)
+				}
+				}
+				let button = document.getElementById('button')
+				button.addEventListener('click', calc)
 
-		function calc() {
-			let order = new Burger('size', 'filling', 'topping')
-			alert(order.calculate())
-		}
+				function calc() {
+				let order = new Burger('size', 'filling', 'topping')
+				alert(order.calculate())
+				}
+		})
+		
 
 	</script>
 </body>

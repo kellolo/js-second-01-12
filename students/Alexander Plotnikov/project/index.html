@@ -494,25 +494,27 @@
         </main>
         <section class="feedBack">
             <h2 class="feedBack__h2">Форма обратной связи</h2>
-            <form action="#" class="feedBack__form">
+            <form  class="feedBack__form">
                 <div class="feedBack__contForParams">
                     <label for="userName" class="feedBack__lName">Ваше Имя:</label>
-                    <input type="text" id="userName" class="feedBack__Input" placeholder="Имя">
+                    <input type="text" data-id="Name" class="feedBack__Input" placeholder="Имя">
                 </div>
                 <div class="feedBack__contForParams">
                     <label for="userPhone" class="feedBack__lName">Телефон:</label>
-                    <input type="tel" id="userPhone" class="feedBack__Input" placeholder="Телефон">
+                    <input type="tel" data-id="Phone" class="feedBack__Input" placeholder="Телефон">
                 </div>
                 <div class="feedBack__contForParams">
                     <label for="userMail" class="feedBack__lName">E-mail:</label>
-                    <input type="mail" id="userMail" class="feedBack__Input" placeholder="Email">
+                    <input type="mail" data-id="Mail" class="feedBack__Input" placeholder="Email">
                 </div>
                 <div class="feedBack__contForParams">
                     <label for="userText" class="feedBack__lName">Сообщение:</label>
                     <textarea id="userText" class="feedBack__Input" placeholder="Сообщение"></textarea>
                 </div>
-                <input type="submit" value="Send" class="feedBack__button"/>
+                     
+                <button type="button" class="feedBack__button">Send</button> 
             </form>
+                 
         </section>
         <footer class="footer">
             <nav class="nav">
@@ -542,8 +544,9 @@
             </div>
         </footer>
     </div>
-    <script src='./src/js/mainHomeWork.js'></script>
-    <script src='./src/js/js1.js'></script>
+    <script src='./build/js/mainHomeWork.js'></script>
+    <script src='./build/js/js1.js'></script>
+    <script src='./build/js/validaition_form.js'></script>
 </body>
 
 </html>

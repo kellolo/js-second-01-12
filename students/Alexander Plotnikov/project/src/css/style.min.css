@@ -2698,6 +2698,27 @@ body {
   color: black;
 }
 
+.feedBack__Input-activ {
+  border: 1px solid red;
+  background-color: #be9191;
+}
+
+.feedBack__Input-activ::-webkit-input-placeholder {
+  color: red;
+}
+
+.feedBack__Input-activ:-moz-placeholder {
+  color: red;
+}
+
+.feedBack__Input-activ::-moz-placeholder {
+  color: red;
+}
+
+.feedBack__Input-activ:-ms-input-placeholder {
+  color: red;
+}
+
 .feedBack__contForParams:nth-child(4) > .feedBack__Input {
   padding: 10px;
   min-height: 90px;

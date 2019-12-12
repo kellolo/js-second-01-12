@@ -1320,12 +1320,19 @@ body {
     outline: none;
     font-size: 18px;
     &:hover,
-    &:focus{
+    &:focus {
       background-color: $colgre;
       @include placeholder() {
         color: black;
       }
-    } 
+    }
+  }
+  &__Input-activ {
+    border: 1px solid red;
+    background-color: rgb(190, 145, 145);
+    @include placeholder() {
+      color: red;
+    }
   }
 
   &__contForParams:nth-child(4) > &__Input {
@@ -1333,7 +1340,7 @@ body {
     min-height: 90px;
     overflow: hidden;
   }
-  &__button { 
+  &__button {
     margin: 10px 0 0 0;
     display: flex;
     min-width: 150px;
@@ -1358,7 +1365,6 @@ body {
       border: 2px solid #01071a;
     }
   }
- 
 }
 
 .footer {

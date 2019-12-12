@@ -1,6 +1,7 @@
 window.onload = function () {
 
     js1()
+    valForm()
 
     let pageShop = new ContProduct('.productsPage')
     pageShop.init()

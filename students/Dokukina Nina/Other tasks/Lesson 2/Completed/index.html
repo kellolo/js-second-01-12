@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Собери свой бургер!</h3>
+    <form action="#">
+        <p>Размер бургера:</p>
+        <fieldset>
+            <label>
+                <input type="radio" name="size" value="small" checked id="smallburger" data-price="50" data-cal="20"> small (50 rub, 20 kcal)
+            </label>
+            <label>
+                <input type="radio" name="size" value="big" id="bigburger" data-price="100" data-cal="40"> big (100 rub, 40 kcal)
+            </label>
+        </fieldset>
+        <p>Выбери начинку:</p>
+        <fieldset>
+                <label>
+                    <input type="radio" name="fill" value="cheese" checked id="cheese" data-price="10" data-cal="20"> cheese (10 rub, 20 kcal)
+                </label>
+                <label>
+                    <input type="radio" name="fill" value="salad" id="salad" data-price="20" data-cal="5"> salad (20 rub, 5 kcal)
+                </label>
+                <label>
+                    <input type="radio" name="fill" value="potato" id="potato" data-price="15" data-cal="10"> potato (15 rub, 10 kcal)
+                </label>
+            </fieldset>
+        <p>Выбери дополнительные приправы и соус:</p>    
+        <fieldset>
+            <label>
+                <input type="checkbox" name="topping" value="seasoning" id="seasoning" data-price="15" data-cal="0"> verdure (15 rub, 0 kcal)
+            </label>
+            <label>
+                <input type="checkbox" name="topping" value="mayonnaise" id="mayonnaise" data-price="20" data-cal="5"> mayonnaise (20 rub, 5 kcal)
+            </label>
+           
+        </fieldset>
+    </form>
+    <button id="ok-btn">Собрать</button>
+    <p>Итоговая стоимость: <span id="totalsum">0</span></p>
+    <p>Калорий: <span id="totalcal">0</span></p>
+    <script>
+
+        class Burger {
+                constructor(size, fill, topp) {
+                this.size = new Param(this._select(size));
+                this.filling = new Param(this._select(fill));
+                this.topping = this._getToppings(topp); //  возвращает объект, в котором массив топпингов 
+                }
+                _select(name) {
+                    return document.querySelector(`input[name="${name}"]:checked`)
+                }
+                _getToppings(name) {
+                    let result = [];
+                    this._selectAll(name).forEach(element => result.push(new Param(element))); 
+                    return result;
+                }
+
+                _selectAll(name) { // возвращает массив выбранных топпингов
+                    return [...document.querySelectorAll(`input[name="${name}"]:checked`)] 
+                }
+                _getAmount() {
+                    let result = this.size.price + this.filling.price;
+                    this.topping.forEach(topping => result += topping.price);
+                    return result;
+                }
+                _getCalories() {
+                    let result = this.size.cal + this.filling.cal;
+                    this.topping.forEach(topping => result += topping.cal);
+                    return result;
+                }
+                show() {
+                    let sumkcal = document.querySelector("#totalcal");
+                    let sumprice = document.querySelector("#totalsum");
+                    sumkcal.textContent = `${this._getCalories()} rub.`;
+                    sumprice.textContent = `${this._getAmount()} kcal`;
+                }
+            }
+
+         class Param {
+            constructor(el) {
+                this.price = +el.dataset['price'];
+                this.cal = +el.dataset['cal'];
+            }
+         }
+
+    
+        let okBtn = document.querySelector('#ok-btn');
+        okBtn.addEventListener('click', () => {
+            let newBurger = new Burger ('size', 'fill', 'topping')
+            newBurger.show();
+            console.log(newBurger);
+        });
+
+    </script>
+</body>
+</html>

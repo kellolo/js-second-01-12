@@ -51,6 +51,7 @@ function fetchRequest (url) {
     return fetch (url)
 }
 
+
 // Создаём класс товара
 class GoodsItem {
     constructor(product_name, price, id_product) {

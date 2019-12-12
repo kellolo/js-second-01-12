@@ -1,5 +1,10 @@
 node_modules/
 Psd/
+src/
+project/img/
+other tasks/img
+package-lock.json
+gulpfile.js
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json

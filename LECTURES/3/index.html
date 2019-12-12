@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //callbacks
+        // let a = 0
+
+        // function asyncronous (callback) {
+        //     setTimeout (() => {
+        //         a = 4
+        //         callback ()
+        //     }, 10)
+        // }
+        
+        // function goThen () {
+        //     console.log (10/a)
+        //     return 10
+        // }
+
+        // asyncronous (function () {
+        //     console.log (10/a)
+        // })
+
+        // Promise
+
+        // let promise = function (val) {
+        //     return new Promise ((res, rej) => { //res === resolve; rej === reject
+        //         setTimeout(() => {
+        //             if (val) {
+        //                 res ({data: val, status: '200'})
+        //             } else {
+        //                 rej ({data: null, status: '404'})
+        //             }
+        //         }, 1000)
+        //     }) 
+        // }
+
+        // function getPromise (val) {
+        //     let a = null
+        //     promise(val)
+        //         .then(obj => {
+        //             console.log ('Promise resolved')
+        //             a = obj
+        //         })
+        //         .catch (err => {
+        //             console.log ('Promise rejected')
+        //             a = err
+        //         })
+        //         .finally (() => {
+        //             console.log (`Promise fulfilled with status ${a.status} and got data: ${a.data}`)
+        //         })
+        // }
+
+        //Promise + XMLHTTPREQUEST
+
+        // function makeGETRequest(url) {
+        //     return new Promise ((res, rej) => {
+        //         let xhr = new XMLHttpRequest ()
+        //         xhr.onreadystatechange = function () {
+        //             if (xhr.readyState === 4) {
+        //                 if (xhr.status === 200) {
+        //                     res (xhr.responseText)
+        //                 } else {
+        //                     rej ('error')
+        //                 }
+        //             }
+        //         }
+        //         xhr.open('GET', url, true)
+        //         xhr.send()
+        //     })
+        // }
+
+        let dataFromWeb = null
+
+        let url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+        // makeGETRequest(url)
+        //     .then (dJSON => JSON.parse (dJSON)) //parse from JSON
+        //     .then (dataNotJSON => {dataFromWeb = dataNotJSON}) //присвоение не джейсона в переменную
+        //     .catch (err => {
+        //         console.log (err)
+        //     })
+        //     .finally (() => {
+        //         console.log (dataFromWeb)
+        //     })
+        
+        function fetchRequest (url) {
+            return fetch (url)
+        }
+
+        fetchRequest (url)
+            .then (dJSON => dJSON.json ())
+            .then (data => {
+                dataFromWeb = data
+            })
+            .finally (() => {
+                console.log (dataFromWeb)
+            })
+    </script>
+</body>
+</html>

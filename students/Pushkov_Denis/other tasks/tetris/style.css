@@ -1,0 +1,94 @@
+body {
+    background-color: #696969;
+}
+
+.container {
+    width: 800px;
+    height: 630px;
+    margin: 50px auto 0;
+
+}
+
+.game-field {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+p {
+    padding: 5px;
+    margin: 0;
+}
+
+.br {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.statistics {
+    margin-left: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100px;
+}
+
+.board-x {
+    padding: 0;
+    width: 30px;
+    outline: 1px dotted #3f3f3f;
+    border-collapse: collapse;
+}
+
+.board-y {
+    padding: 0;
+    height: 30px;
+    border-collapse: collapse;
+}
+
+.nf {
+    outline: none;
+}
+
+.next-figure {
+    margin-left: 1px;
+}
+
+.figure {
+    outline: 1px solid white;
+}
+
+.figureStack {
+    outline: 1px solid white;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: black;
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.red {
+    background-color: firebrick;
+}
+
+.violet {
+    background-color: blueviolet;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.lightblue {
+    background-color: deepskyblue;
+}
+
+.orange {
+    background-color: orange;
+}

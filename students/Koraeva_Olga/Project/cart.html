@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Les 2</title>
+</head>
+<body>
+  <div class="slider">
+    <div class="slider-name">Item 1!</div>
+    <img src="1.jpg" alt="k">
+    <p class="product-name">Shoes 1</p>
+    <p class="price">140$</p>
+    <button class="button" data-id='1' data-name='Shoes 1' data-price='140'>Buy now!</button>
+  </div>
+  <script>
+    'use strict';
+    let arr = []
+    class BasketItem{
+      constructor(id, name, price){
+        this.id = id
+        this.name = name
+        this.price = price
+      }
+    }
+    
+    let button = document.getElementsByClassName('button')[0]
+    button.addEventListener('click',(button) => {
+        let id = button.srcElement.dataset.id
+      	let name = button.srcElement.dataset.name
+      	let price = button.srcElement.dataset.price
+        let item1 = new BasketItem(id , name, price)
+        arr.push(item1)
+    })
+    </script>
+</body>
+</html>

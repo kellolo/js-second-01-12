@@ -1,0 +1,125 @@
+.burger__form {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  padding: 30px 0 0 0;
+}
+
+.burger__image {
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline;
+}
+
+.burger_kingsize {
+  height: 100px;
+  width: 210px;
+  background-image: url("../img/burger_kingsize.png");
+  background-size: contain;
+}
+
+.burger_slave {
+  height: 70px;
+  width: 210px;
+  background-image: url("../img/burger_slave.png");
+  background-size: contain;
+}
+
+input {
+  margin: 0 10px;
+}
+
+.burger__selector__header,
+.toppings__selector__header {
+  margin: 5px;
+}
+
+.toppings__selector,
+.burger__selector {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.mix__controller {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.mix__controller:hover {
+  background-color: silver;
+}
+
+.mix__button {
+  display: inline;
+  text-align: center;
+  background-color: skyblue;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mix__button:hover {
+  background-color: silver;
+}
+
+.burger__form__controls {
+  text-align: center;
+}
+
+.burger {
+  display: inline-block;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+.cart__content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+}
+
+.burger__toppings {
+  text-align: left;
+  font-size: 12px;
+}
+
+.burger__calories,
+.burger__coast {
+  font-weight: 600;
+  padding: 3px 5px;
+}
+
+.topping__header,
+.topping__coast,
+.topping__calories {
+  padding: 3px;
+  display: inline-block;
+}
+
+.cart__coast {
+  text-align: center;
+  font-size: 20px;
+  color: red;
+}

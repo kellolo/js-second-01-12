@@ -291,7 +291,7 @@ body {
     display: none;
   }
 
-  &__check:checked + &__titelCheck {
+  &__check:checked+&__titelCheck {
     &::before {
       content: "\2714";
       display: flex;
@@ -561,7 +561,7 @@ body {
     display: none;
   }
 
-  &__inputInstorage:checked ~ &__inStorage > &__contIcon {
+  &__inputInstorage:checked~&__inStorage>&__contIcon {
     &::before {
       content: "";
       display: block;
@@ -573,7 +573,7 @@ body {
     }
   }
 
-  &__inputCheck:checked ~ &__nameCheck > &__contIconB {
+  &__inputCheck:checked~&__nameCheck>&__contIconB {
     background-image: url("./../img/Check\ Icon.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -706,7 +706,7 @@ body {
     display: none;
   }
 
-  &__inputCheck:checked ~ &__nameCheck > &__contIconB {
+  &__inputCheck:checked~&__nameCheck>&__contIconB {
     background-image: url("./../img/Check\ Icon.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -781,7 +781,7 @@ body {
     margin-right: 15px;
   }
 
-  &__input:checked ~ &__label > &__contIcon {
+  &__input:checked~&__label>&__contIcon {
     &::before {
       content: "";
       display: block;
@@ -918,8 +918,8 @@ body {
   min-height: 90px;
 }
 
-.page-item:first-child > button,
-.page-item:last-child > button {
+.page-item:first-child>button,
+.page-item:last-child>button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -938,7 +938,7 @@ body {
     background-color: rgb(190, 190, 216);
   }
 
-  &:active > button > img {
+  &:active>button>img {
     transform: scale(1.2);
   }
 }
@@ -951,7 +951,7 @@ body {
     background-color: rgb(190, 190, 216);
   }
 
-  &:active > button > img {
+  &:active>button>img {
     transform: scale(1.2);
   }
 }
@@ -964,7 +964,7 @@ body {
   min-height: 90px;
 }
 
-.page-item:not(:first-child):not(:last-child) > button {
+.page-item:not(:first-child):not(:last-child)>button {
   display: flex;
   border: none;
   outline: none;
@@ -1005,6 +1005,7 @@ body {
 }
 
 @include to(700px) {
+
   li.page-item:nth-child(5),
   li.page-item:nth-child(6),
   li.page-item:nth-child(7),
@@ -1066,10 +1067,12 @@ body {
       width: 100%;
       justify-content: space-between;
     }
+
     &__titel {
       border-radius: 5px;
       margin-bottom: 2px;
     }
+
     &__contItem {
       border-radius: 5px;
       width: 49.6%;
@@ -1079,10 +1082,12 @@ body {
       margin: 2px 0;
     }
   }
+
   @include to(600px) {
     &__titel {
       border-radius: 5px;
     }
+
     &__contItem {
       border-radius: 5px;
       width: 100%;
@@ -1242,9 +1247,11 @@ body {
       align-items: center;
       margin-top: 20px;
     }
+
     &__h2 {
       font-size: 22px;
     }
+
     &__contReview {
       width: 80%;
       display: flex;
@@ -1252,13 +1259,16 @@ body {
       align-items: center;
       margin-top: 20px;
     }
+
     &__contImgAndName {
       width: 100%;
       justify-content: center;
     }
+
     &__name {
       width: 100px;
     }
+
     &__text {
       width: 100%;
       margin-top: 10px;
@@ -1280,6 +1290,7 @@ body {
   //display: none;
   flex-direction: column;
   align-items: center;
+
   // box-sizing: content-box;
   &__h2 {
     margin: 10px 0 20px 0;
@@ -1288,12 +1299,14 @@ body {
     color: $colText;
     text-align: center;
   }
+
   &__form {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   &__contForParams {
     flex-direction: column;
     margin: 10px 0;
@@ -1302,12 +1315,26 @@ body {
     justify-content: center;
     align-items: center;
   }
+
   &__lName {
     width: 100px;
     font-size: 20px;
     font-family: $mpr;
     margin-bottom: 2px;
   }
+
+  &__hint {
+    display: flex;
+    width: 80%;
+    text-align-last: left;
+    color: rgba(255, 0, 0, 0);
+    font-size: 13px;
+  }
+
+  &__hint-active {
+    color: red;
+  }
+
   &__Input {
     display: flex;
     width: 80%;
@@ -1319,27 +1346,39 @@ body {
     border: 1px solid rgb(179, 178, 178);
     outline: none;
     font-size: 18px;
+
     &:hover,
     &:focus {
       background-color: $colgre;
+
       @include placeholder() {
         color: black;
       }
     }
   }
-  &__Input-activ {
+
+  &__Input-active {
     border: 1px solid red;
     background-color: rgb(190, 145, 145);
-    @include placeholder() {
-      color: red;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      background-color: rgb(190, 145, 145);
+      ;
+
+      @include placeholder() {
+        color: black;
+      }
     }
   }
 
-  &__contForParams:nth-child(4) > &__Input {
+  &__contForParams:nth-child(4)>&__Input {
     padding: 10px;
     min-height: 90px;
     overflow: hidden;
   }
+
   &__button {
     margin: 10px 0 0 0;
     display: flex;
@@ -1355,6 +1394,7 @@ body {
     background-color: #2754eb;
     outline: none;
     color: #fff;
+
     &:hover {
       background-color: #1b2958;
       border: 2px solid #1b2958;
@@ -1502,10 +1542,12 @@ body {
 
   @include to(850px) {
     flex-direction: column;
+
     &__p {
       width: 80%;
       text-align: center;
     }
+
     &__ul {
       width: 80%;
       text-align: center;

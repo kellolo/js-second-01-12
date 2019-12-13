@@ -1,5 +1,9 @@
 function valForm() {
     let d = document
+    let rName = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/u // Имя содержит только буквы.
+    let rPhone = /^\+7\(\d{3}\)\d{3}\-\d{4}$/ //+7(000)000-0000
+    let rMail = /([A-Za-z]{2}[(\.)|(\-)])*[A-Za-z]+@mail.ru$/ // E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+
 
     class Form {
         constructor(classNameForm) {
@@ -8,10 +12,32 @@ function valForm() {
                 this.phone = null,
                 this.mail = null,
                 this.button = null,
-                this.regExpName = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/u
+                this.regExpName = rName,
+                this.regExpPhone = rPhone,
+                this.regExpMail = rMail
         }
         init() {
             this._addHendlerValid()
+        }
+        _valid(targ) {
+
+            val('Name', this.regExpName)
+            val('Phone', this.regExpPhone)
+            val('Mail', this.regExpMail)
+
+            function val(name, regExp) {
+
+                if (targ.dataset['id'] === `${name}`) { // Если в элементе массива имя                 
+                    if (!regExp.test(targ.value)) {
+                        d.querySelector(`input[data-id='${name}']`).classList.add('feedBack__Input-active')
+                        d.querySelector(`span[data-id='${name}']`).classList.add('feedBack__hint-active')
+                    } else {
+                        d.querySelector(`input[data-id='${name}']`).classList.remove('feedBack__Input-active')
+                        d.querySelector(`span[data-id='${name}']`).classList.remove('feedBack__hint-active')
+                    }
+                }
+            }
+
         }
         _createArrElem(cont) {
             let arr = []
@@ -20,28 +46,17 @@ function valForm() {
                 if (e.dataset['id']) {
                     let obj = {}
                     obj.data_id = e.dataset['id']
-                    if (e.dataset['id'] === 'Name') {
-                        if (!cont.regExpName.test(e.value)) {
-                            d.querySelector("[data-id='Name']").classList.add('feedBack__Input-activ')  
-                            d.querySelector("[data-id='Name']").placeholder = 'Имя введено не верно'
-                        }
-                        else {
-                            d.querySelector("[data-id='Name']").classList.remove('feedBack__Input-activ') 
-                            d.querySelector("[data-id='Name']").placeholder = 'Имя'
-
-                        }
-                    }
                     obj.value = e.value
                     e.value = ''
                     arr.push(obj)
                 }
             })
-            console.log(arr)
             return arr
         }
         _addHendlerValid() {
-            let cont = this
-            d.querySelector('.feedBack__button').addEventListener('click', () => cont._createArrElem(cont))
+            d.querySelector('.feedBack__button').addEventListener('click', () => this._createArrElem(this))
+            d.querySelector(this.classNameForm).addEventListener('focusout', (evt) => this._valid(evt.target))
+            d.querySelector(this.classNameForm).addEventListener('input', (evt) => this._valid(evt.target))
         }
     }
 

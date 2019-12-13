@@ -2,14 +2,17 @@ window.onload = function () {
 
     js1()
     valForm()
-    let cart = []
-    let catURL = 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/lesson3_is_ready/students/Alexander%20Plotnikov/project/responses/catalogData.json'
-    let cartURL = 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/lesson3_is_ready/students/Alexander%20Plotnikov/project/responses/getBasket.json'
 
-    let Basket = new Cart('.contCartProducts__bodyCart', cartURL)
-    let PageShop = new Catalog(Basket, '.productsPage', catURL)
+    let Basket = new Cart('.contCartProducts__bodyCart', `${API}${CartURL}`)
+    let PageShop = new Catalog(Basket, '.productsPage', `${API}${CatURL}`)
 
 }
+
+let API = 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/lesson3_is_ready/students/Alexander%20Plotnikov/project/responses/'
+let CatURL = 'catalogData.json'
+let CartURL = 'getBasket.json'
+let AddToCartURL = 'addToBasket.json'
+let DeleteFromCartURL = 'deleteFromBasket.json'
 
 let d = document
 
@@ -86,7 +89,6 @@ class Catalog extends BaseCont {
 }
 class Item extends BaseItem {}
 
-
 class CartItem extends BaseItem { // класс для товара в корзине
     constructor(obj) {
         super(obj)
@@ -124,8 +126,6 @@ class Cart extends BaseCont { // класс для корзины
                 this._render()
                 this._calcCart()
             })
-
-        //  this._addToCartHendler('.productsPage') // вешаем обработчик кликов на контенер магазина и на контейнер корзины
     }
     _calcCart() { // метод для расчета общей суммы ккорзины, и общего количества товаров
         let allSumm = 0
@@ -151,67 +151,102 @@ class Cart extends BaseCont { // класс для корзины
     }
     addToCart(cont) {
         return function (evt) {
-            if (evt.target.dataset.id) {
-                let id = evt.target.dataset.id
-                let el = cont.Items.find(item => item.id == id)
-                if (el) {
-                    el.quantity++
-                    cont._render()
-                } else {
-                    let obj = {
-                        name: evt.target.dataset['name'],
-                        price: evt.target.dataset['price'],
-                        brand: evt.target.dataset['brand'],
-                        country: evt.target.dataset['country'],
-                        ship: evt.target.dataset['ship'],
-                        img: evt.target.dataset['img'],
-                        id: evt.target.dataset['id'],
-                        quantity: 1
+            fetch(`${API}${AddToCartURL}`)
+                .then(data => data.json())
+                .then(data => { 
+                    if (data.result === 1) {
+                        if (evt.target.dataset.id) {
+                            let id = evt.target.dataset.id
+                            let el = cont.Items.find(item => item.id == id)
+                            if (el) {
+                                el.quantity++
+                                cont._render()
+                            } else {
+                                let obj = {
+                                    name: evt.target.dataset['name'],
+                                    price: evt.target.dataset['price'],
+                                    brand: evt.target.dataset['brand'],
+                                    country: evt.target.dataset['country'],
+                                    ship: evt.target.dataset['ship'],
+                                    img: evt.target.dataset['img'],
+                                    id: evt.target.dataset['id'],
+                                    quantity: 1
+                                }
+                                cont.Items.push(obj)
+                                let prodCart = new CartItem(obj)
+                                d.querySelector(cont.className).innerHTML += prodCart.render()
+                            }
+                            cont._calcCart()
+                        }
                     }
-                    cont.Items.push(obj)
-                    let prodCart = new CartItem(obj)
-                    d.querySelector(cont.className).innerHTML += prodCart.render()
-                }
-                cont._calcCart()
-            }
+                })
+                .catch(() => {
+                    console.log('Error 404.')
+                })
+
         }
     }
     _chengeContentCart(cont) {
         return function (evt) {
             if (evt.target.className == 'contCartProducts__allClean') {
-                cont._dellCart()
+                fetch(`${API}${DeleteFromCartURL}`)
+                    .then(data => data.json())
+                    .then(data => {
+                        if (data.result) {
+                            cont._dellCart()
+                        }
+                    })
+                    .catch(() => {
+                        console.log('Error 404.')
+                    })
             }
             if (evt.target.className == 'contCartProducts__add') {
-                let parent = evt.target.parentNode
-                let id = parent.parentNode.dataset.id
-                parent.parentNode.childNodes[7].innerHTML++
-                cont.Items.forEach(e => {
-                    if (e.id == id) {
-                        e.quantity = e.quantity++
-                        parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity *e.price
-                    }
-                })
-                cont._calcCart()
+                fetch(`${API}${AddToCartURL}`)
+                    .then(data => data.json())
+                    .then(data => {
+                        if (data.result) {
+                            let parent = evt.target.parentNode
+                            let id = parent.parentNode.dataset.id
+                            parent.parentNode.childNodes[7].innerHTML++
+                            cont.Items.forEach(e => {
+                                if (e.id == id) {
+                                    e.quantity = e.quantity++
+                                    parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity * e.price
+                                }
+                            })
+                            cont._calcCart()
+                        }
+                    })
+                    .catch(() => {
+                        console.log('Error 404.')
+                    })
             }
             if (evt.target.className == 'contCartProducts__del') {
-                let parent = evt.target.parentNode
-                let id = parent.parentNode.dataset.id
-                parent.parentNode.childNodes[7].innerHTML--
-                cont.Items.forEach((e,i) => {
-                    if (e.id == id) {
-                        if (e.quantity == 1) {
-                               cont.Items.splice(i, 1)
-                            if (e.length === 0) {
-                                cont._dellCart()
+                fetch(`${API}${AddToCartURL}`)
+                    .then(data => data.json())
+                    .then(() => {
+                        let parent = evt.target.parentNode
+                        let id = parent.parentNode.dataset.id
+                        parent.parentNode.childNodes[7].innerHTML--
+                        cont.Items.forEach((e, i) => {
+                            if (e.id == id) {
+                                if (e.quantity == 1) {
+                                    cont.Items.splice(i, 1)
+                                    if (e.length === 0) {
+                                        cont._dellCart()
+                                    }
+                                    cont._render()
+                                } else {
+                                    e.quantity--
+                                    parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity * e.price
+                                }
                             }
-                            cont._render()
-                        } else {
-                            e.quantity--
-                            parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity * e.price
-                        }
-                    }
-                })
-                cont._calcCart()
+                        })
+                        cont._calcCart()
+                    })
+                    .catch(() => {
+                        console.log('Error 404.')
+                    })
             }
         }
     }

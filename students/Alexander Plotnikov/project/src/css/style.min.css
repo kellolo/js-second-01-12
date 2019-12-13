@@ -2665,6 +2665,18 @@ body {
   margin-bottom: 2px;
 }
 
+.feedBack__hint {
+  display: flex;
+  width: 80%;
+  text-align-last: left;
+  color: rgba(255, 0, 0, 0);
+  font-size: 13px;
+}
+
+.feedBack__hint-active {
+  color: red;
+}
+
 .feedBack__Input {
   display: flex;
   width: 80%;
@@ -2698,25 +2710,30 @@ body {
   color: black;
 }
 
-.feedBack__Input-activ {
+.feedBack__Input-active {
   border: 1px solid red;
   background-color: #be9191;
 }
 
-.feedBack__Input-activ::-webkit-input-placeholder {
-  color: red;
+.feedBack__Input-active:hover, .feedBack__Input-active:focus {
+  outline: none;
+  background-color: #be9191;
 }
 
-.feedBack__Input-activ:-moz-placeholder {
-  color: red;
+.feedBack__Input-active:hover::-webkit-input-placeholder, .feedBack__Input-active:focus::-webkit-input-placeholder {
+  color: black;
 }
 
-.feedBack__Input-activ::-moz-placeholder {
-  color: red;
+.feedBack__Input-active:hover:-moz-placeholder, .feedBack__Input-active:focus:-moz-placeholder {
+  color: black;
 }
 
-.feedBack__Input-activ:-ms-input-placeholder {
-  color: red;
+.feedBack__Input-active:hover::-moz-placeholder, .feedBack__Input-active:focus::-moz-placeholder {
+  color: black;
+}
+
+.feedBack__Input-active:hover:-ms-input-placeholder, .feedBack__Input-active:focus:-ms-input-placeholder {
+  color: black;
 }
 
 .feedBack__contForParams:nth-child(4) > .feedBack__Input {

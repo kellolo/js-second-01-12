@@ -1,105 +1,44 @@
-//заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 
-class Catalog {
-  constructor(container) {
+// lists.Catalog ===> ссылка на КЛАСС
+class List { //super for Catalog and Cart
+  constructor(url, container) {
     this.container = container;
+    this.url = url;
     this.items = [];
-    this.fetchItems();
+    this._init();
   }
 
-  // // via callback
-  //
-  // callbackGETRequest(url, callback) {
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.open('GET', url);
-  //
-  //   xhr.onreadystatechange = function () {
-  //     if (xhr.readyState === XMLHttpRequest.DONE) {
-  //       if (xhr.status !== 200) {
-  //         console.error('server response is not 200 OK');
-  //       } else {
-  //         const parsedData = JSON.parse(xhr.responseText);
-  //         callback(parsedData);
-  //       }
-  //     }
-  //   };
-  //
-  //   xhr.send();
-  // };
-  //
-  // fetchItems() {
-  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-  //   this.callbackGETRequest(catalogUrl, data => {
-  //     catalog.items = data;
-  //     this._render();
-  //   });
-  // }
+  _init() {
+    return false;
+    // здесь удобно навешивать листенеры на кнопки
+  }
 
-  // // via promise
-  //
-  // promiseGETRequest(url) {
-  //   return new Promise((resolve, reject) => {
-  //     const xhr = new XMLHttpRequest();
-  //     xhr.open('GET', url);
-  //
-  //     xhr.onreadystatechange = function () {
-  //       if (xhr.readyState === XMLHttpRequest.DONE) {
-  //         if (xhr.status !== 200) {
-  //           reject('server response is not 200 OK');
-  //         } else {
-  //           resolve(xhr.responseText);
-  //         }
-  //       }
-  //     };
-  //
-  //     xhr.send();
-  //   });
-  // };
-  //
-  // fetchItems() {
-  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-  //   this.promiseGETRequest(catalogUrl)
-  //     .then(data => JSON.parse(data))
-  //     .then(parsedData => {
-  //       this.items = parsedData;
-  //       this._render();
-  //     })
-  //     .catch(error => console.error(error));
-  // }
-
-  // via fetch
-
-  fetchItems() {
-    const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-    fetch(catalogUrl)
-      .then(data => data.json())
-      .then(parsedData => {
-        this.items = parsedData;
-        this._render();
-      })
-      .catch(error => console.error(error));
+  getParsedDataFromServer(url) {
+    return fetch(url)
+      .then(d => d.json());
   }
 
   _render() {
     let block = document.querySelector(this.container);
     let htmlStr = '';
     this.items.forEach(item => {
-      let prod = new CatalogItem(item);
+      let prod = new lists [this.constructor.name](item);
       htmlStr += prod.render();
     });
     block.innerHTML = htmlStr;
   }
 }
 
-class CatalogItem {
-  constructor(obj) {
+class Item { //super for CatalogItem and CartItem
+  constructor(obj, img = image) {
     this.product_name = obj.product_name;
     this.price = obj.price;
     this.id_product = obj.id_product;
-    this.img = image;
+    this.img = img;
   }
 
   render() {
@@ -117,51 +56,88 @@ class CatalogItem {
                 </div>
             </div>
         `
-  }
+  };
 }
 
-
-class Cart {
-  constructor(container) {
-    this.container = container;
-    this.cartItems = [];
-    this.fetchCart();
+class Catalog extends List {
+  constructor(cart, url = '/catalogData.json', container = '.products') {
+    super(url, container);
+    this.cart = cart;
   }
 
-  fetchCart() {
-    const cartUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json';
-    fetch(cartUrl)
-      .then(data => data.json())
-      .then(parsedData => {
-        this.cartItems = parsedData.contents;
-        this._render();
-      })
-      .catch(error => console.error(error));
-  }
-
-  _render() {
-    let block = document.querySelector(this.container);
-    let htmlStr = '';
-    this.cartItems.forEach(cartItem => {
-      let itemCart = new CartItem(cartItem);
-      htmlStr += itemCart.render();
+  _addListeners() {
+    document.querySelector('.products').addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('buy-btn')) {
+        this.cart.addProduct(evt.target);
+      }
     });
-    block.innerHTML = htmlStr;
+  }
+
+  _init() {
+    this.getParsedDataFromServer(API + this.url)
+      .then(data => this.items = data)
+      .then(() => this._render())
+      .finally(() => this._addListeners());
   }
 }
 
+class CatalogItem extends Item {
+} //уже готово
 
-class CartItem {
-  constructor(cartItem) {
-    this.product_name = cartItem.product_name;
-    this.price = cartItem.price;
-    this.id_product = cartItem.id_product;
-    this.quantity = cartItem.quantity;
-    this.img = cartImage;
+class Cart extends List {
+  constructor(url = '/getBasket.json', container = '.cart-block') {
+    super(url, container);
+  }
+
+  _addListeners() {
+    document.querySelector('.btn-cart').addEventListener('click', () => {
+      document.querySelector('.cart-block').classList.toggle('invisible');
+    });
+
+    document.querySelector('.cart-block').addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('del-btn')) {
+        this.removeProduct(evt.target);
+      }
+    });
+  }
+
+  _init() {
+    this.getParsedDataFromServer(API + this.url)
+      .then(data => this.items = data.contents)
+      .then(() => this._render())
+      .finally(() => this._addListeners());
+  }
+
+  addProduct(prod) {
+    let approveFromServer;
+    this.getParsedDataFromServer(API + '/addToBasket.json')
+      .then(d => approveFromServer = d.result)
+      .finally(() => {
+        if (approveFromServer) {
+          console.log(`Товар ${prod.dataset.name} добавлен в корзину`);
+        }
+      });
+  }
+
+  removeProduct(prod) {
+    this.getParsedDataFromServer(API + '/deleteFromBasket.json')
+      .then(d => {
+        if (d.result) {
+          console.log(`Товар ${prod.dataset.id} удален из корзины`);
+        }
+      });
+  }
+}
+
+class CartItem extends Item {
+  constructor(obj, img = cartImage) {
+    super(obj, img);
+    this.quantity = 1;
   }
 
   render() {
-    return `<div class="cart-item" data-id="${this.id_product}">
+    return `
+            <div class="cart-item" data-id="${this.id_product}">
                 <div class="product-bio">
                     <img src="${this.img}" alt="Some image">
                     <div class="product-desc">
@@ -179,23 +155,11 @@ class CartItem {
   }
 }
 
-const catalog = new Catalog('.products');
-const cart = new Cart('.cart-block');
 
+const lists = {
+  Catalog: CatalogItem,
+  Cart: CartItem
+};
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-  document.querySelector('.cart-block').classList.toggle('invisible');
-});
-// //кнопки удаления товара (добавляется один раз)
-// document.querySelector('.cart-block').addEventListener('click', (evt) => {
-//   if (evt.target.classList.contains('del-btn')) {
-//     removeProduct(evt.target);
-//   }
-// });
-// //кнопки покупки товара (добавляется один раз)
-// document.querySelector('.products').addEventListener('click', (evt) => {
-//   if (evt.target.classList.contains('buy-btn')) {
-//     addProduct(evt.target);
-//   }
-// });
+let cart = new Cart();
+let catalog = new Catalog(cart);

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = 'qwerty 123 qw 12'
+
+        let reg1 = /12/i
+        let reg2 = new RegExp ('12', 'gi')
+
+        str.search (reg1)
+        str.match (reg1)
+        str = str.replace (reg2, '777')
+    </script>
+    
+</body>
+</html>

@@ -13,8 +13,6 @@ window.onload = function () {
 
 let d = document
 
-
-
 class BaseItem { // класс для создания товара магазина, часть значений пока не используется
     constructor(obj) {
         this.name = obj.name;
@@ -75,14 +73,18 @@ class Catalog extends BaseCont {
     }
     _init() {
         this._fetchJSON(this.url)
-            .then(data => { this.Items = data })
+            .then(data => {
+                this.Items = data
+            })
             .then(() => this._render())
             .then(() => console.log(this))
-            .finally(() => { this.Cart.addToCartHendler(this.className) })
+            .finally(() => {
+                this.Cart.addToCartHendler(this.className)
+            })
 
     }
 }
-class Item extends BaseItem { }
+class Item extends BaseItem {}
 
 
 class CartItem extends BaseItem { // класс для товара в корзине
@@ -145,11 +147,10 @@ class Cart extends BaseCont { // класс для корзины
         //  обработчик добавления элемента в корзину
         d.querySelector(className).addEventListener('click', this.addToCart(cont))
         // обработчки очистки корзины и регулировки количества отдельных товаров
-        // d.querySelector(this.className).parentNode.addEventListener('click', this._chengeContentCart(context))
+        d.querySelector(this.className).parentNode.addEventListener('click', this._chengeContentCart(cont))
     }
     addToCart(cont) {
         return function (evt) {
-            console.log(evt.target)
             if (evt.target.dataset.id) {
                 let id = evt.target.dataset.id
                 let el = cont.Items.find(item => item.id == id)
@@ -157,7 +158,6 @@ class Cart extends BaseCont { // класс для корзины
                     el.quantity++
                     cont._render()
                 } else {
-                    
                     let obj = {
                         name: evt.target.dataset['name'],
                         price: evt.target.dataset['price'],
@@ -165,7 +165,8 @@ class Cart extends BaseCont { // класс для корзины
                         country: evt.target.dataset['country'],
                         ship: evt.target.dataset['ship'],
                         img: evt.target.dataset['img'],
-                        id: evt.target.dataset['id']
+                        id: evt.target.dataset['id'],
+                        quantity: 1
                     }
                     cont.Items.push(obj)
                     let prodCart = new CartItem(obj)
@@ -184,10 +185,10 @@ class Cart extends BaseCont { // класс для корзины
                 let parent = evt.target.parentNode
                 let id = parent.parentNode.dataset.id
                 parent.parentNode.childNodes[7].innerHTML++
-                cont.CartElems.forEach((e, i) => {
+                cont.Items.forEach(e => {
                     if (e.id == id) {
-                        cont.CartElems[i].quantity++
-                        parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price
+                        e.quantity = e.quantity++
+                        parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity *e.price
                     }
                 })
                 cont._calcCart()
@@ -196,17 +197,17 @@ class Cart extends BaseCont { // класс для корзины
                 let parent = evt.target.parentNode
                 let id = parent.parentNode.dataset.id
                 parent.parentNode.childNodes[7].innerHTML--
-                cont.CartElems.forEach((e, i) => {
+                cont.Items.forEach((e,i) => {
                     if (e.id == id) {
-                        if (cont.CartElems[i].quantity == 1) {
-                            cont.CartElems.splice(i, 1)
-                            if (cont.CartElems.length === 0) {
+                        if (e.quantity == 1) {
+                               cont.Items.splice(i, 1)
+                            if (e.length === 0) {
                                 cont._dellCart()
                             }
-                            cont._render(cont, ProductCart, cont.CartElems)()
+                            cont._render()
                         } else {
-                            cont.CartElems[i].quantity--
-                            parent.parentNode.childNodes[5].innerHTML = '$' + cont.CartElems[i].quantity * cont.CartElems[i].price
+                            e.quantity--
+                            parent.parentNode.childNodes[5].innerHTML = '$' + e.quantity * e.price
                         }
                     }
                 })
@@ -233,10 +234,7 @@ class Cart extends BaseCont { // класс для корзины
         d.querySelector('.contCartProducts__allSumm').innerHTML = '$' + 0
         d.querySelector('.contCartProducts__allQuantity').innerHTML = 0
         d.querySelector('.menuTop__countCart').innerHTML = 0
-        this.CartElems = []
-        this.arrElems.forEach(e => {
-            e.quantity = "1"
-        })
+        this.Items = []
         d.querySelector(this.className).innerHTML = ''
     }
 }

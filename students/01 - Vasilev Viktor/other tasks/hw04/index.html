@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Validation</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <style>
+    .test-form {
+      max-width: 700px;
+      margin: 50px auto auto auto;
+    }
+
+    .form-row {
+      height: 80px;
+    }
+    .btn {
+      margin-top: 20px;
+    }
+  </style>
+  <script src="main.js"></script>
+</head>
+<body>
+<form class="test-form">
+  <div class="form-row">
+    <div class="col">
+      <input type="email" id="email" class="form-control" placeholder="mail@gmail.com">
+      <div class="message"></div>
+    </div>
+    <div class="col">
+      <input type="text" id="phone" class="form-control" placeholder="+7(000)000-0000">
+      <div class="message"></div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" id="name" class="form-control" placeholder="Name">
+      <div class="message"></div>
+    </div>
+  </div>
+    <textarea class="form-control" id="textarea" rows="3" placeholder="Type some words here you bastard"></textarea>
+    <div class="message"></div>
+  <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+</form>
+</body>
+</html>

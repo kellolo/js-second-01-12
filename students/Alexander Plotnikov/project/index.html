@@ -491,38 +491,42 @@
                     </div>
                 </div>
             </section>
-        </main>
-        <section class="feedBack">
-            <h2 class="feedBack__h2">Форма обратной связи</h2>
-            <form  class="feedBack__form">
-                <div class="feedBack__contForParams">
-                    <label for="userName" class="feedBack__lName">Ваше Имя:</label>
-                    <span class="feedBack__hint" data-id="Name">Имя содержит только буквы</span>
-                    <input type="text" data-id="Name" class="feedBack__Input" placeholder="Имя">
-                </div>
-                <div class="feedBack__contForParams">
-                    <label for="userPhone" class="feedBack__lName">Телефон:</label>
-                    <span class="feedBack__hint" data-id="Phone">+7(000)000-0000</span>
-                    <input type="tel" data-id="Phone" class="feedBack__Input" placeholder="Телефон +7(000)000-0000">
-                </div>
-                <div class="feedBack__contForParams">
-                    <label for="userMail" class="feedBack__lName">E-mail:</label>
-                    <span class="feedBack__hint" data-id="Mail">mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
-                    </span>
-                    <input type="mail" data-id="Mail" class="feedBack__Input" placeholder="Email">
-                </div>
-                <div class="feedBack__contForParams">
-                    <label for="userText" class="feedBack__lName">Сообщение:</label>
-                    <textarea id="userText" class="feedBack__Input" placeholder="Сообщение"></textarea>
-                </div>
-                     
-                <button type="button" class="feedBack__button">Send</button> 
-            </form>
-                 
-        </section>
+            <section class="feedBack">
+                <h2 class="feedBack__h2">Форма обратной связи</h2>
+                <form  class="feedBack__form">
+                    <div class="feedBack__contForParams">
+                        <label for="userName" class="feedBack__lName">Ваше Имя:</label>
+                        <span class="feedBack__hint" data-id="Name">Имя содержит только буквы</span>
+                        <input type="text" data-id="Name" data-flag="false" class="feedBack__Input"  placeholder="Имя">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userPhone" class="feedBack__lName">Телефон:</label>
+                        <span class="feedBack__hint" data-id="Phone">+7(000)000-0000</span>
+                        <input type="tel" data-id="Phone" data-flag="false" class="feedBack__Input" placeholder="Телефон +7(000)000-0000">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userMail" class="feedBack__lName">E-mail:</label>
+                        <span class="feedBack__hint" data-id="Mail">mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+                        </span>
+                        <input type="mail" data-id="Mail" data-flag="false" class="feedBack__Input" placeholder="Email">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userText" class="feedBack__lName">Сообщение:</label>
+                        <textarea id="userText" data-id="Text" class="feedBack__Input" placeholder="Сообщение"></textarea>
+                    </div>                 
+                    <button type="button" class="feedBack__button-block" id="formBut">Send</button> 
+                    <div class="feedBack__darck" id="off"></div>
+                </form>      
+                <div class="feedBack__modelWind">
+                    <p>Ваше сообщение отправлено!</p>
+                    <p>Мы свяжемся с вами в ближашее время!</p>
+                    <span id="cloesModelWind">&#10008;</span>
+                </div>      
+            </section>
+        </main>      
         <footer class="footer">
             <nav class="nav">
-                <a href="# " class="footer__a"><img src="/build/img/logo.svg" alt="imglogo" class="footer__img"></a>
+                <a href="# " class="footer__a"><img src="./build/img/logo.svg" alt="imglogo" class="footer__img"></a>
                 <ul class="nav__ul">
                     <li class="nav__li"><a href="#" class="nav__ali" data-id="#">home</a></li>
                     <li class="nav__li"><a href="#" class="nav__ali" data-id="#">Shop</a></li>

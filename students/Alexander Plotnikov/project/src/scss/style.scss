@@ -1283,15 +1283,16 @@ body {
 }
 
 .feedBack {
+  z-index: 1;
+  margin: 30px 0 10px;
   padding: 20px;
   border: 1px solid #e4e8f0;
   background-color: #fff;
   display: flex;
-  //display: none;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
-  // box-sizing: content-box;
   &__h2 {
     margin: 10px 0 20px 0;
     font-family: $mblack;
@@ -1301,10 +1302,12 @@ body {
   }
 
   &__form {
+    position: relative;
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+   // background-color: rgba(64, 224, 208, 0.911);
   }
 
   &__contForParams {
@@ -1355,6 +1358,7 @@ body {
         color: black;
       }
     }
+
   }
 
   &__Input-active {
@@ -1365,7 +1369,6 @@ body {
     &:focus {
       outline: none;
       background-color: rgb(190, 145, 145);
-      ;
 
       @include placeholder() {
         color: black;
@@ -1379,7 +1382,7 @@ body {
     overflow: hidden;
   }
 
-  &__button {
+  &__button-active {
     margin: 10px 0 0 0;
     display: flex;
     min-width: 150px;
@@ -1403,6 +1406,75 @@ body {
     &:active {
       background-color: #01071a;
       border: 2px solid #01071a;
+    }
+  }
+
+  &__button-block {
+    margin: 10px 0 0 0;
+    display: flex;
+    min-width: 150px;
+    min-height: 30px;
+    border-radius: 15px;
+    border: 2px solid #9aa4c7;
+    font-size: 11px;
+    font-family: $mr;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    background-color: #98a3c9;
+    outline: none;
+    color: #fff;
+  }
+
+  &__darck {
+    z-index: 50;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 50px;
+    display: none;
+    background-color: rgba(238, 130, 238, 0);
+  }
+  &__darck-active {
+    display: flex;
+  }
+
+  &__modelWind {
+    z-index: 20;
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    display: none;
+    width: 90%;
+    height: 70%;
+    background-color: rgb(155, 156, 156);
+    flex-direction: column;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  &__modelWind-active {
+    display: flex;
+  }
+
+  &__modelWind>p {
+    display: flex;
+    font-size: 20px;
+    font-family: $mr;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &__modelWind>span {
+    display: flex;
+    font-size: 20px;
+    font-family: $mr;
+    margin: 0 auto;
+
+    &:hover {
+      color: #10e078;
+      ;
     }
   }
 }

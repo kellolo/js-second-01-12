@@ -1,25 +1,99 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 class Catalog {
     constructor(container) {
-        this.container = container
-        this.items = []
+        this.container = container        
         this._init()
     }
-    _init() {
-        this.items = fetchData()
-        this._render()
+//CallBack!!!!
+//...
+    // _init() {
+    //     this.data = this._fetchData ( () => {
+    //         this._render()
+    //     })        
+    // }    
+
+    // _makeGETRequest (url, callback) {
+    //     let xhr = new XMLHttpRequest() 
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState === 4) {
+    //             callback(xhr.responseText)
+    //         }
+    //     }  
+    //     xhr.open('GET', url, true)
+    //     xhr.send()
+    // }
+
+    // _fetchData (cb) {
+    //     this._makeGETRequest (`${API_URL}/catalogData.json`, (data) => {
+    //         this.data = JSON.parse (data)           
+    //         cb()
+    //     }) 
+    // }
+//...
+
+
+//Promise!!!!
+//...
+    // _init () {
+    //     this._makeGETRequest (`${API_URL}/catalogData.json`)
+    //         .then (dJSON => JSON.parse (dJSON))
+    //         .then (dataNotJSON => {this.data = dataNotJSON})
+    //         .catch (err => {
+    //             console.log (err)
+    //         })
+    //         .finally ( () => {                
+    //             this._render()
+    //         })
+    // }
+
+    // _makeGETRequest (url) {
+    //     return new Promise ((res, rej) => {
+    //         let xhr = new XMLHttpRequest ()
+    //         xhr.onreadystatechange = function () {
+    //             if (xhr.readyState === 4) {
+    //                 if (xhr.status === 200) {
+    //                     res (xhr.responseText)
+    //                 } else {
+    //                     rej ('error')
+    //                 }
+    //             }
+    //         }
+    //         xhr.open('GET', url, true)
+    //         xhr.send()
+    //     })
+    // }
+//...
+
+
+//Fetch!!!!
+//...
+    _init () {
+        this._fetchRequest (`${API_URL}/catalogData.json`)
+            .then (dJSON => dJSON.json ())
+            .then (data => {
+                this.data = data
+            })
+            .finally ( () => {
+                this._render ()
+            })
     }
+
+    _fetchRequest (url) {
+        return fetch (url)
+    }
+//...
+
     _render() {
         let block = document.querySelector(this.container)
-        let htmlStr = ''
-        this.items.forEach(item => {
-            let prod = new CatalogItem(item)
+        let htmlStr = ''        
+        this.data.forEach( data => {
+            let prod = new CatalogItem(data)
             htmlStr += prod.render()
         })
         block.innerHTML = htmlStr
@@ -33,6 +107,7 @@ class CatalogItem {
         this.id_product = obj.id_product
         this.img = image
     }
+
     render() {
         return `
             <div class="product-item" data-id="${this.id_product}">
@@ -51,42 +126,7 @@ class CatalogItem {
     }
 }
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let list = fetchData();
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct(i));
-    }
-    return arr
-};
-
-//создание товара
-function createProduct(i) {
-    return {
-        id_product: ids[i],
-        product_name: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
-
-//рендер списка товаров (каталога)
-// function renderProducts () {
-//     //let arr = [];
-//     let str = ''
-//     for (item of list) {
-//         str += item.createTemplate()
-//     }
-//     document.querySelector('.products').innerHTML = str;
-// }
-
-// renderProducts ();
-
 class Cart {
-
     constructor() {
         this.userCart = [];
     }
@@ -160,8 +200,11 @@ class Cart {
     }
 }
 
+//const API_URL = '../project/json'
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 let catalog = new Catalog('.products');
 let cart = new Cart ();
+
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {

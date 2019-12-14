@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script>
+  'use strict';
+
+  class Form {
+    constructor() {
+      this._init();
+      this.form = document.querySelector('form');
+      this.name = document.querySelector('#name');
+      this.phone = document.querySelector('#phone');
+      this.email = document.querySelector('#email');
+    }
+
+    _init() {
+      this._render();
+      this._addEventListeners();
+    }
+
+    _render() {
+      let str = `<form action="#">
+                  <fieldset>
+                    <label for="name">Введите ваше имя:</label>
+                    <p id="name-error">Имя должно содержать только буквы</p>
+                    <input id="name" type="text">
+                    <label for="phone">Введите ваш номер телефона:</label>
+                    <p id="phone-error">Формат ввода +7(000)000-0000</p>
+                    <input id="phone" type="text">
+                    <label for="email">Введите ваш email:</label>
+                    <p id="email-error">Формат ввода mymail@mail.ru</p>
+                    <input id="email" type="text">
+                    <label for="comment">Комментарий:</label>
+                    <textarea name="text" id="comment" cols="30" rows="10"></textarea>
+                    <div class="buttons">
+                      <input class="button" id="ok-btn" type="submit">
+                      <input class="button" type="reset">
+                    </div>
+                  </fieldset>
+                </form>`;
+      document.body.innerHTML = str;
+    }
+
+    _addEventListeners() {
+      const button = document.querySelector('#ok-btn');
+
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        this._checkName();
+        this._checkPhone();
+        this._checkEmail();
+        if (this._checkName() && this._checkPhone() && this._checkEmail()) {
+          this.form.submit();
+          console.log('Submit');
+          alert('OK');
+        }
+      })
+    }
+
+    _checkName() {
+      let reg = /^[a-zа-яё]+$/i;
+
+      if (reg.test(this.name.value)) {
+        this.name.style.removeProperty('border');
+        document.querySelector('#name-error').style.display = 'none';
+        return true;
+      } else {
+        this.name.style = 'border: 2px solid red';
+        document.querySelector('#name-error').style.display = 'block';
+        console.log('name error');
+      }
+    }
+
+    _checkPhone() {
+      let reg = /^([\+]+)*\d\(\d{3}\)\d{3}-\d{4}/;
+
+      if (reg.test(this.phone.value)) {
+        this.phone.style.removeProperty('border');
+        document.querySelector('#phone-error').style.display = 'none';
+        return true;
+      } else {
+        this.phone.style = 'border: 2px solid red';
+        document.querySelector('#phone-error').style.display = 'block';
+        console.log('phone error');
+      }
+    }
+
+    _checkEmail() {
+      let reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
+
+      if (reg.test(this.email.value)) {
+        this.email.style.removeProperty('border');
+        document.querySelector('#email-error').style.display = 'none';
+        return true;
+      } else {
+        this.email.style = 'border: 2px solid red';
+        document.querySelector('#email-error').style.display = 'block';
+        console.log('email error');
+      }
+    }
+  }
+
+  let form = new Form();
+</script>
+</body>
+</html>

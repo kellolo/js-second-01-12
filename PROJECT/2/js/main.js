@@ -1,7 +1,6 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -13,39 +12,9 @@ class Catalog {
         this._init ()
     }
     _init () {
-        this.items = this._fetchData ()
+        this.items = fetchData ()
         this._render ()
     }
-        _fetchData () {
-            function makeGetRequest (url) {
-                let xhr = new XMLHttpRequest ()
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        console.log (xhr.responseText)
-                    }
-                }
-                xhr.open('GET', url, true)
-                xhr.send()
-            }
-        }
-        //создание массива объектов - имитация загрузки данных с сервера
-        // function fetchData () {
-        // let arr = [];
-        // for (let i = 0; i < items.length; i++) {
-        //     arr.push (createProduct (i));
-        // }
-        // return arr
-        // };
-
-        // //создание товара
-        // function createProduct (i) {
-        // return {
-        //     id_product: ids[i],
-        //     product_name: items[i],
-        //     price: prices[i],
-        //     img: image,
-        // }
-        // }; 
     _render () {
         let block = document.querySelector (this.container)
         let htmlStr = ''
@@ -103,7 +72,26 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
     }
 })
 
+//создание массива объектов - имитация загрузки данных с сервера
+function fetchData () {
+    let arr = [];
+    for (let i = 0; i < items.length; i++) {
+        arr.push (createProduct (i));
+    }
+    return arr
+};
 
+
+
+//создание товара
+function createProduct (i) {
+    return {
+        id_product: ids[i],
+        product_name: items[i],
+        price: prices[i],
+        img: image,
+    }
+};
 
 //рендер списка товаров (каталога)
 // function renderProducts () {

@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        <p class="">Выберите гамбургер</p>
+        <fieldset>
+            <input type="radio" name="size" value="small" data-price="50" data-calorie="20"> Маленький
+            <input type="radio" name="size" value="big" data-price="100" data-calorie="40"> Большой
+        </fieldset>
+        <p class="">Добавьте начинку</p>
+        <fieldset>
+            <input type="checkbox" name="staffing" value="cheese" data-price="10" data-calorie="20"> Сыр
+            <input type="checkbox" name="staffing" value="salad" data-price="20" data-calorie="5"> Салат
+            <input type="checkbox" name="staffing" value="potatoes" data-price="15" data-calorie="10"> Картофель
+        </fieldset>
+        <p class="">Добавьте приправу</p>
+        <fieldset>
+            <input type="checkbox" name="topping" value="cheese" data-price="15" data-calorie="10"> Привправа
+            <input type="checkbox" name="topping" value="salad" data-price="20" data-calorie="5"> Майонез
+        </fieldset>
+        <button id="ok-btn">Рассчитать</button>
+        Стоимость <input type="text" id="price">
+        Калорийность <input type="text" id="calorie">
+
+    </form>
+    <script>
+
+        class Hamburger {
+            constructor() {
+
+            }
+
+            calculatePrice() {
+                let sum = 0;
+                sum = +document.querySelector(`input[name="size"]:checked`).dataset.price;
+                sum = sum + this._checkPrice("staffing") + this._checkPrice("topping");
+                return sum;
+            }
+            calculateCalories() {
+                let sum = 0;
+                sum = +document.querySelector(`input[name="size"]:checked`).dataset.calorie;
+                sum = sum + this._checkPrice("staffing") + this._checkPrice("topping");
+                return sum;
+            }
+            _checkPrice(domElementName) {
+                let sum = 0;
+                let arr = [...document.querySelectorAll(`input[name="${domElementName}"]:checked`)];
+                arr.forEach(el => {
+                    sum = sum + +el.dataset.price;
+                })
+                return sum;
+            }
+            _checkCalorie(domElementName) {
+                let sum = 0;
+                let arr = [...document.querySelectorAll(`input[name="${domElementName}"]:checked`)];
+                arr.forEach(el => {
+                    sum = sum + +el.dataset.calorie;
+                })
+                return sum;
+            }
+        }
+
+        let okBtn = document.querySelector('#ok-btn');
+        okBtn.addEventListener('click', addHumburger);
+
+        function addHumburger() {
+            let newHumburger = new Hamburger();
+            document.getElementById('price').value = newHumburger.calculatePrice();
+            document.getElementById('calorie').value = newHumburger.calculateCalories();
+
+        }
+
+    </script>
+</body>
+
+</html>

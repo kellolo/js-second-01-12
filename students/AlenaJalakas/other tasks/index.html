@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Burger Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h3 class="h3">Welcome to our Burger Shop</h3>
+<p class="parag">Please, make your choice</p>
+
+<img class="img" src="burger.jpeg" alt="img">
+
+<form action="#">
+
+    <fieldset>
+        <label>
+            <input type="radio" name="size" value="big" data-calories ="40" data-price="100" checked> Big burger
+        </label>
+        <label>
+            <input  name="size" type="radio" value="small" data-calories = "20" data-price="50">Small burger
+        </label>
+    </fieldset>
+    <fieldset>
+        <label>
+            <input class="checkbox" type="radio" name="add" value="cheese" data-calories = "20" data-price="10">
+        </label>Cheese
+        <label>
+            <input class="checkbox" type="radio" name="add" value="salad" data-calories = "20" data-price="5">
+        </label> Salad
+        <label>
+            <input class="checkbox" type="radio" name="add" value="potato" data-calories = "15" data-price="10">
+        </label> Potato
+    </fieldset>
+        <fieldset>
+        <label>
+            <input  type="checkbox" name="add" value="sauce" data-calories = "5" data-price="20">
+        </label> Sauce
+        <label>
+            <input  type="checkbox" name="add" value="seasoning" data-calories = "0" data-price="15">
+        </label> Seasoning
+        </fieldset>
+
+</form>
+<button id="calc_btn">Calculate</button>
+
+<div class="result">
+    <p> Price of your order: <span id = "price"></span></p>
+    <p>And energy of your order is <span id ="cals"></span></p>
+</div>
+
+<script>
+    window.onload = () => {
+        document.querySelector ('#calc_btn'). addEventListener ('click', function () {
+            let burger = new Burger ('size', 'add', 'toping');
+            burger.showSum ('#price', '#cals')
+        })
+    };
+    class Burger {
+        constructor (size, add, topings) {
+            this.size = new Parameter (this._select (size));
+            this.add = new Parameter (this._select (add));
+            this.topings = this._getDomArray (topings)
+        }
+        _select (attrName) {
+            return document.querySelector (`input[name="${attrName}"]:checked`)
+        }
+        _selectAll (attrName) {
+            return [...document.querySelectorAll (`input[name="${attrName}"]:checked`)]
+        }
+        _getDomArray (attrName) {
+            let arr = [];
+            this._selectAll(attrName).forEach (item => {
+                arr.push (new Parameter (item))
+            });
+            return arr
+        }
+        _calc (parameterPropName) {
+            let rez = this.size[parameterPropName] + this.add[parameterPropName];
+            this.topings.forEach (top => {
+                rez += top[parameterPropName]
+            });
+            return rez
+        }
+        showSum (price, cals) {
+            document.querySelector(price).innerText = this._calc ('price');
+            document.querySelector(cals).innerText = this._calc ('calories')
+        }
+    }
+    class Parameter {
+        constructor (domEl) {
+            this.name = domEl.value;
+            this.price = +domEl.dataset['price'];
+            this.calories = +domEl.dataset['calories'];
+        }
+    }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#" method="post" class="some" id="myform">
+        <div><br><label>Name: <input type="text" name="name" id="name"></label></div>
+        <div><br><label>Phone: <input type="tel" name="phone" id="phone"></label></div>
+        <div><br><label>Email: <input type="email" name="email" id="email"></label></div>
+        <button id="val-btn">Submit</button>
+    </form>
+    <script src="main.js"></script>
+    <script>
+        window.onload = () => {
+            document.getElementById('myform').addEventListener('submit', e => {
+                let valid = new Validator('#myform');
+                if (!valid.valid) {
+                    e.preventDefault();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

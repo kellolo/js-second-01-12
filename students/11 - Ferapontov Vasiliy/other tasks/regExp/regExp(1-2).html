@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  <p>I'm a programmer. John says: 'Your code is excellent!'. 'asfqwdq', asd's qwd:'qsd?'.</p>
+  <button>Заменить кавычки</button>
+</div>
+<script>
+  const button = document.querySelector('button');
+  let str = document.querySelector('p');
+  let regExp1 = /(?<![a-z])\'(.+?)\'(?![a-z])/gi;
+
+  console.log(str.innerText.match(regExp1));
+
+  button.addEventListener('click', () => {
+    str.innerText = str.innerText.replace(regExp1, '"$1"');
+  });
+
+
+</script>
+</body>
+</html>

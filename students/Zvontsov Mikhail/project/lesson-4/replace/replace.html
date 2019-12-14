@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+    <title>Replace</title>
+</head>
+
+<body>
+    <h1 class="head">Replace</h1>
+    <p class="text">Waiter: 'Welcome to our restaurant. Did you book a table in advance?'
+        David: 'Hello. Yes, we ordered a table for Laurins.'
+        W: 'All right. Follow me. Here's your table, as you wanted, by the window. Let me take your and your lady's
+        coats.'
+        D: 'Yes, please. Sit down, dear.'
+        W: 'Check out our menu. I'll come in a minute ... Are you ready to order?'
+        D: 'No, not yet. Give us a little time to study the menu.'
+        W: 'Good. Call me when you're ready.'
+        D: 'Darling, what will you eat?'
+        Amanda: Oh, there is such a chic choice of dishes. I am even confused. What would you advise?'
+        D: 'I can recommend fried duck with cream sauce. A tasty dish. The fish here is also gorgeous. Actually, the
+        chef in this restaurant is a true master. All his dishes are delicious.'
+        A: 'Then I'll order a salad with seafood and a duck.'
+        D: 'And the dessert?'
+        A: 'I would like to try a cheesecake. I love to cook it myself, but I will not refuse from the ready dish.'
+        A: 'Excellent. Waiter!'
+        W: 'I'm listening to you.'
+        D: 'Bring us, please, a salad with seafood and a duck for the lady, and I'll order a julien with mushrooms and
+        entrecote.'
+        W: 'Will you order the dessert?'
+        D: 'Yes, of course. One cheesecake and a slice of banana cake.'
+        W: 'What will you drink?'
+        D: 'Today we have a holiday, an anniversary, which means that we will drink champagne.'
+        W: 'Dry, sweet or semisweet?'
+        D: 'White semisweet.'
+        W: 'Excellent choice. Your order will be ready in 15 minutes. Shall I bring the champagne right now?'
+        D: 'Yes, so it will not be boring to wait for our order.'
+        W: 'Here is your champagne. And this is a gift from the chef in honor of your holiday.'
+        D: 'Thank you very much. We are very pleased!'
+        A: 'Your order, sir. Anything else?'
+        D: 'Thank you. All is perfect.'</p>
+    <button class="replace">Replace</button>
+
+    <script>
+        let text = document.querySelector('.text');
+        document.querySelector('.replace').addEventListener('click', () => {
+            // text.textContent = text.textContent.replace(/'/g, '"');
+            text.textContent = text.textContent.replace(/'\B|\B'/g, '"');
+        })
+    </script>
+</body>
+
+</html>

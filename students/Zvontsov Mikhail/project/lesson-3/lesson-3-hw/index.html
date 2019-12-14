@@ -26,12 +26,25 @@
         <div class="products"></div>
     </main>
 
-
-
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
     </script>
-    <script src="js/main.js"></script>
+
+    <script>
+        const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+
+        const cart = new Cart()
+        const products = new Products(cart)
+        products.getJson('getProducts.json').then(data => products.handleData(data))
+    </script>
+    <script src="js/Item.js"></script>
+    <script src="js/List.js"></script>
+    <script src="js/Products.js"></script>
+    <script src="js/ProductsItem.js"></script>
+    <script src="js/Cart.js"></script>
+    <script src="js/CartItem.js"></script>
+
+
 </body>
 
 </html>

@@ -8,7 +8,8 @@ if (remoteRep) {
   domain = "http://127.0.0.1/gb-api";
 }
 
-let REQUEST_URLS = {
+let API = {
+  catalogData: `${domain}/responses/catalogData.json`,
   addToBasket: `${domain}/responses/addToBasket.json`,
   getBasket: `${domain}/responses/getBasket.json`,
   getGoodById: `${domain}/responses/getGoodById.json`,
@@ -16,232 +17,212 @@ let REQUEST_URLS = {
 };
 
 
+class List {
+  constructor(url, container) {
+    this.container = container;
+    this.url = url;
+    this.items = [];
+    this._init();
+  }
+  _init() {
+    return false;
+  }
+  _addHandlers() { }
+  _render() {
+    let htmlTag = document.querySelector(this.container);
+    let html = this.items
+      .map(item => new lists[this.constructor.name](item))
+      .map(prod => prod.render())
+      .join('');
+    htmlTag.innerHTML = html;
+  }
+  getJSON(url) {
+    return fetch(url)
+      .then(d => d.json()) //не Джейсон
+  }
+}
 
+class Catalog extends List {
+  constructor(cart, url, container) {
+    super(url, container);
+    this.cart = cart;
+  }
+  _init() {
+    fetch(this.url)
+      .then(resp => resp.json())
+      .then(data => {
+        this.items = data;
+      })
+      .finally(() => {
+        this._addHandlers();
+        this._render();
+      });
+  }
+  _addHandlers() {
+    document.querySelector('.products').addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('buy-btn')) {
+        this.cart.addProduct(evt.target);
+      }
+    })
+  }
+}
 
-let dataBasket = `
-{
-  "amount": 46600,
-  "countGoods": 2,
-  "contents": [
-    {
-      "id_product": 123,
-      "product_name": "Ноутбук",
-      "price": 45600,
-      "quantity": 1
-    },
-    {
-      "id_product": 456,
-      "product_name": "Мышка",
-      "price": 1000,
-      "quantity": 1
+class Cart extends List {
+  constructor(url, container) {
+    super(url, container);
+    this.amount = 0;
+    this.countGoods = 0;
+  }
+  _init() {
+    fetch(this.url)
+      .then(resp => resp.json())
+      .then(data => {
+        this.amount = data.amount;
+        this.countGoods = data.countGoods;
+        this.items = data.contents;
+      })
+      .finally(() => {
+        this._addHandlers();
+        this._render();
+      });
+  }
+  _addHandlers() {
+    document.querySelector('.btn-cart').addEventListener('click', () => {
+      document.querySelector('.cart-block').classList.toggle('invisible');
+    });
+    document.querySelector('.cart-block').addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('del-btn')) {
+        this.removeProduct(evt.target);
+      }
+    });
+  }
+
+  _findProductById(id_product) {
+    return this.items.find(p => id_product == p.id_product);
+  }
+
+  _addProduct(prod) {
+    let productData = {
+      id_product: prod.dataset.id,
+      product_name: prod.dataset.name,
+      price: prod.dataset.price,
+      product_image_big: prod.dataset.imageBig,
+      product_image_small: prod.dataset.imageSmall,
+      quantity: 1,
+    };
+    let cartProduct = this._findProductById(productData.id_product);
+    if (cartProduct) {
+      cartProduct.quantity++;
+    } else {
+      this.items.push(productData);
     }
-  ]
-}`;
+  }
+  addProduct(prod) {
+    this.getJSON(API.addToBasket)
+      .then(d => {
+        if (d.result) {
+          console.log(`Товар ${prod.dataset.name} добавлен в корзину`);
+          this._addProduct(prod);
+        }
+        this._render();
+      });
+  }
+  _removeProduct(prod) {
+    let cartProduct = this._findProductById(prod.dataset.id);
+    if (cartProduct) {
+      cartProduct.quantity--;
+      if (cartProduct.quantity <= 0) {
+        this.items = this.items.filter(p => p.id_product != prod.dataset.id);
+      }
+    }
+  }
+  removeProduct(prod) {
+    this.getJSON(API.deleteFromBasket)
+      .then(d => {
+        if (d.result) {
+          console.log(`Товар ${prod.dataset.id} удален из корзины`);
+          this._removeProduct(prod);
+        }
+        this._render();
+      })
+  } 
+}
 
 
-class Product {
-  constructor(id_product, name, price, quantity = 1) {
-    this.id_product = id_product;
-    this.price = +price;
-    this.name = name;
-    this.quantity = quantity;
-  }
-  getName() {
-    return this.name;
-  }
-  getPrice() {
-    return this.price;
-  }
-  getQuantity() {
-    return this.quantity;
-  }
-  add(quantity = 1) {
-    this.quantity += quantity;
-  }
-  remove(quantity = 1) {
-    this.quantity -= quantity;
+
+
+class Item {
+  constructor(obj) {
+    this.id_product = obj.id_product;
+    this.product_name = obj.product_name;
+    this.price = +obj.price;
+    this.product_image_big = obj.product_image_big;
+    this.product_image_small = obj.product_image_small;
   }
   render() {
     return `
-      <div class="product__item" data-productid="${this.id_product}">
-        <div>Name: ${this.getName()}</div>
-        <div>Price: ${this.getPrice()}</div>
-        <div>Quantity: ${this.getQuantity()}</div>
+      <div class="product-item" data-id="${this.id_product}">
+        <img src="${this.product_image_big}" alt="Some img">
+        <div class="desc">
+          <h3>${this.product_name}</h3>
+          <p>${this.price} $</p> 
+          <button class="buy-btn" 
+          data-id="${this.id_product}"
+          data-name="${this.product_name}" 
+          data-price="${this.price}"
+          data-image-big="${this.product_image_big}"
+          data-image-small="${this.product_image_small}">Купить</button>
+        </div>
       </div>
     `;
   }
 }
 
-class ProductCart {
-  constructor(container) {
-    this.container = container;
-    this.contents = [];
-    this.countGoods = 0;
-    this.amount = 0;
-  }
-  find(product) {
-    return this.contents.find(prod => prod.id_product == product.id_product);
-  }
-  add(product) {
-    let cartProduct = this.find(product);
-    if (cartProduct) {
-      cartProduct.add();
-    } else {
-      this.contents.push(product);
-    }
-    this._calculateCountCoods();
-    this._calculateAmount();
-  }
-  getAmount() {
-    return this.amount;
-  }
-  getCountGoods() {
-    return this.countGoods;
-  }
-  getContents() {
-    return this.contents;
-  }
-  remove(product) {
-    let removingProduct = this.find(product);
-    if (removingProduct) {
-      removingProduct.remove();
-      if (!removingProduct.getQuantity()) {
-        this._removeProduct(removingProduct);
-      }
-      this._calculateCountCoods();
-      this._calculateAmount();
-    }
-  }
-  _indexOfProduct(product) {
-    for (let i = 0; i < this.contents.length; i++) {
-      if (product.id_product == this.contents[i].id_product) return i;
-    }
-    return -1;
-  }
-  _removeProduct(product) {
-    let removingProductIndex = this._indexOfProduct(product);
-    if (removingProductIndex != -1) {
-      this.contents = this.contents
-        .filter((prod, index) => index != removingProductIndex);
-    }
-  }
-  _calculateCountCoods() {
-    this.countGoods = 0;
-    if (this.contents.length) {
-      this.countGoods = this.contents
-        .map(product => product.quantity)
-        .reduce((a, b) => a + b);
-    }
-  }
-  _calculateAmount() {
-    this.amount = 0;
-    if (this.contents.length) {
-      this.amount = this.contents
-        .map(product => product.price * product.quantity)
-        .reduce((a, b) => a + b);
-    }
+class CatalogItem extends Item { }
+
+class CartItem extends Item {
+  constructor(obj) {
+    super(obj);
+    this.quantity = obj.quantity;
   }
   render() {
-    let tag = document.querySelector(this.container);
-    let html = this.contents.map(prod => prod.render()).join("");
-    html = `
-      <h3>Your products:</h3>
-      ${html}
-      <hr>
-      <div>Count goods: ${this.getCountGoods()}</div>
-      <div>Amount: ${this.getAmount()}</div>
+    console.log(this);
+    return `
+      <div class="cart-item" data-id="${this.id_product}">
+        <div class="product-bio">
+          <img src="${this.product_image_small}" alt="Some image">
+          <div class="product-desc">
+            <p class="product-title">${this.product_name}</p>
+            <p class="product-quantity">Quantity: ${this.quantity}</p>
+            <p class="product-single-price">$${this.price} each</p>
+          </div>
+        </div>
+        <div class="right-block">
+          <p class="product-price">${this.getCoast()}</p>
+          <button class="del-btn" data-id="${this.id_product}">&times;</button>
+        </div>
+      </div>
     `;
-    tag.innerHTML = html;
+  }
+  getCoast() {
+    return this.quantity * this.price;
+  }
+  getQuantity() {
+    return this.quantity;
+  }
+  addOne() {
+    this.quantity++;
+  }
+  removeOne() {
+    this.quantity = this.quantity > 0 ? this.quantity - 1 : 0;
   }
 }
 
 
-let JSONd = JSON.parse(dataBasket);
-let cart = new ProductCart(".products");
-
-
-function renderCart() {
-  cart.render();
+const lists = {
+  Catalog: CatalogItem,
+  Cart: CartItem
 }
 
-function asyncGetProduct(nextFunc) {
-  let productData = JSONd.contents[0];
-  let product = new Product(productData.id_product, productData.product_name, productData.price);
-  setTimeout(() => {
-    cart.add(product);
-    nextFunc();
-  }, 1300);
-}
-
-function myPromise(val) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      let prod = JSONd.contents.find(p => p.id_product == val);
-      if (prod) {
-        res({ data: prod, status: "200" });
-      } else {
-        rej({ data: null, status: "403" });
-      }
-    }, 2000);
-  });
-}
-
-function getPromise(id_product) {
-  let p = null;
-  myPromise(id_product)
-    .then(val => new Product(val.data.id_product, val.data.product_name, val.data.price))
-    .then(product => cart.add(product))
-    .catch(err => {
-      console.log(err);
-    })
-    .finally(cart.render.bind(cart));
-}
-
-
-function makeGETRequest(url) {
-  return new Promise((res, rej) => {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          res(xhr.responseText);
-        } else {
-          rej({ error: xhr.responseText });
-        }
-      }
-    }
-    xhr.open('GET', url, true);
-    xhr.send();
-  });
-}
-
-
-function fetchRequest(url) {
-  debugger;
-  return fetch(url);
-}
-
-
-asyncGetProduct(renderCart);
-getPromise(456);
-makeGETRequest(REQUEST_URLS.getGoodById)
-  .then(dJSON => JSON.parse(dJSON))
-  .then(productData => new Product(123, productData.product_name, productData.product_price))
-  .then(product => cart.add(product))
-  .catch(err => {
-    console.log(err);
-  })
-  .finally(() => {
-    cart.render();
-  });
-
-fetchRequest(REQUEST_URLS.getGoodById)
-  .then(dJSON => dJSON.json())
-  .then(productData => new Product(123, productData.product_name, productData.product_price))
-  .then(product => cart.add(product))
-  .catch(err => {
-    console.log(err);
-  })
-  .finally(() => {
-    cart.render();
-  });
+let cart = new Cart(API.getBasket, '.cart-block');
+let cat = new Catalog(cart, API.catalogData, '.products');

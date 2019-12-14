@@ -185,8 +185,7 @@ class CartItem extends Item {
     super(obj);
     this.quantity = obj.quantity;
   }
-  render() {
-    console.log(this);
+  render() { 
     return `
       <div class="cart-item" data-id="${this.id_product}">
         <div class="product-bio">

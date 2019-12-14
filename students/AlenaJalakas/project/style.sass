@@ -20,7 +20,7 @@ body
 .basket__preview
   margin-left: 900px
   margin-top: 20px
-  &_cart
+  &_button
     border: none
     background-color: #f8f9fa
     position: relative
@@ -30,16 +30,17 @@ body
     display: none
     flex-direction: column
     width: 250px
-    height: 400px
-    background-color: antiquewhite
+    height: 500px
+    background-color: white
     position: absolute
+
 .order
   width: 150px
   height: 40px
   background-color: rosybrown
   font-size: 18px
   color: white
-  margin-top: 350px
+  margin-top: 10px
   margin-left: 50px
 
 .fa-shopping-basket
@@ -92,3 +93,22 @@ body
  font-family: inherit
  font-size: inherit
 
+.basket__item
+  width: 60px
+  height: 80px
+  border-radius: .25rem
+  margin-left: 20px
+  &_name
+    font-size: 10px
+  &_img
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
+    width: 50px
+    height: 70px
+  &_quantity
+    font-size: 10px
+    border: 1px solid gray
+    width: 15px
+    height: 15px
+    text-align: center

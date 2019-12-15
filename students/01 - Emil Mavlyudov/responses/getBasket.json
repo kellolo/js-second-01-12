@@ -3,23 +3,15 @@
   "countGoods": 2,
   "contents": [
     {
-      "name": "title_3",
-      "price": "20",
-      "brand": "samsung",
-      "country": "Russa",
-      "ship": "Free",
-      "img": "build/img/Photo1.png",
-      "id": "3",
+      "id_product": 2,
+      "product_name": "Мышка",
+      "price": 1000,
       "quantity": "1"
     },
     {
-      "name": "title_4",
-      "price": "20",
-      "brand": "samsung",
-      "country": "Russa",
-      "ship": "Free",
-      "img": "build/img/Photo1.png",
-      "id": "4",
+      "id_product": 1,
+      "product_name": "Ноутбук",
+      "price": 45600,
       "quantity": "1"
     }
   ]

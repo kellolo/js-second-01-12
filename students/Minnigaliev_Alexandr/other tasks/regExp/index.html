@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form class="myForm" action="">
+        <div class="myFormBox">
+            <input 
+                class="myFormBoxElement" 
+                data-id="userName"
+                name="Имя" 
+                placeholder="Введите ваше имя" 
+                type="text">
+            <p class="myFormBoxError">Неверно введено имя</p> 
+        </div>
+        <div class="myFormBox">
+            <input 
+                class="myFormBoxElement" 
+                name="Телефон" 
+                data-id="userPhone"
+                placeholder="+7(000)000-0000" 
+                type="tel"
+                value="+7(000)000-0000">
+            <p class="myFormBoxError">Неверно введен номер телефона</p class="myFormBoxError"> 
+        </div>
+        <div class="myFormBox">
+            <input 
+                class="myFormBoxElement" 
+                name="email"
+                data-id="userEmail" 
+                placeholder="Введите ваш Email" 
+                type="email">
+            <p class="myFormBoxError">Неверно введен Email</p> 
+        </div>
+        <textarea 
+            class="myFormTextarea" 
+            name="Отзыв" 
+            id="userText"
+            placeholder="Ваш отзыв"            
+            cols="30" 
+            rows="10"></textarea>
+        <button             
+            type="button">Отправить</button>
+    </form>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,36 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Les 2</title>
+	<meta charset="UTF-8">
+	<title>Cart</title>
 </head>
+
 <body>
-  <div class="slider">
-    <div class="slider-name">Item 1!</div>
-    <img src="1.jpg" alt="k">
-    <p class="product-name">Shoes 1</p>
-    <p class="price">140$</p>
-    <button class="button" data-id='1' data-name='Shoes 1' data-price='140'>Buy now!</button>
-  </div>
-  <script>
-    'use strict';
-    let arr = []
-    class BasketItem{
-      constructor(id, name, price){
-        this.id = id
-        this.name = name
-        this.price = price
+	<script>
+		'use strict';
+		const image = 'https://placehold.it/200x150'
+		const cartImage = 'https://placehold.it/100x80'
+		let serverItems = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+
+		class Catalog {
+			constructor(container) {
+				this.container = container
+				this.items = []
+				this._init()
+			}
+			_init() {
+				this.items = fetchData(serverItems)
+      }
+      getBasketItems(){
+        return
+        fetchData('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json')
       }
     }
-    
-    let button = document.getElementsByClassName('button')[0]
-    button.addEventListener('click',(button) => {
-        let id = button.srcElement.dataset.id
-      	let name = button.srcElement.dataset.name
-      	let price = button.srcElement.dataset.price
-        let item1 = new BasketItem(id , name, price)
-        arr.push(item1)
-    })
-    </script>
+
+      class CatalogItem {
+      constructor(obj) {
+      this.product_name = obj.product_name
+      this.price = obj.price
+      this.id_product = obj.id_product
+      this.img = image
+      }
+      addToBasket(){
+      return
+      fetchData('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json')
+      }
+      deleteFromBasket(){
+      return
+      fetchData('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json')
+      }
+      }
+
+
+			// ***** Callback *****
+			
+//			function fetchData(url, callback) {
+//				let xhr = new XMLHttpRequest()
+//
+//				xhr.onreadystatechange = function() {
+//					if (xhr.readyState === 4) {
+//						callback(xhr.responseText)
+//					}
+//				}
+//
+//				xhr.open('GET', url, true)
+//				xhr.send()
+//			}
+
+			// ***** Promise ******
+			
+			function fetchData(url) {
+				return new Promise((resolve, reject) => {
+					let xhr = new XMLHttpRequest()
+
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+								resolve(xhr.responseText)
+							} else {
+								reject('error')
+							}
+						}
+					}
+					xhr.open('GET', url, true)
+					xhr.send()
+				})
+			}
+			fetchData(url)
+				.then(Json => {
+					console.log(JSON.parse(Json))
+				})
+				.catch(err => {
+					console.log(err)
+				})
+				.finally(() => {
+					console.log('Finished')
+				})
+
+
+			// ***** Fetch *****
+      // let outerData = null
+      
+			// function fetchData(url) {
+			// 	return fetch(url)
+			// }
+
+      // fetchData(url)
+      //   .then(Json => Json.json())
+      //   .then(data => outerData = data)
+			// 	.finally(() => {
+			// 		console.log('Finished')
+			// 	})
+		
+
+	</script>
 </body>
+
 </html>

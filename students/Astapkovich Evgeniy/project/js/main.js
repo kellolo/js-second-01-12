@@ -15,13 +15,12 @@ class Catalog {
     // this._init()
     this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
-    this._getProductsCallback(this.url, this._render)
+    this._getProductsCallback(this.url)
   }
 
   _init() {
     //this.items = fetchData()
     //this._render()
-    //this._getProductsCallback(this.url, this._render)
   }
 
   _render(items) {
@@ -39,21 +38,22 @@ class Catalog {
   /**
   *  Версия CALLBACK
   */
-  _getProductsCallback(url, cb) {
+  _getProductsCallback(url) {
+    console.log(this)
     let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
+    function reqFunc() {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           console.log(xhr.responseText, xhr.readyState, xhr.status)
           let dJSON = xhr.responseText
           const items = JSON.parse(dJSON)
-          let render = catalog._render.bind(catalog)
-          render(items)
+          this._render(items)
         } else {
           console.log('error, статус не 200')
         }
       }
     }
+    xhr.onreadystatechange = reqFunc.bind(this)
     xhr.open('GET', url, true)
     xhr.send()
 

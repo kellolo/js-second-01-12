@@ -16,7 +16,8 @@ class Catalog {
     this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
     // this._getProductsCallback(this.url) // вызов варианта с колбэком
-    this._getProductsPromise(this.url) // вызов варианта с Promise
+    // this._getProductsPromise(this.url) // вызов варианта с Promise
+    this._getProductsFetch(this.url) // вызов варианта с Fetch
   }
 
   _init() {
@@ -28,7 +29,6 @@ class Catalog {
   *  Версия CALLBACK
   */
   _getProductsCallback(url) {
-    console.log(this)
     let xhr = new XMLHttpRequest()
     function reqFunc() {
       if (xhr.readyState === 4) {
@@ -82,6 +82,24 @@ class Catalog {
       xhr.open('GET', url, true)
       xhr.send()
     })
+  }
+
+  /**
+   * Версия с Fetch
+   */
+  _getProductsFetch(url) {
+    let items = null
+    let render = this._render.bind(this)
+    this._fetchRequest(url)
+      .then(resp => resp.json())
+      .then(arr => {items = arr})
+      .finally(function(){
+        render(items)
+      })
+  }
+
+  _fetchRequest(url) {
+    return fetch(url)
   }
 
   _render(items) {
@@ -144,24 +162,28 @@ document.querySelector('.products').addEventListener('click', (evt) => {
   }
 })
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-  let arr = [];
-  for (let i = 0; i < items.length; i++) {
-    arr.push(createProduct(i));
-  }
-  return arr
-};
+/*
+* создание массива объектов - имитация загрузки данных с сервера
+*/ 
+// function fetchData() {
+//   let arr = [];
+//   for (let i = 0; i < items.length; i++) {
+//     arr.push(createProduct(i));
+//   }
+//   return arr
+// };
 
-//создание товара
-function createProduct(i) {
-  return {
-    id_product: ids[i],
-    product_name: items[i],
-    price: prices[i],
-    img: image,
-  }
-};
+/*
+* создание товара
+*/ 
+// function createProduct(i) {
+//   return {
+//     id_product: ids[i],
+//     product_name: items[i],
+//     price: prices[i],
+//     img: image,
+//   }
+// };
 
 //рендер списка товаров (каталога)
 // function renderProducts() {

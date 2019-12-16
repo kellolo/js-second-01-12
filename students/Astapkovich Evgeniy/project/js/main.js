@@ -12,19 +12,20 @@ class Catalog {
   constructor(container) {
     this.container = container
     // this.items = []
-    this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
     // this._init()
+    this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+
     this._getProductsCallback(this.url, this._render)
   }
 
   _init() {
     //this.items = fetchData()
     //this._render()
-    // this._getProductsCallback(this.url, this._render)
+    //this._getProductsCallback(this.url, this._render)
   }
 
   _render(items) {
-    let block = document.querySelector('.products')
+    let block = document.querySelector(this.container)
     let htmlStr = ''
     console.log(items)
     items.forEach(item => {
@@ -46,7 +47,8 @@ class Catalog {
           console.log(xhr.responseText, xhr.readyState, xhr.status)
           let dJSON = xhr.responseText
           const items = JSON.parse(dJSON)
-          cb(items)
+          let render = catalog._render.bind(catalog)
+          render(items)
         } else {
           console.log('error, статус не 200')
         }

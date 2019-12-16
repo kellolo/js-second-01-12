@@ -51,6 +51,7 @@ class Catalog {
     /**
     * Версия Promise + XHR
     */
+   //dJSON => JSON.parse(dJSON)
   _getProductsPromise(url) {
     let arr = []
     this._makeGETRequest(url)
@@ -61,8 +62,8 @@ class Catalog {
       })
       .finally(() => {
         console.log('finally')
+        this._render(arr)
       })
-    return arr
   }
 
   _makeGETRequest(url) {

@@ -2,8 +2,107 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+let dataFromWeb = null
+
+let url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+
+
+//Каталог товаров
+class Catalog {
+    constructor(container) {
+        this.container = container;
+        this.items = [];
+        this._init();
+    }
+    _init() {
+
+        //fetch
+        this.fetchRequest(url)
+            .then(dJSON => dJSON.json())
+            .then(data => {
+                dataFromWeb = data;
+            })
+            .finally(() => {
+                this.items = dataFromWeb;
+                this._render();
+            })
+
+        //promise
+        // this.promise(url)
+        //     .then(response => {
+        //         this.items = JSON.parse(response);
+        //     })
+        //     .catch(error => {
+        //         console.log (`Promise rejected ${error}`);
+        //     })
+        //     .finally (() => {
+        //         this._render();
+        //     })
+
+
+    }
+    _render() {
+        let block = document.querySelector(this.container);
+        let htmlStr = '';
+        this.items.forEach(item => {
+            let prod = new CatalogItem(item);
+            htmlStr += prod.render();
+        });
+        block.innerHTML = htmlStr;
+    }
+
+    fetchRequest(url) {
+        return fetch(url)
+    }
+
+    promise(url) {
+
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    resolve(this.response);
+                } else {
+                    var error = new Error(this.statusText);
+                    error.code = this.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = function () {
+                reject(new Error("Network Error"));
+            };
+            xhr.send();
+        });
+    }
+}
+
+class CatalogItem {
+    constructor(obj) {
+        this.product_name = obj.product_name
+        this.price = obj.price
+        this.id_product = obj.id_product
+        this.img = image
+    }
+    render() {
+        return `
+            <div class="product-item" data-id="${this.id_product}">
+                <img src="${this.img}" alt="Some img">
+                <div class="desc">
+                    <h3>${this.product_name}</h3>
+                    <p>${this.price} $</p>
+                    <button class="buy-btn" 
+                    data-id="${this.id_product}"
+                    data-name="${this.product_name}"
+                    data-image="${this.img}"
+                    data-price="${this.price}">Купить</button>
+                </div>
+            </div>
+        `
+    }
+}
+let catalog = new Catalog('.products')
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -22,63 +121,6 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     }
 })
 
-//Каталог товаров
-class GoodsList {
-    constructor() {
-        this.list = this._fetchData();
-    }
-
-
-    //создание массива объектов - имитация загрузки данных с сервера
-    _fetchData() {
-        let arr = [];
-        for (let i = 0; i < items.length; i++) {
-            arr.push(this._createProduct(i));
-        }
-        return arr
-    };
-
-    //создание товара
-    _createProduct(i) {
-        return {
-            id: ids[i],
-            name: items[i],
-            price: prices[i],
-            img: image,
-            quantity: 0,
-            createTemplate: function () {
-                return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-            },
-
-            add: function () {
-                this.quantity++
-            }
-        }
-    };
-
-    //рендер списка товаров (каталога)
-    renderProducts() {
-        let str = ''
-        for (let item of this.list) {
-            str += item.createTemplate()
-        }
-        document.querySelector('.products').innerHTML = str;
-    }
-}
-
-let newGoodsList = new GoodsList();
-newGoodsList.renderProducts();
 
 //CART
 class Cart {

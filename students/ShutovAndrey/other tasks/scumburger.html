@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>bonappetit</title>
 </head>
+
 <body>
 <form action="#">
 
     <fieldset>
         <p>Choose size</p>
         <caption>
-            <input type="radio" name="size" value="big"> Big
+            <input type="radio" name="size" data-price="100" data-calories="40" value="big"> Big
         </caption>
         <caption>
-            <input type="radio" name="size" value="small"> Small
+            <input type="radio" name="size" data-price="50" data-calories="20" value="small"> Small
         </caption>
     </fieldset>
 
     <fieldset>
         <p>Choose topping</p>
         <caption>
-            <input type="radio" name="topping" value="cheese"> Cheese
+            <input type="radio" name="topping" data-price="10" data-calories="20" value="cheese"> Cheese
         </caption>
         <caption>
-            <input type="radio" name="topping" value="salad"> Salad
+            <input type="radio" name="topping" data-price="20" data-calories="5" value="salad"> Salad
         </caption>
         <caption>
-            <input type="radio" name="topping" value="potatoe"> Potatoe
+            <input type="radio" name="topping" data-price="15" data-calories="10" value="potatoe"> Potatoe
         </caption>
     </fieldset>
 
     <fieldset>
         <p>If u wish</p>
         <caption>
-            <input type="checkbox" name="add_topping" value="flavouring"> Flavouring
+            <input type="checkbox" name="add_topping" data-price="15" data-calories="0" value="flavouring"> Flavouring
         </caption>
         <caption>
-            <input type="checkbox" name="add_topping" value="yogurt"> Yogurt
+            <input type="checkbox" name="add_topping" data-price="20" data-calories="5" value="yogurt"> Yogurt
         </caption>
 
     </fieldset>
@@ -44,24 +46,30 @@
 <button id="cmn-btn">Cmn</button>
 
 
-
-
 <script>
     "use script";
+
     class Hamburger {
         constructor(size, topping, add_topping) {
+            this.price = 0;
+            this.calories = 0;
             this.size = this._getSize(size);
             this.topping = this._addTopping(topping);
-            this.addToppings = this._getToppings(add_topping)
+            this.addToppings = this._getToppings(add_topping);
+
         }
 
         //узнать размер гамбургера
         _getSize(domElementName) {
+            this.price = +(document.querySelector(`input[name="${domElementName}"]:checked`).dataset.price);
+            this.calories = +(document.querySelector(`input[name="${domElementName}"]:checked`).dataset.calories);
             return document.querySelector(`input[name="${domElementName}"]:checked`).value
         }
 
         //добавить добавку
         _addTopping(domElementName) {
+            this.price += +(document.querySelector(`input[name="${domElementName}"]:checked`).dataset.price);
+            this.calories += +(document.querySelector(`input[name="${domElementName}"]:checked`).dataset.calories);
             return document.querySelector(`input[name="${domElementName}"]:checked`).value
         }
 
@@ -70,64 +78,29 @@
             let addTopp = [];
             let arr = [...document.querySelectorAll(`input[name="${domElementName}"]:checked`)]
             arr.forEach(el => {
+                this.price += +(el.dataset.price);
+                this.calories += +(el.dataset.calories);
                 addTopp.push(el.value)
             });
             return addTopp;
         }
+
+        showInfo() {
+            const message = document.createElement('div');
+            let total = `<p> Total price: ${this.price}</p><p> Calories: ${this.calories}</p>`;
+            message.innerHTML = total;
+            document.body.appendChild(message);
+        }
     }
 
-    let hambInfo;
+
     let cmnBtn = document.querySelector('#cmn-btn');
-    cmnBtn.addEventListener('click', showInfo);
-
-    function showInfo() {
-        let cost, calories;
-        let newHamburger = new Hamburger('size', 'topping', 'add_topping')
-        if (newHamburger.size === 'big') {
-            this.cost = 100;
-            this.calories = 40;
-        } else {
-            this.cost += 50;
-            this.calories += 20;
-        }
-
-        switch (newHamburger.topping) {
-            case 'cheese':
-                this.cost += 10;
-                this.calories += 20;
-                break;
-            case 'salad':
-                this.cost += 20;
-                this.calories += 5;
-                break;
-            case 'potatoe':
-                this.cost += 15;
-                this.calories += 10;
-                break;
-
-        }
-
-        if (newHamburger.addToppings.length = 1) {
-            switch (newHamburger.addToppings[0]) {
-                case 'flavouring':
-                    this.cost += 15;
-                    break;
-                case 'yogurt':
-                    this.cost += 20;
-                    this.calories += 5;
-                    break;
-            }
-        } else {
-            this.cost += 35;
-            this.calories += 5;
-        }
-
-        const message = document.createElement('div');
-        let total = `<p> Total price: ${this.cost}</p><p> Calories: ${this.calories}</p>`;
-        message.innerHTML = total;
-        document.body.appendChild(message);
-    }
+    cmnBtn.addEventListener('click', () => {
+        let newHamburger = new Hamburger('size', 'topping', 'add_topping');
+        newHamburger.showInfo();
+    });
 
 </script>
 </body>
+
 </html>

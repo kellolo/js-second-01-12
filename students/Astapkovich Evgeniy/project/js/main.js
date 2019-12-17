@@ -8,8 +8,13 @@ const cartImage = 'https://placehold.it/100x80';
 // const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 100500];
 // const ids = [1, 2, 3, 4, 5, 6, 7, 8, 000];
 
-class Catalog {
-  constructor(container) {
+const lists {
+  Catalog: CatalogItem,
+  Cart: CartItem
+}
+
+class List {  // super for Catalog and Cart
+  constructor(url, container) {
     this.container = container
     // this.items = []
     // this._init()
@@ -48,10 +53,10 @@ class Catalog {
 
   }
 
-    /**
-    * Версия Promise + XHR
-    */
-   //dJSON => JSON.parse(dJSON)
+  /**
+  * Версия Promise + XHR
+  */
+  //dJSON => JSON.parse(dJSON)
   _getProductsPromise(url) {
     let arr = []
     this._makeGETRequest(url)
@@ -92,8 +97,8 @@ class Catalog {
     let render = this._render.bind(this)
     this._fetchRequest(url)
       .then(resp => resp.json())
-      .then(arr => {items = arr})
-      .finally(function(){
+      .then(arr => { items = arr })
+      .finally(function () {
         render(items)
       })
   }
@@ -105,7 +110,6 @@ class Catalog {
   _render(items) {
     let block = document.querySelector(this.container)
     let htmlStr = ''
-    console.log(items)
     items.forEach(item => {
       let prod = new CatalogItem(item)
       htmlStr += prod.render()
@@ -115,7 +119,7 @@ class Catalog {
   }
 }
 
-class CatalogItem {
+class Item {  // super for CatalogItem and CartItem
   constructor(obj) {
     this.product_name = obj.product_name
     this.price = obj.price
@@ -125,79 +129,25 @@ class CatalogItem {
 
   render() {
     return `<div class="product-item" data-id="${this.id_product}">
-                    <img src="${this.img}" alt="Some img">
-                    <div class="desc">
-                        <h3>${this.product_name}</h3>
-                        <p>${this.price} $</p>
-                        <button class="buy-btn" 
-                        data-id="${this.id_product}"
-                        data-name="${this.product_name}"
-                        data-image="${this.img}"
-                        data-price="${this.price}">Купить</button>
-                    </div>
-                </div>`
+              <img src="${this.img}" alt="Some img">
+              <div class="desc">
+                <h3>${this.product_name}</h3>
+                <p>${this.price} $</p>
+                <button class="buy-btn" 
+                  data-id="${this.id_product}"
+                  data-name="${this.product_name}"
+                  data-image="${this.img}"
+                  data-price="${this.price}">Купить</button>
+              </div>
+            </div>`
   }
 }
 
-const catalog = new Catalog('.products')
+class Catalog {
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-//var userCart = [];
-//var list = fetchData ();
+}
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-  document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('del-btn')) {
-    removeProduct(evt.target);
-  }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('buy-btn')) {
-    addProduct(evt.target);
-  }
-})
-
-/*
-* создание массива объектов - имитация загрузки данных с сервера
-*/ 
-// function fetchData() {
-//   let arr = [];
-//   for (let i = 0; i < items.length; i++) {
-//     arr.push(createProduct(i));
-//   }
-//   return arr
-// };
-
-/*
-* создание товара
-*/ 
-// function createProduct(i) {
-//   return {
-//     id_product: ids[i],
-//     product_name: items[i],
-//     price: prices[i],
-//     img: image,
-//   }
-// };
-
-//рендер списка товаров (каталога)
-// function renderProducts() {
-//     //let arr = [];
-//     let str = ''
-//     for (item of list) {
-//         str += item.createTemplate()
-//     }
-//     document.querySelector('.products').innerHTML = str;
-// }
-
-// renderProducts();
-
-//CART
+class CatalogItem extends Item { }  // уже готово. НО!!! метод render можно было оставить здесь, а не в супере. 
 
 class Cart {
   constructor() {
@@ -216,6 +166,27 @@ class CartItem {
   }
 }
 
+const catalog = new Catalog('.products')
+const cart = new Cart()
+
+
+
+//кнопка скрытия и показа корзины
+document.querySelector('.btn-cart').addEventListener('click', () => {
+  document.querySelector('.cart-block').classList.toggle('invisible');
+});
+//кнопки удаления товара (добавляется один раз)
+document.querySelector('.cart-block').addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('del-btn')) {
+    removeProduct(evt.target);
+  }
+})
+//кнопки покупки товара (добавляется один раз)
+document.querySelector('.products').addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('buy-btn')) {
+    addProduct(evt.target);
+  }
+})
 
 // Добавление продуктов в корзину
 function addProduct(product) {
@@ -270,3 +241,42 @@ function renderCart() {
 
   document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
+
+//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
+let userCart = [];
+//var list = fetchData ();
+
+/*
+* создание массива объектов - имитация загрузки данных с сервера
+*/
+// function fetchData() {
+//   let arr = [];
+//   for (let i = 0; i < items.length; i++) {
+//     arr.push(createProduct(i));
+//   }
+//   return arr
+// };
+
+/*
+* создание товара
+*/
+// function createProduct(i) {
+//   return {
+//     id_product: ids[i],
+//     product_name: items[i],
+//     price: prices[i],
+//     img: image,
+//   }
+// };
+
+//рендер списка товаров (каталога)
+// function renderProducts() {
+//     //let arr = [];
+//     let str = ''
+//     for (item of list) {
+//         str += item.createTemplate()
+//     }
+//     document.querySelector('.products').innerHTML = str;
+// }
+
+// renderProducts();

@@ -1,18 +1,11 @@
-//заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 // const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
-
 // const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad', 'something'];
 // const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 100500];
 // const ids = [1, 2, 3, 4, 5, 6, 7, 8, 000];
-
-const lists {
-  Catalog: CatalogItem,
-  Cart: CartItem
-}
 
 class List {  // super for Catalog and Cart
   constructor(url, container) {
@@ -29,32 +22,14 @@ class List {  // super for Catalog and Cart
 
   getJSON(url) {
     return fetch(url)
-            .then(d => d.json())
-  }
-
-  /**
-   * Версия с Fetch
-   */
-  _getProductsFetch(url) {
-    let items = null
-    let render = this._render.bind(this)
-    this._fetchRequest(url)
-      .then(resp => resp.json())
-      .then(arr => { items = arr })
-      .finally(function () {
-        render(items)
-      })
-  }
-
-  _fetchRequest(url) {
-    return fetch(url)
+      .then(d => d.json())
   }
 
   _render(items) {
     let block = document.querySelector(this.container)
     let htmlStr = ''
     items.forEach(item => {
-      let prod = new CatalogItem(item)
+      let prod = new lists[this.constructor.name](item)
       htmlStr += prod.render()
     })
 
@@ -63,11 +38,11 @@ class List {  // super for Catalog and Cart
 }
 
 class Item {  // super for CatalogItem and CartItem
-  constructor(obj) {
+  constructor(obj, img = image) {
     this.product_name = obj.product_name
     this.price = obj.price
     this.id_product = obj.id_product
-    this.img = image
+    this.img = img
   }
 
   render() {
@@ -86,33 +61,65 @@ class Item {  // super for CatalogItem and CartItem
   }
 }
 
-class Catalog {
+class Catalog extends List {
+  constructor(cart, url = '/catalogData.json', container = '.products') {
+    super(url, container)
+    this.cart = cart
+  }
 
+  _addListeners() {
+    document.querySelector('.products').addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('buy-btn')) {
+        // addProduct(evt.target);
+      }
+    })
+  }
+
+  _init() {
+    this.getJSON(API + this.url)
+      .then(data => { this.items = data })
+      .then(() => { this._render() })
+      .finally(() => { this._addListeners() })
+  }
 }
 
 class CatalogItem extends Item { }  // уже готово. НО!!! метод render можно было оставить здесь, а не в супере. 
 
 class Cart {
-  constructor() {
-    this.products = [];
-  }
 
-  addProduct() { }
-  removeProduct() { }
-  renderCart() { }
 }
 
-class CartItem {
-  constructor() {
-    this.id = null;
-    this.quantity = null;
+class CartItem extends Item {
+  constructor(obj, img = cartImage) {
+    super(obj, img)
+    this.quantity = 1
+  }
+
+  render() {
+    return `<div class="cart-item" data-id="${this.id}">
+              <div class="product-bio">
+                  <img src="${this.img}" alt="Some image">
+                  <div class="product-desc">
+                      <p class="product-title">${this.name}</p>
+                      <p class="product-quantity">Quantity: ${this.quantity}</p>
+                      <p class="product-single-price">$${this.price} each</p>
+                  </div>
+              </div>
+              <div class="right-block">
+                  <p class="product-price">${this.quantity * this.price}</p>
+                  <button class="del-btn" data-id="${this.id}">&times;</button>
+              </div>
+            </div>`
   }
 }
 
-const catalog = new Catalog('.products')
+
+const lists {
+  Catalog: CatalogItem,
+  Cart: CartItem
+}
 const cart = new Cart()
-
-
+const catalog = new Catalog(cart)
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -124,12 +131,7 @@ document.querySelector('.cart-block').addEventListener('click', (evt) => {
     removeProduct(evt.target);
   }
 })
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('buy-btn')) {
-    addProduct(evt.target);
-  }
-})
+
 
 // Добавление продуктов в корзину
 function addProduct(product) {

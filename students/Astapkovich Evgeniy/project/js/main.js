@@ -1,6 +1,7 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
+const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
 // const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
@@ -16,77 +17,19 @@ const lists {
 class List {  // super for Catalog and Cart
   constructor(url, container) {
     this.container = container
-    // this.items = []
-    // this._init()
-    this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
-
-    // this._getProductsCallback(this.url) // вызов варианта с колбэком
-    // this._getProductsPromise(this.url) // вызов варианта с Promise
-    this._getProductsFetch(this.url) // вызов варианта с Fetch
+    this.url = url
+    this.items = []
+    this._init()
   }
 
   _init() {
-    //this.items = fetchData()
-    //this._render()
+    return false
+    // Здесь удобно навешивать листенеры на кнопки
   }
 
-  /**
-  *  Версия CALLBACK
-  */
-  _getProductsCallback(url) {
-    let xhr = new XMLHttpRequest()
-    function reqFunc() {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          console.log(xhr.responseText, xhr.readyState, xhr.status)
-          let dJSON = xhr.responseText
-          const items = JSON.parse(dJSON)
-          this._render(items)
-        } else {
-          console.log('error, статус не 200')
-        }
-      }
-    }
-    xhr.onreadystatechange = reqFunc.bind(this)
-    xhr.open('GET', url, true)
-    xhr.send()
-
-  }
-
-  /**
-  * Версия Promise + XHR
-  */
-  //dJSON => JSON.parse(dJSON)
-  _getProductsPromise(url) {
-    let arr = []
-    this._makeGETRequest(url)
-      .then(dJSON => JSON.parse(dJSON))
-      .then(parsedData => { arr = parsedData })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        console.log('finally')
-        this._render(arr)
-      })
-  }
-
-  _makeGETRequest(url) {
-    return new Promise((res, rej) => {
-      let xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log(xhr.responseText, xhr.readyState, xhr.status)
-            res(xhr.responseText)
-          } else {
-            rej('error')
-          }
-        }
-      }
-      xhr.open('GET', url, true)
-      xhr.send()
-    })
+  getJSON(url) {
+    return fetch(url)
+            .then(d => d.json())
   }
 
   /**

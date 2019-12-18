@@ -1,7 +1,45 @@
  function js1() {
  let d = document
 
-    
+    //  ********************************Adept menu************************************ //
+    //  ********************************Adept menu************************************ //
+    //  ********************************Adept menu************************************ //
+
+    d.querySelector('.menuTop__iconMemu').addEventListener('click', clickHendler)
+
+    function clickHendler() {
+
+        d.querySelector('.menuTop__nav').classList.toggle('menuTop__nav-activ')
+        d.querySelector('.menuTop__iconMemu').classList.toggle('menuTop__iconMemu-activ')
+        let iconMenu = d.querySelectorAll('.menuTop__line')
+        iconMenu.forEach((el, i) => {
+            iconMenu[i].classList.toggle('menuTop__line-activ')
+        })
+        // close cart
+        d.querySelector('.menuTop__CartSvg').classList.remove('menuTop__CartSvg-active')
+        d.querySelector('.contCartProducts').classList.remove('contCartProducts-active')
+    }
+
+    // ************************* Open cart and close catr *****************************//
+    // ************************* Open cart and close catr *****************************//
+    // ************************* Open cart and close catr *****************************//
+
+    d.querySelector('.menuTop__CartSvg').addEventListener('click', openCart)
+
+    function openCart() {
+        d.querySelector('.menuTop__CartSvg').classList.toggle('menuTop__CartSvg-active')
+        d.querySelector('.contCartProducts').classList.toggle('contCartProducts-active')
+
+        // close adapt menu
+        d.querySelector('.menuTop__nav').classList.remove('menuTop__nav-activ')
+        d.querySelector('.menuTop__iconMemu').classList.remove('menuTop__iconMemu-activ')
+        let iconMenu = d.querySelectorAll('.menuTop__line')
+        iconMenu.forEach((el, i) => {
+            iconMenu[i].classList.remove('menuTop__line-activ')
+        })
+
+    }
+
 
     // *********************** Slider ************************************ //
     // *********************** Slider ************************************ //

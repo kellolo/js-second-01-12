@@ -1,32 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
+  <meta charset="UTF-8">
+  <title>Интернет-магазин</title>
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+<div id="app">
+  <header>
+    <div class="logo">E-shop</div>
+    <div class="cart">
+      <form action="#" class="search-form">
+        <input @input="showAll" v-model="searchLine" type="text" class="search-field">
+        <button @click="filter" class="btn-search" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+      <button @click="cartShown = !cartShown" class="btn-cart" type="button">Корзина</button>
+      <div v-show="cartShown" class="cart-block">
+        <p v-if="cartError">Ошибка получения данных от сервера</p>
+        <template v-show="cartItems.length > 0">
+          <div class="cart-item" v-for="item of cartItems" :key="item.id_product" :data-id="item.id_product">
+            <div class="product-bio">
+              <img :src="cartImage" alt="Some image">
+              <div class="product-desc">
+                <p class="product-title">{{item.product_name}}</p>
+                <p class="product-quantity">Quantity: {{item.quantity}}</p>
+                <p class="product-single-price">RU {{item.price}} each</p>
+              </div>
+            </div>
+            <div class="right-block">
+              <p class="product-price">{{item.quantity * item.price}}</p>
+              <button class="del-btn" :data-id="item.id_product">&times;</button>
+            </div>
+          </div>
+          <div v-show="cartItems.length > 0" class="total-cost">Total cost: {{totalCost}} RUB</div>
+        </template>
+      </div>
+    </div>
+  </header>
+  <main>
+    <p v-show="searchMsgShown" class="search-message">{{searchMsg}}</p>
+    <div class="products">
+      <template v-if="items.length > 0">
+        <div class="product-item" v-for="item of items" :key="item.id_product" :data-id="item.id_product">
+          <img :src="image" alt="Some img">
+          <div class="desc">
+            <h3>{{item.product_name}}</h3>
+            <p>{{item.price}} RUB</p>
+            <button class="buy-btn"
+                    :data-id="item.id_product"
+                    :data-name="item.product_name"
+                    :data-image="image"
+                    :data-price="item.price">Купить</button>
+          </div>
         </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+      </template>
+      <p v-else class="server-error">Нет ответа от сервера</p>
+    </div>
+  </main>
+</div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+<script>
+  let vm = new Vue({
+    el: '#app',
+    data: {
+      searchLine: null,
+      searchMsgShown: false,
+      searchMsg: 'Такого товара в нашем каталоге нет :(',
+      API: 'https://raw.githubusercontent.com/pwnyaka/Professional-layout/master',
+      items: [],
+      cartError: false,
+      cartShown: false,
+      cartItems: [],
+      cartImage: 'https://placehold.it/100x80',
+      image: 'https://placehold.it/200x150',
+      totalCost: 0
+    },
+    methods: {
+      getJSON(url) {
+        return fetch(url)
+            .then(d => d.json())
+      },
+      filter() {
+        let arr = document.querySelectorAll('.product-item');
+        let hiddenItems = 0;
+        arr.forEach((item) => {
+          if (!(item.childNodes[2].childNodes[0].innerText.toLocaleLowerCase().includes(this.searchLine.toLocaleLowerCase()))) {
+            item.style.display = 'none';
+            hiddenItems++;
+            if (hiddenItems === arr.length) {
+              this.searchMsgShown = true;
+            }
+          } else {
+            item.style.display = 'block';
+          }
+        })
+      },
+      showAll() {
+        let arr = document.querySelectorAll('.product-item');
+        arr.forEach((item) => {
+          if (!(item.childNodes[2].childNodes[0].innerText === this.searchLine)) {
+            item.style.display = 'block';
+            this.searchMsgShown = false;
+          }
+        })
+      },
 
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+      addListenersForCart() {
+        document.querySelector('.cart-block').addEventListener('click', (evt) => {
+          if (evt.target.classList.contains('del-btn')) {
+            this.removeProduct(evt.target);
+          }
+        });
+      },
+      addListenersForCatalog() {
+        document.querySelector('.products').addEventListener('click', (evt) => {
+          if (evt.target.classList.contains('buy-btn')) {
+            this.addProduct(evt.target);
+          }
+        });
+      },
+      addProduct(prod) {
+        this.getJSON(this.API + '/addToBasket.json')
+            .then(d => {
+              if (d.result) {
+                let productId = +prod.dataset['id'];
+                let find = this.cartItems.find(element => element.id_product === productId); //товар или false
+                if (!find) {
+                  this.cartItems.push({
+                    product_name: prod.dataset['name'],
+                    id_product: productId,
+                    img: this.cartImage,
+                    price: +prod.dataset['price'],
+                    quantity: 1
+                  })
+                } else {
+                  find.quantity++
+                }
+                this.calcTotalCost();
+                console.log(`Товар ${prod.dataset['name']} добавлен в корзину`);
+              }
+            })
+      },
+      removeProduct(prod) {
+        this.getJSON(this.API + '/deleteFromBasket.json')
+            .then(d => {
+              if (d.result) {
+                let productId = +prod.dataset['id'];
+                let find = this.cartItems.find(element => element.id_product === productId);
+                if (find.quantity > 1) {
+                  find.quantity--;
+                } else {
+                  this.cartItems.splice(this.cartItems.indexOf(find), 1);
+                  document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+                }
+                this.calcTotalCost();
+                console.log(`Товар ${prod.dataset['id']} удален из корзины`);
+              }
+            })
+      },
+      calcTotalCost() {
+        this.totalCost = 0;
+        this.cartItems.forEach((item) => {
+          this.totalCost += item.price * item.quantity;
+        })
+      }
+    },
+    mounted() {
+      this.getJSON(this.API + '/catalogData.json')
+          .then(data => {
+            vm.items = data;
+          });
+
+      this.getJSON(this.API + '/getBasket.json')
+          .then(data => {
+            vm.cartItems = data.contents;
+            vm.totalCost = data.amount;
+          })
+          .catch(() => {
+            this.cartError = true;
+          })
+          .finally(() => {
+            this.addListenersForCatalog();
+            this.addListenersForCart()
+            })
+    }
+  })
+</script>
 </body>
 </html>

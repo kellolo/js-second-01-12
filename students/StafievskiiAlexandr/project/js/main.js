@@ -117,16 +117,18 @@ class Cart extends List {
       this.items.push(productData);
     }
   }
+
   addProduct(prod) {
     this.getJSON(API.addToBasket)
       .then(d => {
         if (d.result) {
-          console.log(`Товар ${prod.dataset.name} добавлен в корзину`);
+          // console.log(`Товар ${prod.dataset.name} добавлен в корзину`);
           this._addProduct(prod);
         }
         this._render();
       });
   }
+
   _removeProduct(prod) {
     let cartProduct = this._findProductById(prod.dataset.id);
     if (cartProduct) {
@@ -136,16 +138,24 @@ class Cart extends List {
       }
     }
   }
+
   removeProduct(prod) {
     this.getJSON(API.deleteFromBasket)
       .then(d => {
         if (d.result) {
-          console.log(`Товар ${prod.dataset.id} удален из корзины`);
+          // console.log(`Товар ${prod.dataset.id} удален из корзины`);
           this._removeProduct(prod);
         }
         this._render();
       })
   } 
+
+  getCoast() {
+    // console.log(this.items);
+    let items = [...this.items];
+    console.log(items);
+    return items.map(p => p.price * p.quantity).reduce((a, b) => a + b);
+  }
 }
 
 
@@ -225,3 +235,32 @@ const lists = {
 
 let cart = new Cart(API.getBasket, '.cart-block');
 let cat = new Catalog(cart, API.catalogData, '.products');
+
+
+// let vue = new Vue({
+//   el: "#app",
+//   data: {
+//     cost: 0,
+//     cart: cart,
+//     cat: cat,
+//     comments: [], 
+//     limit: 1,                
+//     url: 'https://jsonplaceholder.typicode.com/comments',
+//   },
+//   methods: {    
+//     addProduct() {
+      
+//     },
+//     load() {
+
+//     }
+//   },
+//   computed: {
+//     getCoast() {
+//       return this.cart.getCoast();
+//     }
+//   },
+//   mounted() { 
+    
+//   }
+// }); 

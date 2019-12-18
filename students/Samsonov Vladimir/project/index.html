@@ -17,17 +17,29 @@
                 </button>
             </form>
             <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+            <div class="cart-block invisible">
+            </div>
         </div>
     </header>
     <main>
-        <div class="products"></div>
+        <div class="products">
+            <div class="product-item" v-for="item of items" :key="items.id_product" :data-id="item.id_product">
+                <img :src="img" alt="Some img">
+                <div class="desc">
+                    <h3> {{ item.product_name }} </h3>
+                    <p>{{ item.price}} $</p>
+                    <button class="buy-btn" :data-id="item.id_product" :data-name="item.product_name" :data-image="item.img" :data-price="item.price">Купить</button>
+                </div>
+            </div>
+        </div>
     </main>
 
 
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"crossorigin="anonymous"></script>
     <!-- <script src="js/main.js"></script> -->
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+    <script src="js/vue.js"></script>
 </body>
 </html>

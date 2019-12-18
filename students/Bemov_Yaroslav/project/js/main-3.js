@@ -44,14 +44,14 @@ class Item {
     }
 
     render() {
-        return `<div class="product-item" data-id="${this.id}">
+        return `<div class="product-item" data-id="${this.id_product}">
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">
-                        <h3>${this.name}</h3>
+                        <h3>${this.product_name}</h3>
                         <p>${this.price} $</p>
                         <button class="buy-btn" 
-                        data-id="${this.id}"
-                        data-name="${this.name}"
+                        data-id="${this.id_product}"
+                        data-name="${this.product_name}"
                         data-image="${this.img}"
                         data-price="${this.price}">Купить</button>
                     </div>
@@ -127,9 +127,9 @@ class CartList extends List {
 
     _addListeners() {
         //кнопка скрытия и показа корзины
-        document.querySelector('.btn-cart').addEventListener('click', () => {
-            document.querySelector('.cart-block').classList.toggle('invisible');
-        });
+        // document.querySelector('.btn-cart').addEventListener('click', () => {
+        //     document.querySelector('.cart-block').classList.toggle('invisible');
+        // });
 
         //кнопки удаления товара (добавляется один раз)
         document.querySelector('.cart-block').addEventListener('click', (evt) => {
@@ -146,6 +146,9 @@ class CartList extends List {
             })
             .then(() => {
                 this.render()
+            })
+            .catch(() => {
+                app.isCartEmpty()
             })
             .finally(() => {
                 this._addListeners()

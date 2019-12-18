@@ -70,7 +70,7 @@ class Catalog extends List {
   _addListeners() {
     document.querySelector('.products').addEventListener('click', (evt) => {
       if (evt.target.classList.contains('buy-btn')) {
-        // addProduct(evt.target);
+        this.cart._addProduct(evt.target);
       }
     })
   }
@@ -78,17 +78,25 @@ class Catalog extends List {
   _init() {
     this.getJSON(API + this.url)
       .then(data => { this.items = data })
-      .then(() => { this._render() })
+      .then(() => { this._render(this.items) })
       .finally(() => { this._addListeners() })
   }
 }
 
 class CatalogItem extends Item { }  // уже готово. НО!!! метод render можно было оставить здесь, а не в супере. 
-// TODO
-class Cart extends List {
+
+class Cart extends List { //TODO
   constructor(url = '/getBasket.json', container = '.cart-block') {
     super(url, container)
   }
+
+  _init() {
+    this.getJSON(API + this.url)
+      .then(data => { this.items = data.contents })
+      .then(() => { this._render(this.items) })
+      .finally(() => { this._addListeners() })
+  }
+
   _addListeners() {
     //кнопка скрытия и показа корзины
     document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -97,9 +105,27 @@ class Cart extends List {
     //кнопки удаления товара (добавляется один раз)
     document.querySelector('.cart-block').addEventListener('click', (evt) => {
       if (evt.target.classList.contains('del-btn')) {
-        // removeProduct(evt.target);
+        this._removeProduct(evt.target)
       }
     })
+  }
+
+  _addProduct(prod) {
+    this.getJSON(API + '/addToBasket.json')
+        .then(d => {
+          if (d.result) {
+            console.log(`Товар ${prod.dataset.name} добавлен в корзину`)
+          }
+        })
+  }
+
+  _removeProduct(prod) {
+    this.getJSON(API + '/deleteFromBasket.json')
+        .then(d => {
+          if (d.result) {
+            console.log(`Товар ${prod.dataset.id} удален из корзины`)
+          }
+        })
   }
 }
 
@@ -110,40 +136,40 @@ class CartItem extends Item {
   }
 
   render() {
-    return `<div class="cart-item" data-id="${this.id}">
+    return `<div class="cart-item" data-id="${this.id_product}">
               <div class="product-bio">
                   <img src="${this.img}" alt="Some image">
                   <div class="product-desc">
-                      <p class="product-title">${this.name}</p>
+                      <p class="product-title">${this.product_name}</p>
                       <p class="product-quantity">Quantity: ${this.quantity}</p>
                       <p class="product-single-price">$${this.price} each</p>
                   </div>
               </div>
               <div class="right-block">
                   <p class="product-price">${this.quantity * this.price}</p>
-                  <button class="del-btn" data-id="${this.id}">&times;</button>
+                  <button class="del-btn" data-id="${this.id_product}">&times;</button>
               </div>
             </div>`
   }
 }
 
-const lists {
+const lists = {
   Catalog: CatalogItem,
   Cart: CartItem
 }
 const cart = new Cart()
 const catalog = new Catalog(cart)
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-  document.querySelector('.cart-block').classList.toggle('invisible');
-})
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('del-btn')) {
-    removeProduct(evt.target);
-  }
-})
+// //кнопка скрытия и показа корзины
+// document.querySelector('.btn-cart').addEventListener('click', () => {
+//   document.querySelector('.cart-block').classList.toggle('invisible');
+// })
+// //кнопки удаления товара (добавляется один раз)
+// document.querySelector('.cart-block').addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('del-btn')) {
+//     removeProduct(evt.target);
+//   }
+// })
 
 
 // Добавление продуктов в корзину

@@ -1,38 +1,59 @@
 'use strict';
 
-//заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const names = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
-//Класс товара
-class Item {
+const url = [
+    //ссылка на товары
+    'https://raw.githubusercontent.com/malashenok/JS_advanced/master/online-store-api/response/catalogData.json',
+];
 
-    constructor(id, name, price, img) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.img = img;
+//Класс каталога
+class Catalog {
+    constructor (container, items) {
+        this.container = container;
+        this.items = items;
     }
 
+    _render () {
+        let block = document.querySelector (this.container);
+        let htmlStr = '';
+        this.items.forEach (item => {
+            let prod = new CatalogItem(item);
+            htmlStr += prod.render();
+        })
+        block.innerHTML = htmlStr;
+    }
+
+    render () {
+        this._render ();
+    }
+}
+
+//Класс товара
+class CatalogItem {
+    constructor (obj) {
+        this.id_product = obj.id_product;
+		this.name = obj.product_name;
+		this.price = obj.price;
+		this.img = image;
+    }
     /**
      * Метод формирует HTML для товара
      * @returns {string} HTML содержимое элемента в виде строки
      **/
-    createItemHTML() {
-        return `<div class="product-item" data-id="${this.id}">
+    render () {
+		return `<div class="product-item" data-id="${this.id_product}">
                 <img src="${this.img}" alt="Some img">
                 <div class="desc">
-                    <h3>${this.name}</h3>
-                    <p>${this.price} $</p>
-                    <button class="buy-btn" 
-                    data-id="${this.id}"
-                    data-name="${this.name}"
-                    data-image="${this.img}"
-                    data-price="${this.price}">Купить</button>
-                </div>
+					<h3>${this.name}</h3>
+					<p>${this.price} руб.</p>
+					<button class="buy-btn" 
+					data-id="${this.id_product}"
+					data-name="${this.name}"
+					data-image="${this.img}"
+					data-price="${this.price}">Купить</button>
+				</div>
             </div>`;
     }
 }
@@ -47,19 +68,19 @@ class Cart {
 
     /**
      * Метод добавляет товар в корзину
-     *  @param {Item} item
+     *  @param {CatalogItem} 
      **/
     addItem(item) {
 
-        if (this.items[item.id] == undefined) {
-            this.items[item.id] = {
-                name: item.name,
+        if (this.items[item.dataset.id] == undefined) {
+            this.items[item.dataset.id] = {
+                name: item.dataset.name,
                 img: cartImage,
-                price: item.price,
+                price: item.dataset.price,
                 quantity: 1,
             }
         } else {
-            this.items[item.id].quantity++;
+            this.items[item.dataset.id].quantity++;
         }
     }
 
@@ -70,12 +91,13 @@ class Cart {
      **/
     removeItem(item) {
 
-        if (this.items[item.id].quantity == 1) {
-            delete this.items[item.id];
+        if (this.items[item.dataset.id].quantity == 1) {
+            delete this.items[item.dataset.id];
         } else {
-            this.items[item.id].quantity--;
+            this.items[item.dataset.id].quantity--;
         }
     }
+
     /**
      * Метод считает суммарную стоимость товаров в корзине
      * возвращает HTML с суммой в виде строки 
@@ -85,7 +107,7 @@ class Cart {
         this.totalSum = this.items.reduce((sum, current) =>
             sum + current.price * current.quantity, 0);
         return `<div class="total-sum">
-                    <h3>Total: $${this.totalSum}</h3>
+                    <h3>Всего: ${this.totalSum} руб.</h3>
                 </div>`;
     }
     /**
@@ -101,7 +123,7 @@ class Cart {
                             <div class="product-desc">
                                 <p class="product-title">${current.name}</p>
                                 <p class="product-quantity">Quantity: ${current.quantity}</p>
-                                <p class="product-single-price">$${current.price} each</p>
+                                <p class="product-single-price">${current.price}</p>
                             </div>
                         </div>
                         <div class="right-block">
@@ -111,19 +133,6 @@ class Cart {
                     </div>`, '');
     }
 }
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let userCart = new Cart();
-let list = fetchData();
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < names.length; i++) {
-        arr.push(new Item(ids[i], names[i], prices[i], image));
-    }
-    return arr;
-};
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -144,24 +153,15 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     }
 })
 
-//Рендер списка товаров (каталога)
-function renderProducts() {
-    let str = '';
-    list.forEach(item =>
-        str += item.createItemHTML()
-    );
-    document.querySelector('.products').innerHTML = str;
-}
-
 //Добавление товаров в корзину
 function addProduct(product) {
-    userCart.addItem(list[+product.dataset.id - 1]);
+    userCart.addItem(product);
     renderCart();
 }
 
 //удаление товаров из корзины
 function removeProduct(product) {
-    userCart.removeItem(list[+product.dataset.id - 1]);
+    userCart.removeItem(product);
     renderCart();
 }
 
@@ -170,4 +170,76 @@ function renderCart() {
     document.querySelector(`.cart-block`).innerHTML = userCart.createCartHTML() + userCart.getTotalSum();
 }
 
-renderProducts();
+
+//глобальные сущности корзины и каталога
+let userCart = new Cart();
+let catalog = null;
+
+//callback
+function makeCallBackRequest(url) {
+    let xhr = new XMLHttpRequest();
+    let arr = [];
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            arr = JSON.parse(xhr.responseText);
+            catalog = new Catalog('.products', arr);
+            catalog.render();
+        }
+    }
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+
+function async(callback) {
+    setTimeout(() => {
+        callback(url[0])
+    }, 0);
+}
+
+
+//Вызов callback
+//async(makeCallBackRequest);
+
+//функция с Promise
+function makePromiseRequest(url) {
+    return new Promise(res => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                res(xhr.responseText);
+            }
+        }
+        xhr.open('GET', url, true);
+        xhr.send();
+    });
+}
+
+//Вызов Promise
+// makePromiseRequest(url[0])
+//     .then(dJson =>
+//         JSON.parse(dJson)
+//     )
+//     .then(arr => {
+//         catalog = new Catalog('.products', arr);
+//     })
+//     .then(() => {
+//         catalog.render();
+//     }) 
+
+
+//функция с fetch
+function fetchRequest(url) {
+    return fetch(url);
+}
+
+//вызов fetch
+fetchRequest(url[0])
+     .then (dJson => dJson.json())
+     .then(arr => {
+            catalog = new Catalog('.products', arr);
+    })
+     .then(() => {
+         catalog.render();
+     })

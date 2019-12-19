@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
     <header>
         <div class="logo">E-shop</div>
@@ -16,17 +18,49 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+            <button class="btn-cart" @click="cartShown = !cartShown" type="button">Корзина</button>
+            <div class="cart-block" v-show="cartShown">
+                <div class="cart-item"  v-for="item of items" :key="`${item.id_product}`" :data-id="`${item.id_product}`">
+                    <div class="product-bio">
+                        <img src='https://placehold.it/100x80' alt="Some image">
+                        <div class="product-desc">
+                            <p class="product-title">{{item.product_name}}</p>
+                            <p class="product-quantity">{{item.quantity}}</p>
+                            <p class="product-single-price">{{item.price}} each</p>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">{{item.quantity * item.price}}</p>
+                        <button class="del-btn" @click="removeProduct({item})" :data-id="`${item.id_product}`">&times;</button>
+                    </div>
+                </div>
+                <div class="cart_footer">
+                    <h5>Всего товаров {{items.length}}</h5>
+                    <h5>Итоговая стоимость {{amount}} денег</h5>
+                </div>
+            </div>
         </div>
     </header>
     <main>
-        <div class="products"></div>
+        <div class="products">
+
+            <div class="product-item" v-for="item of items" :key="`${item.id_product}`"   :data-id="`${item.id_product}`">
+                <img src='https://placehold.it/200x150' alt="Some img">
+                <div class="desc">
+                    <h3>{{item.product_name}}</h3>
+                    <p>{{item.price}}</p>
+                    <button class="buy-btn" @click="addProduct({item})" :data-id="`${item.id_product}`" :data-name="`${item.product_name}`"  :data-price="`${item.price}`">Купить</button>
+                </div>
+            </div>
+
+        </div>
     </main>
 
 
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

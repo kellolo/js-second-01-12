@@ -1,0 +1,33 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #namewrong {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <textarea cols="100" rows="10" id="textarea1">
+        As Polonius's son Laertes prepares to depart for a visit to France, Polonius offers him advice that culminates in the maxim 'to thine own self be true.'[6] Polonius's daughter, Ophelia, admits her interest in Hamlet, but Laertes warns her against seeking the prince's attention, and Polonius orders her to reject his advances. That night on the rampart, the ghost appears to Hamlet, telling the prince that he was murdered by Claudius and demanding that Hamlet avenge him. Hamlet agrees, and the ghost vanishes. The prince confides to Horatio and the sentries that from now on he plans to 'put an antic disposition on', or act as though he has gone mad, and forces them to swear to keep his plans for revenge secret; however, he remains uncertain of the ghost's reliability.
+      </textarea>
+    <textarea cols="100" rows="10" id="textarea2"></textarea>
+
+    <script>
+        
+        let text = document.getElementById('textarea1').value;
+        let regexp = /(^|\s|\')\'([^']+?)\'/g;
+        text = text.replace(regexp, '$1\"$2\"');
+        document.getElementById('textarea2').value = text;
+
+    </script>
+</body>
+
+</html>

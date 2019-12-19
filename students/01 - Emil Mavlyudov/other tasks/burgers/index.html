@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="#">
+
+         <fieldset>
+             <p>Size</p>
+            <label>
+                <input type="radio" name="size" value="big" data-price="100" data-calories="200" checked> Big
+            </label>
+            <label>
+                <input type="radio" name="size" value="medium" data-price="75" data-calories="150"> Medium
+            </label>
+            <label>
+                <input type="radio" name="size" value="small" data-price="50" data-calories="100"> Small
+            </label>
+            </fieldset>
+            
+            <fieldset>
+                <p>Meat</p>
+                <label>
+                    <input type="radio" name="meat" value="beef" data-price="120" data-calories="200" checked> Beef
+                </label>
+                <label>
+                    <input type="radio" name="meat" value="pork" data-price="100" data-calories="230"> Pork
+                </label>
+                <label>
+                    <input type="radio" name="meat" value="chiken" data-price="80" data-calories="160"> Chiken
+                </label>
+                <label>
+                    <input type="radio" name="meat" value="fish" data-price="150" data-calories="140"> Fish
+                </label>
+            </fieldset>
+            
+            <fieldset>
+                 <p>Toping</p>
+                <label>
+                    <input type="checkbox" name="toping" value="holopenio" data-price="30" data-calories="20"> Holopenio
+                </label>
+                <label>
+                    <input type="checkbox" name="toping" value="cheese" data-price="40" data-calories="30"> Cheese
+                </label>
+                <label>
+                    <input type="checkbox" name="toping" value="bacon" data-price="50" data-calories="40"> Bacon
+                </label>
+            
+            </fieldset>
+            </form>
+            <button id="order-button">Order</button> 
+            <div>
+                <p>Цена: <span id="price"></span></p>
+                <p>Калории: <span id="calories"></span></p>
+            </div>   
+    
+    <script>
+        window.onload = () => {
+            document.querySelector ("#order-button").addEventListener ("click", function () {
+                let burger = new Burger ('size', 'meat', 'toping')
+                burger.showSum('#price', '#calories')
+            })
+        }
+
+        class Burger {
+            constructor(size, meat, topings) {
+                this.size = new Parameter (this._select (size))
+                this.meat = new Parameter (this._select (meat))
+                this.topings = this._getDomArray (topings)
+
+
+            }
+
+            _select (attrName) {
+                return document.querySelector (`input[name="${attrName}"]:checked`)
+            }
+
+            _selectAll (attrName) {
+                return [...document.querySelectorAll (`input[name="${attrName}"]:checked`)]
+            }
+
+            _getDomArray (attrName) {
+                let arr = []
+                this._selectAll (attrName).forEach(item => {
+                    arr.push (new Parameter (item))
+                }) 
+                return arr
+            }
+
+            _calc (parameterPropName) {
+                let result = this.size[parameterPropName] + this.meat[parameterPropName]
+                this.topings.forEach (top => {
+                    result += top [parameterPropName]
+                })
+                return result
+            }
+
+            showSum (price, calories) {
+                document.querySelector (price).innerText = this._calc ("price")
+                document.querySelector (calories).innerText = this._calc ("calories")
+                
+            }
+        }
+
+        class Parameter {
+            constructor (domEl) {
+                this.name = domEl.value
+                this.price = +domEl.dataset['price']
+                this.calories = +domEl.dataset['calories']
+            }
+        }
+    </script>
+</body>
+</html>

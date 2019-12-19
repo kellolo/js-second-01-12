@@ -11,7 +11,6 @@
 
 <body>
     <div class="contener">
-
         <header class="header">
             <div class="menuTop">
                 <a href="index.html" class="menuTop__logo">
@@ -26,11 +25,11 @@
                     <span class="menuTop__line"></span>
                 </div>
                 <nav class="menuTop__nav" id="menuTop__nav">
-                    <a href="#" class="menuTop__a">Home</a>
-                    <a href="#" class="menuTop__a">Devices</a>
-                    <a href="#" class="menuTop__a">Delivery & Payment</a>
-                    <a href="#" class="menuTop__a">Guarantee</a>
-                    <a href="#" class="menuTop__a">About Us</a>
+                    <a href="#" class="menuTop__a" data-id="#">Home</a>
+                    <a href="#" class="menuTop__a" data-id="#">Devices</a>
+                    <a href="#" class="menuTop__a" data-id="#">Delivery & Payment</a>
+                    <a href="#" class="menuTop__a" data-id="#">About Us</a>
+                    <a href="#" class="menuTop__a" data-id="contacts">Contacts Us</a>
                 </nav>
                 <div class="menuTop__contCart">
                     <div class="menuTop__CartSvg">
@@ -43,7 +42,7 @@
                     <span class="menuTop__countCart">0</span>
                     <div class="contCartProducts" id="contCartProducts">
                         <div class="contCartProducts__bodyCart">
-                           <!--  <div class="contCartProducts__contItem">
+                            <!--  <div class="contCartProducts__contItem">
                                 <img src="build/img/Photo1.png" width="198" height="180" alt="imgProduct"
                                     class="contCartProducts__img">
                                 <span class="contCartProducts__name">Lorem ipsum dolor sit.</span>
@@ -76,7 +75,7 @@
                                     <button class="contCartProducts__del">&#9660</button>
                                 </div>
                             </div>-->
-                        </div> 
+                        </div>
                         <div class="contCartProducts__rethult">
                             <span class="contCartProducts__span">Итого:</span>
                             <span class="contCartProducts__allSumm">$ 0</span>
@@ -110,61 +109,61 @@
                 </div>
             </div>
         </header>
-        <section class="slider">
-            <div class="next" data-id="next">
-                <svg width="6" height="11" class="nextSvg" data-id="next">
-                    <path data-id="next"
-                        d="M5.667,5.877 L1.832,9.700 C1.408,10.123 0.721,10.123 0.298,9.700 C-0.126,9.279 -0.126,8.593 0.298,8.170 L3.465,5.014 L0.298,1.857 C-0.126,1.434 -0.126,0.749 0.298,0.326 C0.721,-0.096 1.408,-0.096 1.832,0.326 L5.667,4.150 C5.904,4.386 5.994,4.704 5.965,5.013 C5.994,5.323 5.904,5.640 5.667,5.877 Z" />
-                </svg>
-            </div>
-            <div class="pagination">
-                <div class="check checkActiv" data-number='1'></div>
-                <div class="check" data-number='2'></div>
-                <div class="check" data-number='3'></div>
-                <div class="check" data-number='4'></div>
-            </div>
-            <div class="bunner bunnerActiv" data-id='1'>
-                <div class="bunner__contContent">
-                    <h2 class="bunner__h2">The best product 1</h2>
-                    <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
-                        taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
-                    <button class="bunner__button">Buy now</button>
-
-                </div>
-                <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
-            </div>
-            <div class="bunner" data-id='2'>
-                <div class="bunner__contContent">
-                    <h2 class="bunner__h2">The best product 2</h2>
-                    <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
-                        taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
-                    <button class="bunner__button">Buy now</button>
-
-                </div>
-                <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
-            </div>
-            <div class="bunner" data-id='3'>
-                <div class="bunner__contContent">
-                    <h2 class="bunner__h2">The best product 3</h2>
-                    <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
-                        taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
-                    <button class="bunner__button">Buy now</button>
-
-                </div>
-                <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
-            </div>
-            <div class="bunner" data-id='4'>
-                <div class="bunner__contContent">
-                    <h2 class="bunner__h2">The best product 4</h2>
-                    <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
-                        taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
-                    <button class="bunner__button">Buy now</button>
-
-                </div>
-                <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
-            </div>
-        </section>
         <main class="main">
+                <section class="slider">
+                        <div class="next" data-id="next">
+                            <svg width="6" height="11" class="nextSvg" data-id="next">
+                                <path data-id="next"
+                                    d="M5.667,5.877 L1.832,9.700 C1.408,10.123 0.721,10.123 0.298,9.700 C-0.126,9.279 -0.126,8.593 0.298,8.170 L3.465,5.014 L0.298,1.857 C-0.126,1.434 -0.126,0.749 0.298,0.326 C0.721,-0.096 1.408,-0.096 1.832,0.326 L5.667,4.150 C5.904,4.386 5.994,4.704 5.965,5.013 C5.994,5.323 5.904,5.640 5.667,5.877 Z" />
+                            </svg>
+                        </div>
+                        <div class="pagination">
+                            <div class="check checkActiv" data-number='1'></div>
+                            <div class="check" data-number='2'></div>
+                            <div class="check" data-number='3'></div>
+                            <div class="check" data-number='4'></div>
+                        </div>
+                        <div class="bunner bunnerActiv" data-id='1'>
+                            <div class="bunner__contContent">
+                                <h2 class="bunner__h2">The best product 1</h2>
+                                <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
+                                    taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
+                                <button class="bunner__button">Buy now</button>
+            
+                            </div>
+                            <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
+                        </div>
+                        <div class="bunner" data-id='2'>
+                            <div class="bunner__contContent">
+                                <h2 class="bunner__h2">The best product 2</h2>
+                                <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
+                                    taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
+                                <button class="bunner__button">Buy now</button>
+            
+                            </div>
+                            <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
+                        </div>
+                        <div class="bunner" data-id='3'>
+                            <div class="bunner__contContent">
+                                <h2 class="bunner__h2">The best product 3</h2>
+                                <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
+                                    taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
+                                <button class="bunner__button">Buy now</button>
+            
+                            </div>
+                            <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
+                        </div>
+                        <div class="bunner" data-id='4'>
+                            <div class="bunner__contContent">
+                                <h2 class="bunner__h2">The best product 4</h2>
+                                <p class="bunner__p"> At first, for some time, I was not able to answer him one word; but as he had
+                                    taken me in his arms I held fast by him, or I should have fallen to the ground.</p>
+                                <button class="bunner__button">Buy now</button>
+            
+                            </div>
+                            <img src="https://via.placeholder.com/300x480" height="480" alt="" class="bunner__imgProduct">
+                        </div>
+                    </section>
             <section class="bodyShop">
                 <div class="search">
                     <div class="search__sortBy">
@@ -492,16 +491,48 @@
                     </div>
                 </div>
             </section>
-        </main>
+            <section class="feedBack">
+                <h2 class="feedBack__h2">Форма обратной связи</h2>
+                <form  class="feedBack__form">
+                    <div class="feedBack__contForParams">
+                        <label for="userName" class="feedBack__lName">Ваше Имя:</label>
+                        <span class="feedBack__hint" data-id="Name">Имя содержит только буквы</span>
+                        <input type="text" data-id="Name" data-flag="false" class="feedBack__Input"  placeholder="Имя">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userPhone" class="feedBack__lName">Телефон:</label>
+                        <span class="feedBack__hint" data-id="Phone">+7(000)000-0000</span>
+                        <input type="tel" data-id="Phone" data-flag="false" class="feedBack__Input" placeholder="Телефон +7(000)000-0000">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userMail" class="feedBack__lName">E-mail:</label>
+                        <span class="feedBack__hint" data-id="Mail">mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+                        </span>
+                        <input type="mail" data-id="Mail" data-flag="false" class="feedBack__Input" placeholder="Email">
+                    </div>
+                    <div class="feedBack__contForParams">
+                        <label for="userText" class="feedBack__lName">Сообщение:</label>
+                        <textarea id="userText" data-id="Text" class="feedBack__Input" placeholder="Сообщение"></textarea>
+                    </div>                 
+                    <button type="button" class="feedBack__button-block" id="formBut">Send</button> 
+                    <div class="feedBack__darck" id="off"></div>
+                </form>      
+                <div class="feedBack__modelWind">
+                    <p>Ваше сообщение отправлено!</p>
+                    <p>Мы свяжемся с вами в ближашее время!</p>
+                    <span id="cloesModelWind">&#10008;</span>
+                </div>      
+            </section>
+        </main>      
         <footer class="footer">
             <nav class="nav">
                 <a href="# " class="footer__a"><img src="./build/img/logo.svg" alt="imglogo" class="footer__img"></a>
                 <ul class="nav__ul">
-                    <li class="nav__li"><a href="#" class="nav__ali">home</a></li>
-                    <li class="nav__li"><a href="#" class="nav__ali">Shop</a></li>
-                    <li class="nav__li"><a href="#" class="nav__ali">Team</a></li>
-                    <li class="nav__li"><a href="#" class="nav__ali">About Us</a></li>
-                    <li class="nav__li"><a href="#" class="nav__ali">Contacts</a></li>
+                    <li class="nav__li"><a href="#" class="nav__ali" data-id="#">home</a></li>
+                    <li class="nav__li"><a href="#" class="nav__ali" data-id="#">Shop</a></li>
+                    <li class="nav__li"><a href="#" class="nav__ali" data-id="#">Team</a></li>
+                    <li class="nav__li"><a href="#" class="nav__ali" data-id="#">About Us</a></li>
+                    <li class="nav__li"><a href="#" class="nav__ali" data-id="contacts">Contacts</a></li>
                 </ul>
                 <ul class="nav__socsety">
                     <li class="nav__liIcon"><a href="#" class="nav__aIcon"><i class="icon-twitter nav__icon"></i></a>
@@ -523,6 +554,7 @@
     </div>
     <script src='./build/js/mainHomeWork.js'></script>
     <script src='./build/js/js1.js'></script>
+    <script src='./build/js/validaition_form.js'></script>
 </body>
 
 </html>

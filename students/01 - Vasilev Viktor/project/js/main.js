@@ -1,212 +1,201 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+class Catalog {
+  constructor(container) {
+    this.container = container;
+    this.items = [];
+    this.fetchItems();
+  }
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-});
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-});
+  // // via callback
+  //
+  // callbackGETRequest(url, callback) {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('GET', url);
+  //
+  //   xhr.onreadystatechange = function () {
+  //     if (xhr.readyState === XMLHttpRequest.DONE) {
+  //       if (xhr.status !== 200) {
+  //         console.error('server response is not 200 OK');
+  //       } else {
+  //         const parsedData = JSON.parse(xhr.responseText);
+  //         callback(parsedData);
+  //       }
+  //     }
+  //   };
+  //
+  //   xhr.send();
+  // };
+  //
+  // fetchItems() {
+  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+  //   this.callbackGETRequest(catalogUrl, data => {
+  //     catalog.items = data;
+  //     this._render();
+  //   });
+  // }
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
+  // // via promise
+  //
+  // promiseGETRequest(url) {
+  //   return new Promise((resolve, reject) => {
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open('GET', url);
+  //
+  //     xhr.onreadystatechange = function () {
+  //       if (xhr.readyState === XMLHttpRequest.DONE) {
+  //         if (xhr.status !== 200) {
+  //           reject('server response is not 200 OK');
+  //         } else {
+  //           resolve(xhr.responseText);
+  //         }
+  //       }
+  //     };
+  //
+  //     xhr.send();
+  //   });
+  // };
+  //
+  // fetchItems() {
+  //   const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+  //   this.promiseGETRequest(catalogUrl)
+  //     .then(data => JSON.parse(data))
+  //     .then(parsedData => {
+  //       this.items = parsedData;
+  //       this._render();
+  //     })
+  //     .catch(error => console.error(error));
+  // }
+
+  // via fetch
+
+  fetchItems() {
+    const catalogUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+    fetch(catalogUrl)
+      .then(data => data.json())
+      .then(parsedData => {
+        this.items = parsedData;
+        this._render();
+      })
+      .catch(error => console.error(error));
+  }
+
+  _render() {
+    let block = document.querySelector(this.container);
+    let htmlStr = '';
+    this.items.forEach(item => {
+      let prod = new CatalogItem(item);
+      htmlStr += prod.render();
+    });
+    block.innerHTML = htmlStr;
+  }
 }
 
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        name: items[i],
-        price: prices[i],
-        img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
+class CatalogItem {
+  constructor(obj) {
+    this.product_name = obj.product_name;
+    this.price = obj.price;
+    this.id_product = obj.id_product;
+    this.img = image;
+  }
 
-        add: function() {
-            this.quantity++
-        }
-    }
+  render() {
+    return `
+            <div class="product-item" data-id="${this.id_product}">
+                <img src="${this.img}" alt="Some img">
+                <div class="desc">
+                    <h3>${this.product_name}</h3>
+                    <p>${this.price} $</p>
+                    <button class="buy-btn" 
+                    data-id="${this.id_product}"
+                    data-name="${this.product_name}"
+                    data-image="${this.img}"
+                    data-price="${this.price}">Купить</button>
+                </div>
+            </div>
+        `
+  }
 }
 
-//рендер списка товаров (каталога)
-function renderProducts () {
-    let str = '';
-    for (item of list) {
-        str += item.createTemplate()
-    }
-    document.querySelector('.products').innerHTML = str;
-}
-
-renderProducts ();
-
-//CART
-
-// Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id']; //data-id="1"
-    let find = userCart.find (element => element.id === productId); //товар или false
-    if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
-}
-
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
-
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
-
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
-
-// 1. Добавьте пустые классы для Корзины товаров и Элемента корзины товаров. Продумайте,
-// какие методы понадобятся для работы с этими сущностями.
-
-// 2. Добавьте для GoodsList метод, определяющий суммарную стоимость всех товаров.
-// ***добавил этот метод для класса корзины, потому что на мой взгляд тотал прайс логичнее считать для корзины
 
 class Cart {
-  constructor() {
+  constructor(container) {
+    this.container = container;
     this.cartItems = [];
+    this.fetchCart();
   }
 
   fetchCart() {
-
+    const cartUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json';
+    fetch(cartUrl)
+      .then(data => data.json())
+      .then(parsedData => {
+        this.cartItems = parsedData.contents;
+        this._render();
+      })
+      .catch(error => console.error(error));
   }
 
-  add() {
-
-  }
-
-  update() {
-
-  }
-
-  delete() {
-
-  }
-
-  render() {
-
-  }
-
-  get totalPrice() {
-    return this.cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
-  }
-
-  get totalCount() {
-
+  _render() {
+    let block = document.querySelector(this.container);
+    let htmlStr = '';
+    this.cartItems.forEach(cartItem => {
+      let itemCart = new CartItem(cartItem);
+      htmlStr += itemCart.render();
+    });
+    block.innerHTML = htmlStr;
   }
 }
+
 
 class CartItem {
-  constructor() {
-    this.price = null;
-    this.name = null;
-    this.id = null;
-    this.qty = null;
+  constructor(cartItem) {
+    this.product_name = cartItem.product_name;
+    this.price = cartItem.price;
+    this.id_product = cartItem.id_product;
+    this.quantity = cartItem.quantity;
+    this.img = cartImage;
   }
 
   render() {
-
+    return `<div class="cart-item" data-id="${this.id_product}">
+                <div class="product-bio">
+                    <img src="${this.img}" alt="Some image">
+                    <div class="product-desc">
+                        <p class="product-title">${this.product_name}</p>
+                        <p class="product-quantity">Quantity: ${this.quantity}</p>
+                        <p class="product-single-price">$${this.price} each</p>
+                    </div>
+                </div>
+                <div class="right-block">
+                    <p class="product-price">${this.quantity * this.price}</p>
+                    <button class="del-btn" data-id="${this.id_product}">&times;</button>
+                </div>
+            </div>
+        `
   }
 }
 
-class Goods {
-  constructor() {
-    this.goods = [];
-  }
+const catalog = new Catalog('.products');
+const cart = new Cart('.cart-block');
 
-  fetchGoods() {
 
-  }
-
-  render() {
-
-  }
-}
-
-class Good {
-  constructor() {
-    this.price = null;
-    this.name = null;
-    this.id = null;
-  }
-
-  render() {
-
-  }
-}
+//кнопка скрытия и показа корзины
+document.querySelector('.btn-cart').addEventListener('click', () => {
+  document.querySelector('.cart-block').classList.toggle('invisible');
+});
+// //кнопки удаления товара (добавляется один раз)
+// document.querySelector('.cart-block').addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('del-btn')) {
+//     removeProduct(evt.target);
+//   }
+// });
+// //кнопки покупки товара (добавляется один раз)
+// document.querySelector('.products').addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('buy-btn')) {
+//     addProduct(evt.target);
+//   }
+// });

@@ -1,0 +1,29 @@
+.myForm {
+    display: flex;    
+    flex-direction: column;    
+}
+
+.myFormBox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;    
+}
+
+.myForm button {    
+    width: 250px;
+}
+
+.myFormBoxElement {    
+    width: 250px; 
+    height: 20px;
+}
+
+.myFormTextarea {
+    width: 250px;
+    margin-bottom: 15px;
+}
+
+.myFormBoxError {
+    display: none;
+    margin: 0;    
+}

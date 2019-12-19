@@ -7,65 +7,62 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./build/css/all.css">
+    <style>
+        .contener {
+            width: 1200px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+        }
+
+        .input {
+            display: flex;
+            width: 100%;
+        }
+
+        .output {
+            margin-top: 20px;
+            display: flex;
+            width: 100%;
+        }
+
+        button {
+            width: 20%;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="contener">
-        <div class="Burg">
-            <h3 class="Burg__h3">Big Burger</h3>
-            <div class="Burg__contImg">
-                <img src="build/img/big-burger.png" alt="" class="Burg__img">
-            </div>
-            <select name="big-burg" id="big-burg" class="Burg__select">
-                <option value="sheese" class="Burg__option">С сыром</option>
-                <option value="salad" class="Burg__option">С салатом</option>
-                <option value="potatoes" class="Burg__option">С картофелем</option>
-            </select>
-            <div class="Burg__contSeasoi">
-                <input type="checkbox" class="Burg__seasoning p1">
-                <span class="Burg__spanSeasoing">C приправой</span>
-            </div>
-            <div class="Burg__contSeasoi">
-                <input type="checkbox" class="Burg__seasoning p2">
-                <span class="Burg__spanSeasoing">С майонезом</span>
-            </div>
-            <button class="Burg__button">Добавить в заказ</button>
+        <div class="input">
+            If you'd like to learn more about 'Vue before diving in', we 'created' a video's walking through the core
+            principles and a sample project.
         </div>
-        <div class="Burg">
-            <h3 class="Burg__h3">Small Burger</h3>
-            <div class="Burg__contImg">
-                <img src="build/img/small-burger.png" alt="" class="Burg__img">
-            </div>
-            <select name="small-burg" id="small-burg" class="Burg__select">
-                <option value="cheese" class="Burg__option">С сыром</option>
-                <option value="salad" class="Burg__option">С салатом</option>
-                <option value="potatoes" class="Burg__option">С картофелем</option>
-            </select>
-            <div class="Burg__contSeasoi">
-                <input type="checkbox" class="Burg__seasoning">
-                <span class="Burg__spanSeasoing">C приправой</span>
-            </div>
-            <div class="Burg__contSeasoi">
-                <input type="checkbox" class="Burg__seasoning">
-                <span class="Burg__spanSeasoing">С майонезом</span>
-            </div>
-            <button class="Burg__button">Добавить в заказ</button>
+        <div class="output">
         </div>
-        <h2 class="h2">Ваш заказ</h2>
-        <div class="contOders">
-            <div class="contOders__title">
-                <p> Название</p>
-                <p> Начинка</p>
-                <p> Приправа </p>
-                <p> Майонез</p>
-                <p> Цена</p>
-                <p> Калорийность</p>
-            </div>
-        </div>
-        <button class="button">Отменить заказ</button>
+        <button>Коновентировать</button>
 
     </div>
-    <script src="./build/js/main.js" ></script>
+    <script>
+        window.onload = () => {
+
+            document.querySelector('button').addEventListener('click', () => {
+                let regExp = /('[^A-zА-я])|([^A-zА-я]')/g
+                let str1 = document.querySelector('.input').innerHTML
+                let arr = [...str1.match(regExp)]
+                let arr1 = []
+                arr.forEach((e, i) => {
+                    arr1.push(e.replace(/[']/, `"`))
+                })
+                arr1.forEach((e, i) => {
+                    str1 = str1.replace(arr[i], arr1[i])
+                })
+                document.querySelector('.output').innerHTML = str1
+            })
+
+        }
+    </script>
 </body>
 
 </html>

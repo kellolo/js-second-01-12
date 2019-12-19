@@ -7,6 +7,18 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
 // const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 100500];
 // const ids = [1, 2, 3, 4, 5, 6, 7, 8, 000];
 
+let app = new Vue ({
+  el: '#app',
+  data: {
+    isVisibleCart: false
+  },
+  methods: {
+    showCart() {
+
+    }
+  },
+})
+
 class List {  // super for Catalog and Cart
   constructor(url, container) {
     this.container = container
@@ -160,17 +172,6 @@ const lists = {
 const cart = new Cart()
 const catalog = new Catalog(cart)
 
-// //кнопка скрытия и показа корзины
-// document.querySelector('.btn-cart').addEventListener('click', () => {
-//   document.querySelector('.cart-block').classList.toggle('invisible');
-// })
-// //кнопки удаления товара (добавляется один раз)
-// document.querySelector('.cart-block').addEventListener('click', (evt) => {
-//   if (evt.target.classList.contains('del-btn')) {
-//     removeProduct(evt.target);
-//   }
-// })
-
 
 // Добавление продуктов в корзину
 // function addProduct(product) {
@@ -225,42 +226,3 @@ const catalog = new Catalog(cart)
 
 //   document.querySelector(`.cart-block`).innerHTML = allProducts;
 // }
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-// let userCart = [];
-//var list = fetchData ();
-
-/*
-* создание массива объектов - имитация загрузки данных с сервера
-*/
-// function fetchData() {
-//   let arr = [];
-//   for (let i = 0; i < items.length; i++) {
-//     arr.push(createProduct(i));
-//   }
-//   return arr
-// };
-
-/*
-* создание товара
-*/
-// function createProduct(i) {
-//   return {
-//     id_product: ids[i],
-//     product_name: items[i],
-//     price: prices[i],
-//     img: image,
-//   }
-// };
-
-//рендер списка товаров (каталога)
-// function renderProducts() {
-//     //let arr = [];
-//     let str = ''
-//     for (item of list) {
-//         str += item.createTemplate()
-//     }
-//     document.querySelector('.products').innerHTML = str;
-// }
-
-// renderProducts();

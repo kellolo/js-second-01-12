@@ -19,8 +19,8 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-                <button class="btn-cart" type="button">Корзина</button>
-                <div class="cart-block"></div>
+                <button class="btn-cart" @click="showCart" type="button">Корзина</button>
+                <div class="cart-block" v-show="isVisibleCart"></div>
             </div>
         </header>
         <main>

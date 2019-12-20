@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Les 5</title>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <input type="text" class="goods-search" v-model='searchLine'>
+      <button class="search-button" type="button" v-on:click='filterGoods'>Искать</button>
+      <button class="cart-button" type="button">Корзина</button>
+    </header>
+    <main>
+      <div class="goods-list" v-if='filteredGoods.length > 0'>
+          <div class="goods-item" v-for="good in filteredGoods">
+            <h3>{{ good.product_name }}</h3>
+            <p>{{ good.price }}</p>
+          </div>
+      </div>
+      <div v-else>
+        <p>Нет данных</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+   'use strict';
+      const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+      
+      const app = new Vue({
+        el: '#app',
+        data: {
+          goods: [],
+          filteredGoods: [],
+          searchLine: '',
+          isVisibleCart: true
+        },
+        methods:{
+          makeGETRequest(url, callback) {
+          let xhr = new XMLHttpRequest()
+
+          xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+          callback(xhr.responseText)
+          }
+          }
+
+          xhr.open('GET', url, true)
+          xhr.send()
+          },
+
+          mounted() {
+          this.makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
+          this.goods = goods;
+          this.filteredGoods = goods;
+          })
+          },
+
+          filterGoods(){
+            console.log('goods are filtred')
+          }
+        }
+
+      })
+  </script>
+
+</body>
+
+</html>

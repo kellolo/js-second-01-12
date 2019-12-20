@@ -2,30 +2,32 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
-const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+// const url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad', 'something'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 100500];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8, 000];
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad', 'something'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 100500];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8, 000];
 
 class Catalog {
   constructor(container) {
     this.container = container
-    this.items = []
-    this._init()
+    // this.items = []
+    this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+    // this._init()
+    this._getProductsCallback(this.url, this._render)
   }
 
   _init() {
     //this.items = fetchData()
-    this.items = this._getProducts(url)
-    this._render()
+    //this._render()
+    // this._getProductsCallback(this.url, this._render)
   }
 
-  _render() {
-    let block = document.querySelector(this.container)
+  _render(items) {
+    let block = document.querySelector('.products')
     let htmlStr = ''
-    console.log(this.items)
-    this.items.forEach(item => {
+    console.log(items)
+    items.forEach(item => {
       let prod = new CatalogItem(item)
       htmlStr += prod.render()
     })
@@ -33,37 +35,62 @@ class Catalog {
     block.innerHTML = htmlStr
   }
 
-  _getProducts(url) {
-    let arr = []
-    this._makeGETRequest(url)
-      .then(dJSON => JSON.parse(dJSON))
-      .then(parsedData => { arr = parsedData })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        console.log('finally')
-      })
-    return arr
-  }
-
-  _makeGETRequest(url) {
-    return new Promise((res, rej) => {
-      let xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log(xhr.responseText, xhr.readyState, xhr.status)
-            res(xhr.responseText)
-          } else {
-            rej('error')
-          }
+  /**
+  *  Версия CALLBACK
+  */
+  _getProductsCallback(url, cb) {
+    let xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText, xhr.readyState, xhr.status)
+          let dJSON = xhr.responseText
+          const items = JSON.parse(dJSON)
+          cb(items)
+        } else {
+          console.log('error, статус не 200')
         }
       }
-      xhr.open('GET', url, true)
-      xhr.send()
-    })
+    }
+    xhr.open('GET', url, true)
+    xhr.send()
+
   }
+
+    /**
+    * Версия Promise + XHR
+    */
+//   _getProducts(url) {
+//     let arr = []
+//     this._makeGETRequest(url)
+//       .then(dJSON => JSON.parse(dJSON))
+//       .then(parsedData => { arr = parsedData })
+//       .catch(err => {
+//         console.log(err)
+//       })
+//       .finally(() => {
+//         console.log('finally')
+//       })
+//     return arr
+//   }
+
+//   _makeGETRequest(url) {
+//     return new Promise((res, rej) => {
+//       let xhr = new XMLHttpRequest()
+//       xhr.onreadystatechange = function () {
+//         if (xhr.readyState === 4) {
+//           if (xhr.status === 200) {
+//             console.log(xhr.responseText, xhr.readyState, xhr.status)
+//             res(xhr.responseText)
+//           } else {
+//             rej('error')
+//           }
+//         }
+//       }
+//       xhr.open('GET', url, true)
+//       xhr.send()
+//     })
+//   }
 }
 
 class CatalogItem {

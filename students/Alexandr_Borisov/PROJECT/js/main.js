@@ -1,178 +1,130 @@
 //заглушки (имитация базы данных)
 const image = "https://placehold.it/200x150";
 const cartImage = "https://placehold.it/100x80";
-const items = [
-  "Notebook",
-  "Display",
-  "Keyboard",
-  "Mouse",
-  "Phones",
-  "Router",
-  "USB-camera",
-  "Gamepad"
-];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData();
 
-//создание массива объектов - имитация загрузки данных с сервера
+let userCart = [];
+let list = fetchData();
+
+// Загрузка данных callback
+// function fetchData() {
+// 	const xhr = new XMLHttpRequest();
+// 	const url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json";
+// 	xhr.onreadystatechange = function () {
+// 		if (xhr.readyState === 4 && xhr.status === 200) {
+// 			list = JSON.parse(xhr.response);
+// 			renderProducts();
+// 			getTotalPrice();
+// 		}
+// 	}
+// 	xhr.open("GET", url, true);
+// 	xhr.send();
+// }
+
+// Загрузка данных через promise
+// function fetchData() {
+// 	let promise = new Promise(function (res, rej) {
+// 		const xhr = new XMLHttpRequest();
+// 		const url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json";
+
+// 		xhr.open("GET", url, true);
+// 		xhr.send();
+// 		xhr.addEventListener("load", function () {
+// 			if (xhr.readyState === 4 && xhr.status === 200) {
+// 				res(xhr.response);
+// 			} else {
+// 				rej("Error loading data...")
+// 				"Error loading data..."
+// 			}
+// 		})
+// 	});
+
+// 	promise
+// 		.then(function (data) {
+// 			list = JSON.parse(data);
+// 			renderProducts();
+// 			getTotalPrice();
+// 		})
+// }
+
+// Загрузка данных через fetch
 function fetchData() {
-  let arr = [];
-  for (let i = 0; i < items.length; i++) {
-    arr.push(createProduct(i));
-  }
-  return arr;
-}
-
-//создание товара
-function createProduct(i) {
-  return {
-    id: ids[i],
-    name: items[i],
-    price: prices[i],
-    img: image,
-    quantity: 0,
-    createTemplate: function() {
-      return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`;
-    },
-
-    add: function() {
-      this.quantity++;
-    }
-  };
+	const url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json";
+	fetch(url)
+		.then(function (data) {
+			return data.json();
+		})
+		.then(function (data) {
+			list = data;
+			renderProducts();
+			getTotalPrice();
+		})
 }
 
 //рендер списка товаров (каталога)
 function renderProducts() {
-  //let arr = [];
-  let str = "";
-  for (item of list) {
-    str += item.createTemplate();
-  }
-  document.querySelector(".products").innerHTML = str;
+	let catalogEl = document.querySelector(".products");
+	let str = "";
+	catalogEl.innerHTML = "";
+	for (item of list) {
+		str += `<div class="product-item" data-id="${item.id_product}">
+                        <img src="${image}" alt="Some img">
+                        <div class="desc">
+                            <h3>${item.product_name}</h3>
+                            <p>${item.price} $</p>
+                            <button class="buy-btn" 
+                            data - id = "${item.id_product}"
+                            data - name = "${item.product_name}"
+                            data - image = "${image}"
+                            data - price = "${item.price}">Купить</button>
+                        </div>
+                    </div>`;
+	}
+	catalogEl.innerHTML = str;
 }
-
-renderProducts();
 
 //Определение общей стоимости продуктов
 function getTotalPrice() {
-  let total = 0;
-  for (item of list) {
-    total += item.price;
-  }
-  renderTotalPrice(total);
+	let total = 0;
+	for (item of list) {
+		total += item.price;
+	}
+	renderTotalPrice(total);
 }
-
-getTotalPrice();
 
 // Вывод стоимости всех товаров в каталоге
 function renderTotalPrice(total) {
-  document
-    .querySelector(".products")
-    .insertAdjacentHTML(
-      "beforebegin",
-      `<p class="toal-price">Общая стоимость товаров к каталоге: ${total} $</p>`
-    );
+	document
+		.querySelector(".products")
+		.insertAdjacentHTML(
+			"beforebegin",
+			`<p class="toal-price">Общая стоимость товаров к каталоге: ${total} $</p>`
+		);
 }
 
 // CART
 
 // Класс корзины
 class Cart {
-  constructor() {}
+	constructor() {}
 
-  // Очистка корзины
-  clearCart() {}
+	// Очистка корзины
+	clearCart() {}
 
-  // Общая стоимость товаров в корзине
-  totalPrice() {}
+	// Общая стоимость товаров в корзине
+	totalPrice() {}
 }
 
 // Класс товара в корзине
 class GoodsInCart {
-  constructor() {}
+	constructor() {}
 
-  // Увеличение колиечства товара в корзине
-  quantityUp() {}
+	// Увеличение колиечства товара в корзине
+	quantityUp() {}
 
-  // Уменьшение количества товара в корзине
-  quantityDown() {}
+	// Уменьшение количества товара в корзине
+	quantityDown() {}
 
-  // Удаление товара из корзины
-  removeGoodFromCart() {}
+	// Удаление товара из корзины
+	removeGoodFromCart() {}
 }
-
-// // Добавление продуктов в корзину
-// function addProduct(product) {
-//   let productId = +product.dataset["id"]; //data-id="1"
-//   let find = userCart.find(element => element.id === productId); //товар или false
-//   if (!find) {
-//     userCart.push({
-//       name: product.dataset["name"],
-//       id: productId,
-//       img: cartImage,
-//       price: +product.dataset["price"],
-//       quantity: 1
-//     });
-//   } else {
-//     find.quantity++;
-//   }
-//   renderCart();
-// }
-
-// //удаление товаров
-// function removeProduct(product) {
-//   let productId = +product.dataset["id"];
-//   let find = userCart.find(element => element.id === productId);
-//   if (find.quantity > 1) {
-//     find.quantity--;
-//   } else {
-//     userCart.splice(userCart.indexOf(find), 1);
-//     document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
-//   }
-//   renderCart();
-// }
-
-// //перерендер корзины
-// function renderCart() {
-//   let allProducts = "";
-//   for (el of userCart) {
-//     allProducts += `<div class="cart-item" data-id="${el.id}">
-//                             <div class="product-bio">
-//                                 <img src="${el.img}" alt="Some image">
-//                                 <div class="product-desc">
-//                                     <p class="product-title">${el.name}</p>
-//                                     <p class="product-quantity">Quantity: ${
-//                                       el.quantity
-//                                     }</p>
-//                                     <p class="product-single-price">$${
-//                                       el.price
-//                                     } each</p>
-//                                 </div>
-//                             </div>
-//                             <div class="right-block">
-//                                 <p class="product-price">${el.quantity *
-//                                   el.price}</p>
-//                                 <button class="del-btn" data-id="${
-//                                   el.id
-//                                 }">&times;</button>
-//                             </div>
-//                         </div>`;
-//   }
-
-//   document.querySelector(`.cart-block`).innerHTML = allProducts;
-// }

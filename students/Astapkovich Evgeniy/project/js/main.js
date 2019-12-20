@@ -13,9 +13,6 @@ let app = new Vue ({
     isVisibleCart: false
   },
   methods: {
-    showCart() {
-      this.isVisibleCart = (this.isVisibleCart === true) ? false : true
-    }
   },
 })
 

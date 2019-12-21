@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hamburger</title>
+</head>
+<body>
+    <form action="#">
+        <fieldset>
+            <p>Выберите размер: </p>
+            <input type="radio" name="size" value="big" checked data-price="100" data-cals="40"> Большой
+            <input type="radio" name="size" value="small" data-price="50" data-cals="20"> Маленький
+        </fieldset>
+        <fieldset>
+            <p>Выберите начинку: </p>
+            <input type="radio" name="stuff" value="cheese" checked data-price="10" data-cals="20"> Сыр
+            <input type="radio" name="stuff" value="salad" data-price="20" data-cals="5"> Салат
+            <input type="radio" name="stuff" value="potato" data-price="15" data-cals="10"> Картофель
+        </fieldset>
+        <fieldset>
+            <p>Выберите приправу: </p>
+            <input type="checkbox" name="toping" value="sauce" data-price="15" data-cals="0"> Специи
+            <input type="checkbox" name="toping" value="mayo" data-price="20" data-cals="5"> Майонез
+        </fieldset>
+        <!-- <button id="result_button">Посчитать</button> -->
+    </form>
+    <button id="result_button">Посчитать</button>
+    <div>
+        <p>Цена:  <span id="price"></span></p>
+        <p>Калорийность:  <span id="cals"></span></p>
+    </div>
+
+    <script defer src="script.js"></script>
+
+</body>
+</html>

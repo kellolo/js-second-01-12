@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+	<script src="js.js" defer></script>
+</head>
+
+<body>
+	<div class="burger">
+	<fieldset class="size">
+		<legend>Размер бургера</legend>
+		<p>
+			<input type="radio" name="burger" data-price="50" data-calories="20" id="size-small" checked />
+			Маленький
+		</p>
+		<p>
+			<input type="radio" name="burger" data-price="100" data-calories="40" id="size-big" />
+			Большой
+		</p>
+	</fieldset>
+	<fieldset class="stuffing">
+		<legend>Начинка</legend>
+		<p>
+			<input type="radio" name="stuffing" data-price="10" data-calories="20" id="cheese" checked />
+			С сыром
+		</p>
+		<p>
+			<input type="radio" name="stuffing" data-price="20" data-calories="5" id="size-big" />
+			С салатом
+		</p>
+		<p>
+			<input type="radio" name="stuffing" data-price="15" data-calories="10" id="size-big" />
+			С картофелем
+		</p>
+	</fieldset>
+	<fieldset class="topping">
+		<legend>Приправы и соусы</legend>
+		<p>
+			<input type="checkbox" name="topping" data-price="15" data-calories="0" id="size-small" checked />
+			Приправа
+		</p>
+		<p>
+			<input type="checkbox" name="topping" data-price="20" data-calories="5" id="size-big" checked />
+			Майонез
+		</p>
+	</fieldset>
+	<button>Посчитатаь!</button>
+	<p class="price"></p>
+	<p class="calories"></p>
+
+	</div>
+</body>
+
+</html>

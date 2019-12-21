@@ -1,9 +1,29 @@
 //заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+
+//Каталог товаров
+
+let app = new Vue({
+    el: '#app',
+    data: {
+        url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
+        container: '.products',
+        items: [],
+        image: 'https://placehold.it/200x150'
+    },
+    methods: {
+
+    },
+    mounted() {
+        console.log(this.items)
+        fetch(this.url)
+            .then(resp => resp.json())
+            .then(data => {
+                this.items = data;
+                console.log('this.items',this.items)
+            })
+    }
+})
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -22,63 +42,6 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     }
 })
 
-//Каталог товаров
-class GoodsList {
-    constructor() {
-        this.list = this._fetchData();
-    }
-
-
-    //создание массива объектов - имитация загрузки данных с сервера
-    _fetchData() {
-        let arr = [];
-        for (let i = 0; i < items.length; i++) {
-            arr.push(this._createProduct(i));
-        }
-        return arr
-    };
-
-    //создание товара
-    _createProduct(i) {
-        return {
-            id: ids[i],
-            name: items[i],
-            price: prices[i],
-            img: image,
-            quantity: 0,
-            createTemplate: function () {
-                return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-            },
-
-            add: function () {
-                this.quantity++
-            }
-        }
-    };
-
-    //рендер списка товаров (каталога)
-    renderProducts() {
-        let str = ''
-        for (let item of this.list) {
-            str += item.createTemplate()
-        }
-        document.querySelector('.products').innerHTML = str;
-    }
-}
-
-let newGoodsList = new GoodsList();
-newGoodsList.renderProducts();
 
 //CART
 class Cart {

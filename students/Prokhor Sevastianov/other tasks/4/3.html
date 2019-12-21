@@ -1,0 +1,80 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #namewrong {
+            color: red;
+            display: none;
+        }
+
+        #emailwrong {
+            color: red;
+            display: none;
+        }
+
+        #phonewrong {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form>
+        <div class="form-row">
+            <div class="col">
+                <label for="recipient-name" class="col-form-label">Ваше имя:</label>
+                <input type="text" name="name" id="recipient-name" class="form-control" placeholder="Только буквы">
+                <label for="" id="namewrong">Только буквы</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="recipient-email" class="col-form-label">Ваш email:</label>
+            <input type="email" name="email" id="recipient-email" class="form-control" placeholder="mymail@mail.ru">
+            <label for="" id="emailwrong">mymail@mail.ru</label>
+        </div>
+        <div class="form-group">
+            <label for="recipient-phone" class="col-form-label">Ваш телефон:</label>
+            <input type="text" id="recipient-phone" class="form-control" name="phone" placeholder="+7(000)000-0000">
+            <label for="" id="phonewrong">+7(000)000-0000</label>
+        </div>
+        <button type="submit" class="btn">Отправить</button>
+    </form>
+
+    <script>
+        document.querySelector('.btn').addEventListener('click', validate);
+        function validate(event) {
+            let name = document.getElementById('recipient-name').value;
+            let email = document.getElementById('recipient-email').value;
+            let phone = document.getElementById('recipient-phone').value;
+            let regName = /^[a-zа-яё]+$/i;
+            let regEmail = /^[\w\.-]+@\w+\.[a-z]{2,4}$/i;
+            let regPhone = /^\+7\(\d{3}\)\d{3}-\d{4}$/;
+            if (regName.test(name) == false) {
+                document.getElementById('namewrong').style.display = 'inline';
+            } else {
+                document.getElementById('namewrong').style.display = 'none';
+            }
+            if (regEmail.test(email) == false) {
+                document.getElementById('emailwrong').style.display = 'inline';
+            } else {
+                document.getElementById('emailwrong').style.display = 'none';
+            }
+            if (regPhone.test(phone) == false) {
+                document.getElementById('phonewrong').style.display = 'inline';
+            } else {
+                document.getElementById('phonewrong').style.display = 'none';
+            }
+            event.preventDefault();
+        }
+
+
+    </script>
+</body>
+
+</html>

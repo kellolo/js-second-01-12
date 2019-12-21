@@ -15,7 +15,7 @@ class Burger {
     _getFillingPrice(el) {
         let price = null;
 
-        //TODO проверка на checked
+        price = document.querySelector(`input[name="${el}"]:checked`).dataset.price;
 
         return price;
     }
@@ -23,29 +23,39 @@ class Burger {
     _getAddonPrice(el) {
         let price = null;
 
-        //TODO проверка на checked
+        let arr = [...document.querySelectorAll(`input[name='${el}']:checked`)];
+        arr.forEach((item) => {
+            price += +item.dataset.price;
+        })
 
         return price;
     }
 
     _getSizeCalories(el) {
-        return document.querySelector(`input[name="${el}"]:checked`).dataset.calories;
+        let calories = null;
+
+        calories = document.querySelector(`input[name="${el}"]:checked`).dataset.calories;
+
+        return calories;
     }
 
     _getFillingCalories(el) {
-        let price = null;
+        let calories = null;
 
-        //TODO проверка на checked
+        calories = document.querySelector(`input[name="${el}"]:checked`).dataset.calories;
 
-        return price;
+        return calories;
     }
 
     _getAddonCalories(el) {
-        let price = null;
+        let calories = null;
 
-        //TODO проверка на checked
+        let arr = [...document.querySelectorAll(`input[name='${el}']:checked`)];
+        arr.forEach((item) => {
+            calories += +item.dataset.calories;
+        })
 
-        return price;
+        return calories;
     }
 
     setPrice() {
@@ -57,15 +67,13 @@ class Burger {
     }
 }
 
-let btn = document.getElementById('btn-ok');
+window.addEventListener('load', () => newBurger());
+
+let btn = document.getElementById('btn-add');
 btn.addEventListener('click', newBurger);
 
 function newBurger() {
-    let burger = new Burger('size', 'filling');
+    let burger = new Burger('size', 'filling', 'addon');
     burger.setPrice();
     burger.setCalories();
-    console.log(burger);
 }
-console.log(document.querySelector('.calories'));
-
-//TODO автоматический расчет при переключении опций

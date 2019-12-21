@@ -1,0 +1,26 @@
+{
+  "amount": 40,
+  "countGoods": 2,
+  "contents": [
+    {
+      "name": "title_3",
+      "price": "20",
+      "brand": "samsung",
+      "country": "Russa",
+      "ship": "Free",
+      "img": "build/img/Photo1.png",
+      "id": "3",
+      "quantity": "1"
+    },
+    {
+      "name": "title_4",
+      "price": "20",
+      "brand": "samsung",
+      "country": "Russa",
+      "ship": "Free",
+      "img": "build/img/Photo1.png",
+      "id": "4",
+      "quantity": "1"
+    }
+  ]
+}

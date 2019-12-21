@@ -1,0 +1,24 @@
+form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px;
+    margin-top: 300px;
+}
+
+input {
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+}
+
+input:invalid {
+    background-color: darkred;
+}
+
+button {
+    width: 100px;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-left: 70px;
+}

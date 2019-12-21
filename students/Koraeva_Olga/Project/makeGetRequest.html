@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Les 3</title>
+</head>
+
+<body>
+
+  <script>
+    'use strict'
+    //  1-ое задание
+
+    function makeGETRequest(url) {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest()
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              resolve(xhr.responseText);
+            } else {
+              reject('error')
+            }
+          }
+        }
+        xhr.open('GET', url, true)
+        xhr.send()
+      })
+    }
+    let url =
+      "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json"
+
+    makeGETRequest(url)
+      .then(Json => {
+        console.log(JSON.parse(Json))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        console.log('Finished')
+      })
+      
+      // 3-е задание
+
+
+    class GoodsItem {
+      render() {
+        return `<div class="goods-item">
+                <h3>${this.product_name}</h3>
+                <p>${this.price}</p>
+                </div>`;
+      }
+    }
+
+    class GoodsList {
+      render() {
+        let listHtml = ''
+        this.goods.forEach(good => {
+          const goodItem = new GoodsItem(good.product_name, good.price)
+        })
+      }
+
+      fetchGoods(url) {
+        return new Promise((resolve, reject) => {
+          let xhr = new XMLHttpRequest()
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                resolve(xhr.responseText);
+              } else {
+                reject('error')
+              }
+            }
+          }
+          xhr.open('GET', url, true)
+          xhr.send()
+        })
+
+        fetchGoods(url)
+          .then(Json => {
+            JSON.parse(Json)
+          })
+          .then(render())
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => {
+            console.log('Finished')
+          })
+      }
+    }
+  </script>
+</body>
+
+</html>

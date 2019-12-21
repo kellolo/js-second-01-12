@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta charset="utf-8">
+    <style>
+        .error {
+            border-color: red;
+        }
+
+        .error_text {
+            display: inline-block;
+            color: red;
+        }
+
+    </style>
+    <title>форма</title>
+</head>
+
+<body>
+
+<div id="content">
+    <form action="#">
+        <p><i>Пожалуйста, заполните форму регистрации пользователей. Обязательные поля помечены </i><em>*</em></p>
+        <fieldset id="name_form">
+            <label for="name">Имя <em>*</em></label>
+            <input id="name" placeholder="Иван">
+
+        </fieldset>
+        <fieldset id="telephone_form">
+            <label for="telephone">Телефон <em>*</em></label>
+            <input id="telephone" placeholder="+7(000)000-0000">
+
+        </fieldset>
+        <fieldset id="email_form">
+            <label for="email">Email <em>*</em></label>
+            <input id="email" placeholder="email@server.com">
+
+        </fieldset>
+
+        <fieldset id="comment_form">
+            <legend>Комментарий</legend>
+
+            <label for="comments">Напишите что-нибудь тут</label>
+            <textarea id="comments"></textarea>
+        </fieldset>
+
+        <p>
+            <input id="submit_btn" type="submit" value="Отправить информацию">
+        </p>
+    </form>
+    <div class="converted_form">
+        <p class="converted_text"></p>
+    </div>
+
+
+</div>
+
+
+<script>
+    "use script";
+
+    class Form {
+        constructor(name, telephone, email, comments) {
+            this.nameRegexp = /[a-zа-я][^0-9]$/;
+            this.telephoneRegexp = /(\+7+)(\([0-9]{3}\)+)(([0-9]{3})+)(\-[0-9]{4})$/
+            this.emailRegexp = /(my\-?\.?[a-z]+)@(mail\.ru)$/;
+            this.name = this._validation(name, this.nameRegexp);
+            this.telephone = this._validation(telephone, this.telephoneRegexp);
+            this.email = this._validation(email, this.emailRegexp);
+            this.comments = this._validation(comments, /\B/);
+        }
+
+        _validation(domElementName, regexp) {
+            let userName = document.getElementById(domElementName).value;
+            if (regexp.test(userName)) { //
+                const validForm = document.createElement('div');
+                validForm.innerHTML = ` <div> <p> ${domElementName} : ${userName}</p> </div>`;
+                //вывожу просто для того, чтобы видно было, что что-то произошло.
+                //п.с. по хорошему может надо проверять, что если одна ошибка, то не выводит(не посылает на сервер инф)
+                document.body.appendChild(validForm);
+
+            } else {
+                let errorDiv = document.getElementById(`${domElementName}`);
+                errorDiv.classList.toggle('error');
+                let field = document.getElementById(`${domElementName}_form`);
+                const errorText = document.createElement('div');
+                errorText.innerHTML = " <p>ошибочка</p> ";
+                errorText.classList.add("error_text");
+                field.appendChild(errorText);
+            }
+        }
+    }
+
+    let toRendBtn = document.querySelector('#submit_btn');
+    toRendBtn.addEventListener('click', () => {
+        let convertedForm = new Form('name', 'telephone', 'email', 'comments');
+    });
+
+</script>
+
+
+</body>
+
+</html>

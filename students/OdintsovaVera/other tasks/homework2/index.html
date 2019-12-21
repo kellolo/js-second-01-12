@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 3</title>
+</head>
+<body>
+<!----------------------------Задача 3---------------------------
+
+Некая сеть фастфуда предлагает несколько видов гамбургеров:
+### Маленький (50 рублей, 20 калорий).
+### Большой (100 рублей, 40 калорий). 
+
+### Гамбургер может быть с одним из нескольких видов начинок (обязательно):
+### С сыром (+10 рублей, +20 калорий).
+### С салатом (+20 рублей, +5 калорий).
+### С картофелем (+15 рублей, +10 калорий). 
+
+### Дополнительно гамбургер можно посыпать приправой (+15 рублей, +0 калорий) 
+и полить майонезом (+20 рублей, +5 калорий). 
+
+### 3Напишите программу, рассчитывающую стоимость и калорийность гамбургера. 
+Можно использовать примерную архитектуру класса из методички, но можно использовать и свою.-->
+
+	<form action='#'>
+		<fieldset>
+			<caption>
+				<input type="radio" name="size" value="little" data-calories="20" data-price="50"> Little
+			</caption>
+			<caption>
+				<input type="radio" name="size" value="big" data-calories="40" data-price="100"> Big
+			</caption>
+		</fieldset>
+		<fieldset>
+			<caption>
+				<input type="radio" name="stuffing" value="cheese" data-calories="20" data-price="10"> Cheese
+			</caption>
+			<caption>
+				<input type="radio" name="stuffing" value="salat" data-calories="5" data-price="20"> Salat
+			</caption>
+			<caption>
+				<input type="radio" name="stuffing" value="potato" data-calories="10" data-price="15"> Potato
+			</caption>
+		</fieldset>
+		
+		<fieldset>
+			<caption>
+				<input type="radio" name="topping" value="no"> No <br>
+			<caption>
+				<input type="radio" name="topping" value="yes"> Yes
+		    
+	    
+			<caption>
+				<input type="checkbox" name="addtopping" value="seasoning" data-calories="0" data-price="15"> Seasoning
+			</caption>
+			<caption>
+				<input type="checkbox" name="addtopping" value="mayonnaise" data-calories="5" data-price="20"> Mayonnaise
+			</caption>
+		</caption>
+		</fieldset>
+	</form>	
+  <button id='ok-btn'>Add</button>
+  <div class="result"></div>
+  <script async>
+  	class Humburger {
+  constructor(size, stuffing, topping) { 
+  	this.size = this._inputHumburger(size);
+    this.stuffing = this._inputHumburger(stuffing);
+    this.topping = this._inputTopping(topping);
+ }
+_inputHumburger(domElementName){
+	let element=document.querySelector(`input[name="${domElementName}"]:checked`);
+	if(element===null)alert('Укажите размер и начинку гамбургера.');
+	else return element.value;
+}
+
+_inputTopping(domElementName){
+	let needTopping=document.querySelector(`input[name="${domElementName}"]:checked`);
+	if(needTopping===null)alert('Укажите нужны ли приправы (Yes/No)?');
+	else{
+	switch(needTopping.value){
+    case 'yes':
+	let topp=[];
+	let arr=[...document.querySelectorAll (`input[name="addtopping"]:checked`)];
+	arr.forEach(el => {topp.push(el.value)});
+	return topp;
+    case 'no':
+    return 'With out topping';
+    default:               
+    return false;}
+}
+}
+ calculate(argument) {
+ 	let sum=0;
+ 	let argumentSize=+document.querySelector(`input[value="${this.size}"]`).dataset[`${argument}`];
+ 	let argumentStuffing=+document.querySelector(`input[value="${this.stuffing}"]`).dataset[`${argument}`];
+    if(this.topping==='With out topping') sum=0; else{
+    this.topping.forEach(el => {
+     sum=sum+(+document.querySelector(`input[value="${el}"]`).dataset[`${argument}`]);
+    });}
+    console.log(argumentSize);
+    console.log(argumentStuffing);
+    console.log(sum);
+    return	argumentSize+argumentStuffing+sum;
+}
+
+}
+function addHumburger (){
+	let myHumburger = new Humburger('size', 'stuffing', 'topping');
+	//console.log(myHumburger);
+    //console.log(`Цена гамбургера: ${myHumburger.calculate('price')}`);
+	//console.log(`Калорийность гамбургера: ${myHumburger.calculate('calories')}`);
+	document.querySelector(`.result`).innerHTML = `<p>Цена гамбургера: ${myHumburger.calculate('price')}</p>
+	                                                  <p>Калорийность гамбургера: ${myHumburger.calculate('calories')}</p>`;
+}
+
+let okbtn=document.querySelector ('#ok-btn');
+okbtn.addEventListener('click', addHumburger);
+  </script>
+</body>
+</html> 

@@ -1,0 +1,30 @@
+
+.btn-cart {
+    width: 150px; 
+  height: 30px;
+  color: black;
+  text-align: center;
+  line-height: 20px;
+  display: block;
+  margin: 20px auto;
+    border-radius: 15px;
+  font: normal 17px arial;
+    float: right;
+}
+
+.products {
+    margin-top: 50px;
+    display: flex;
+    list-style-type: none;
+    height: 51px;
+    justify-content:space-between;
+    align-items: center;
+    color: blue;
+    font-family:cursive;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+header {
+    height: 100px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .container {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        margin: 0 auto
+        }
+        .post {
+            border-radius: 5px;
+            border: 2px solid grey;
+            padding: 15px;
+            margin-bottom: 10px
+        }
+        .post-footer {
+            text-align: right
+        }
+        .font-it {
+            font-style: italic
+        }
+        .red {
+            color: red
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <h1 @click="" :class="`class${item}`" v-for="item of [1, 2, 3]">{{ item }}</h1> -->
+        <label for=""><input type="text" v-model="number"> к-во постов</label>
+        <button @click="reload">ok</button>
+        <div class="container">
+            <post ref="firstPost"></post>
+            <hr>
+            <div class="all">
+                <post v-for="com of comments" :key="com.id" :comment="com"></post>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./comp.js"></script>
+    <script>
+
+        let app = new Vue ({
+            el: '#app',
+            data: {
+                url: 'https://jsonplaceholder.typicode.com/comments',
+                comments: [],
+                number: 10,
+                // fPostShown: true
+                // хранилище внутр данных
+            },
+            methods: {
+                // методы
+                getComments (url) {
+                    return fetch (url)
+                            .then (d => d.json ())
+                },
+                reload () {
+                    this.getComments (this.getUrl)
+                        .then (data => {
+                            this.comments = data
+                        })
+                }
+            },
+            computed: {
+                getUrl () {
+                    return `${this.url}?_limit=${this.number}`
+                }
+                // вычисляемые значения - как бы "методы", но только возвращающие значения --- Vue смотрит на компьютеды как на данные
+            },
+            // хуки
+            mounted () {
+                this.getComments (this.getUrl)
+                        .then (data => {
+                            this.comments = data
+                        })
+            }
+        })
+
+    </script>
+</body>
+</html>

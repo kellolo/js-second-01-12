@@ -1,36 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Интернет-магазин</title>
-  <link rel="stylesheet" href="style/normalize.css">
-  <link rel="stylesheet" href="style/style.css">
-</head>
-
-<body>
-  <header>
-    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="/favicon.ico">
-    <div class="logo">E-shop</div>
-    <div class="cart">
-      <form action="#" class="search-form">
-        <input type="text" class="search-field">
-        <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">E-shop</div>
+        <div class="cart">
+          <form action="#" class="search-form">
+            <input type="text" class="search-field" />
+            <button class="btn-search" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          <button
+            class="btn-cart"
+            type="button"
+            @click="cartVisibility = !cartVisibility"
+          >
+            Корзина
+          </button>
+          <div class="cart-block" v-show="cartVisibility">
+            <div
+              v-for="item of cartItems"
+              :key="item.id_product"
+              class="cart-item"
+              :data-id="item.id_product"
+            >
+              <div class="product-bio">
+                <img :src="item.product_image_small" alt="Some image" />
+                <div class="product-desc">
+                  <p class="product-title">{{ item.product_name }}</p>
+                  <p class="product-quantity">Quantity: {{ item.quantity }}</p>
+                  <p class="product-single-price">${{ item.price }} each</p>
+                </div>
+              </div>
+              <div class="right-block">
+                <p class="product-price">${{ item.quantity * item.price }}</p>
+                <button
+                  class="del-btn"
+                  :data-id="item.id_product"
+                  @click="removeProduct(item)"
+                >
+                  &times;
                 </button>
-      </form>
-      <button class="btn-cart" type="button">Корзина</button>
-      <div class="cart-block invisible"></div>
+              </div>
+            </div>
+            <div>Total items: {{ getCountGoods }}</div>
+            <div>Amount: {{ getAmount }}</div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div v-if="catItems.length == 0">Нет данных</div>
+        <div v-else class="products">
+          <div
+            v-for="catItem in catItems"
+            class="product-item"
+            :data-id="catItem.id_product"
+          >
+            <img :src="catItem.product_image_big" alt="Some img" />
+            <div class="desc">
+              <h3>{{ catItem.product_name }}</h3>
+              <p>{{ catItem.price }} $</p>
+              <button
+                class="buy-btn"
+                :data-id="catItem.id_product"
+                :data-name="catItem.product_name"
+                :data-image-big="catItem.product_image_big"
+                :data-image-small="catItem.product_image_small"
+                :data-price="catItem.price"
+                @click="addProduct(catItem)"
+              >
+                Купить
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-  </header>
-  <main>
-    <div class="products"></div>
-  </main>
 
-
-
-  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
-</body>
-
+    <script
+      async
+      src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+      integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="js/main.js"></script>
+  </body>
 </html>

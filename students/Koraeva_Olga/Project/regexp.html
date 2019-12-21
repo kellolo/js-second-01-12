@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Reg Exp</title>
+</head>
+
+<body>
+  <script>
+    'use strict';
+    let str = "He said, 'I don't have much free time.' "
+    let newString = ''
+
+    function change(string, regexp, repl) {
+      let result = string.replace(regexp, repl)
+      return result
+    }
+
+    let reg = /\s\'/gm
+    let repl = ' "'
+    newString = change(str, reg, repl)
+
+    str = newString
+    reg = /\'\s|\'\.\"/gm
+    repl = '" '
+    newString = change(str, reg, repl)
+
+    console.log(newString)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400');
+
+*, *:after, *:before {   
+     box-sizing: border-box; 
+     outline: none;
+  }
+
+body {    
+    background: #212129;    
+    font-family: 'Lato', sans-serif;
+    color: #BDBFCA;
+}
+
+#content {
+    width: 800px;
+    min-width: 800px;   
+}
+
+input {
+    height: 20px;
+    width: 300px;
+    margin: 5px 0;
+    display:inline-block;
+}
+
+form 
+{
+  width: 1200px;
+  padding: 0px 30px;
+  margin: auto;
+  text-align:left; 
+}
+
+form fieldset 
+{
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+form legend 
+{
+  font-size: 1.2em;
+  padding: 0px 3px;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
+form label 
+{
+  width: 100px;
+  display: inline-block;
+  margin: 6px;
+  text-align: right;
+  vertical-align: top;
+}
+
+form div {
+    margin-left: 10px;
+    display:inline-block;
+}
+
+
+form input:focus 
+{
+  background: #eaeaea;
+}
+
+form input, textarea 
+{
+  width: 400px;
+}
+
+form textarea 
+{
+  height: 200px;
+}
+
+button {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+	border: none;
+	margin: 50px 0;
+	background: #27ae60;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 20px;
+	padding: 1em 2em;
+	font-weight: bold;
+
+    border-radius: 40px;
+    cursor: pointer;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>        
+        'use strict';                        
+        
+        //let regEx = /(^'(?=\w))|'(?!\w)|(?<=\W)'/g;
+        let regEx = /(?<=\W|^)'|'(?!\w)/g;
+        let str = "'Was it,' he asked, 'the first time you'd spoken to Mrs Dalton'";
+        let newstr = str.replace(regEx, '"');
+        
+        console.log('old string\n' + str);
+        console.log('new string\n' + newstr);        
+    </script>
+</body>
+</html>

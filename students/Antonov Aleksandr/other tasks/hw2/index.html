@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Burger Constructor</title>
+</head>
+
+<body>
+
+
+    <form action="#">
+        <legend>Выберите бургер:</legend>
+        <p></p>
+        <fieldset>
+            <label>
+                <input type="radio" name="size" data-price="50" data-calories="20" checked> Маленький
+                <input type="radio" name="size" data-price="100" data-calories="40"> Большой
+            </label>
+        </fieldset>
+        <legend>Выберите начинку для бургера:</legend>
+        <fieldset>
+            <label>
+                <input type="radio" name="stuffing" data-price="10" data-calories="20"checked> Сыр
+                <input type="radio" name="stuffing" data-price="20" data-calories="5"> Салат
+                <input type="radio" name="stuffing" data-price="15" data-calories="10"> Картофель
+            </label>
+        </fieldset>
+        <legend>Выберите чем полить бургер:</legend>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="spice" data-price="15" data-calories="0"> Приправа
+                <input type="checkbox" name="spice" data-price="20" data-calories="5"> Майонез
+            </label>
+        </fieldset>
+    </form>
+
+    <p>Стоимость бургера: <span class="price"></span></p>
+    <p>Калории: <span class="calories"></span></p>
+
+    <button id="cook-btn">Рассчитать бургер</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

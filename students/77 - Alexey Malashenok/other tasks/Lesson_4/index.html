@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="content">
+        <form action="#">
+            <fieldset>
+                <legend>Контактная информация</legend>
+                <label for="name">Имя</label>
+                <input id="name" placeholder="Имя" autofocus required>
+                <div id="name-message"></div>
+				<br>
+				<label for="phone">Телефон</label>
+                <input id="phone" placeholder="+7-999-999-99-99" required>
+                <div id="phone-message"></div>
+                <br>
+				<label for="email">Email</label>
+                <input id="email" placeholder="mymail@mail.ru" required>
+                <div id="email-message"></div>
+                <br>
+				<label for="comments">О себе</label>
+                <textarea id="comments"></textarea>
+            </fieldset>
+            <button id="send">Отправить</button>
+
+        </form>
+       
+        <script src="src/app.js"></script>
+    </div>    
+</body>
+</html>

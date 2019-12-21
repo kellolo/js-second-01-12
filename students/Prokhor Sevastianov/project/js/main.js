@@ -1,108 +1,29 @@
 //заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-let dataFromWeb = null
-
-let url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
-
 
 //Каталог товаров
-class Catalog {
-    constructor(container) {
-        this.container = container;
-        this.items = [];
-        this._init();
-    }
-    _init() {
 
-        //fetch
-        this.fetchRequest(url)
-            .then(dJSON => dJSON.json())
+let app = new Vue({
+    el: '#app',
+    data: {
+        url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
+        container: '.products',
+        items: [],
+        image: 'https://placehold.it/200x150'
+    },
+    methods: {
+
+    },
+    mounted() {
+        console.log(this.items)
+        fetch(this.url)
+            .then(resp => resp.json())
             .then(data => {
-                dataFromWeb = data;
+                this.items = data;
+                console.log('this.items',this.items)
             })
-            .finally(() => {
-                this.items = dataFromWeb;
-                this._render();
-            })
-
-        //promise
-        // this.promise(url)
-        //     .then(response => {
-        //         this.items = JSON.parse(response);
-        //     })
-        //     .catch(error => {
-        //         console.log (`Promise rejected ${error}`);
-        //     })
-        //     .finally (() => {
-        //         this._render();
-        //     })
-
-
     }
-    _render() {
-        let block = document.querySelector(this.container);
-        let htmlStr = '';
-        this.items.forEach(item => {
-            let prod = new CatalogItem(item);
-            htmlStr += prod.render();
-        });
-        block.innerHTML = htmlStr;
-    }
-
-    fetchRequest(url) {
-        return fetch(url)
-    }
-
-    promise(url) {
-
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onload = function () {
-                if (this.status == 200) {
-                    resolve(this.response);
-                } else {
-                    var error = new Error(this.statusText);
-                    error.code = this.status;
-                    reject(error);
-                }
-            };
-            xhr.onerror = function () {
-                reject(new Error("Network Error"));
-            };
-            xhr.send();
-        });
-    }
-}
-
-class CatalogItem {
-    constructor(obj) {
-        this.product_name = obj.product_name
-        this.price = obj.price
-        this.id_product = obj.id_product
-        this.img = image
-    }
-    render() {
-        return `
-            <div class="product-item" data-id="${this.id_product}">
-                <img src="${this.img}" alt="Some img">
-                <div class="desc">
-                    <h3>${this.product_name}</h3>
-                    <p>${this.price} $</p>
-                    <button class="buy-btn" 
-                    data-id="${this.id_product}"
-                    data-name="${this.product_name}"
-                    data-image="${this.img}"
-                    data-price="${this.price}">Купить</button>
-                </div>
-            </div>
-        `
-    }
-}
-let catalog = new Catalog('.products')
+})
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {

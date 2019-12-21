@@ -42,24 +42,29 @@
         methods:{
           makeGETRequest(url, callback) {
           let xhr = new XMLHttpRequest()
+
           xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
           callback(xhr.responseText)
           }
           }
+
           xhr.open('GET', url, true)
           xhr.send()
           },
+          
           mounted() {
           this.makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
           this.goods = goods;
           this.filteredGoods = goods;
           })
           },
+
           filterGoods(){
             console.log('goods are filtred')
           }
         }
+
       })
   </script>
 

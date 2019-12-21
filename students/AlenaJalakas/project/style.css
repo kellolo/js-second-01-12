@@ -39,7 +39,7 @@ body {
   display: none;
   flex-direction: column;
   width: 250px;
-  height: 400px;
+  height: 500px;
   background-color: white;
   position: absolute;
 }
@@ -47,13 +47,11 @@ body {
 .order {
   width: 150px;
   height: 40px;
-  background-image: radial-gradient(circle 1136px at 5.2% 14%, white 0%, #eaa811 100.2%);
+  background-color: rosybrown;
   font-size: 18px;
-  color: black;
-  margin-top: 70px;
+  color: white;
+  margin-top: 10px;
   margin-left: 50px;
-  border: none;
-  border-radius: 8px;
 }
 
 .fa-shopping-basket {
@@ -74,7 +72,7 @@ body {
 }
 .catalog__item {
   width: 250px;
-  height: 340px;
+  height: 300px;
   margin: 20px;
   padding: 15px 38px;
   border-radius: 0.25rem;
@@ -87,43 +85,19 @@ body {
 .catalog__item_price {
   color: rosybrown;
 }
-.catalog__item_btn {
+.catalog__item_button {
   border: 1px solid lightgray;
-  width: 200px;
+  background-color: white;
   height: 30px;
-  margin-top: 5px;
-  padding-left: 3px;
-  border-radius: 1000px;
-  background: #ffffff;
+  width: 100px;
 }
-.catalog__item_btn:hover {
-  background-image: radial-gradient(circle 1136px at 5.2% 14%, white 0%, #eaa811 100.2%);
+.catalog__item_button:hover {
+  background-color: coral;
 }
 .catalog__item_img {
-  background-image: radial-gradient(circle farthest-corner at 10% 20%, #dea8f8 0%, #a8def8 21.8%, #bdfacd 35.6%, #f3fabd 52.9%, #fae3bd 66.8%, #f8acac 90%, #fed3fc 99.7%);
-  width: 150px;
-  height: 170px;
-  border-radius: 8px;
-}
-
-.inc {
-  background: white;
-  color: black;
-}
-
-.quant-text {
-  display: inline-block;
-  text-align: center;
-  width: 140px;
-  padding: 8px;
-}
-
-.quantity {
-  border: 1px solid lightgray;
-  width: 200px;
-  padding-left: 3px;
-  border-radius: 1000px;
-  background: #ffffff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .btn {
@@ -142,26 +116,23 @@ body {
   height: 80px;
   border-radius: 0.25rem;
   margin-left: 20px;
-  margin-top: 30px;
 }
 .basket__item_name {
   font-size: 10px;
-  margin-top: 15px;
 }
 .basket__item_img {
-  background-image: radial-gradient(circle farthest-corner at 10% 20%, #dea8f8 0%, #a8def8 21.8%, #bdfacd 35.6%, #f3fabd 52.9%, #fae3bd 66.8%, #f8acac 90%, #fed3fc 99.7%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   width: 50px;
   height: 70px;
 }
 .basket__item_quantity {
   font-size: 10px;
   border: 1px solid gray;
-  border-radius: 5px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   text-align: center;
-  margin-left: 100px;
-  margin-top: -70px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -169,3 +169,7 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+.err-red{
+    background: red;
+    text-align: center;
+}

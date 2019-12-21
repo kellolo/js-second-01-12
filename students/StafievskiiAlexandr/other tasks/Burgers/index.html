@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Интернет-магазин Burgers</title>
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/burger.css">
+</head>
+
+<body>
+  <form class="burger__form" name="burger-form">
+
+    <fieldset class="burger__selector">
+      <div class="burger__image" name="burger-image"></div>
+      <h3 class="burger__selector__header">Выбери свой бургер!</h3>
+      <label class="burger__type mix__controller">
+				<input class="burger__selector__type" type="radio" name="burger-type" data-price="50" data-calories="20" value="burger-slave" data-text="Burger-Slave">Burger-Slave
+			</label>
+      <label class="burger__type mix__controller">
+				<input class="burger__selector__type" type="radio" name="burger-type" data-price="100" data-calories="40" value="burger-kingsize" data-text="Burger-King">Burger-King 
+			</label>
+    </fieldset>
+
+    <fieldset class="toppings__selector">
+      <h3 class="toppings__selector__header">Добавить вкусняшки:</h3>
+      <label class="topping__type mix__controller">
+        <input class="topping__selector__type" type="checkbox" name="topping-type" data-price="10" data-calories="20" value="topping-cheese" data-text="Сыр">Сырок
+      </label>
+      <label class="topping__type mix__controller">
+        <input class="topping__selector__type" type="checkbox" name="topping-type" data-price="20" data-calories="5" value="topping-salat" data-text="Салат">Салатик
+      </label>
+      <label class="topping__type mix__controller">
+        <input class="topping__selector__type" type="checkbox" name="topping-type" data-price="15" data-calories="10" value="topping-potato" data-text="Картошка">Картошечка
+      </label>
+      <label class="topping__type mix__controller">
+        <input class="topping__selector__type" type="checkbox" name="topping-type" data-price="15" data-calories="0" value="topping-weed" data-text="Укропчик и петрушечка">Укропчик и петрушечка
+      </label>
+      <label class="topping__type mix__controller">
+        <input class="topping__selector__type" type="checkbox" name="topping-type" data-price="20" data-calories="5" value="topping-mayonnaise" data-text="Майонезик">Майонезик
+      </label>
+      <div class="burger__form__controls">
+        <button class="mix__button" name="mix-button">Замесить!</button>
+      </div>
+    </fieldset>
+
+    <!-- 
+    ### Дополнительно гамбургер можно посыпать приправой (+15 рублей, +0 калорий)
+    ### полить майонезом (+20 рублей, +5 калорий)
+   -->
+  </form>
+  <div class="cart" name="cart"></div>
+  <script defer src="js/burger.js"></script>
+</body>
+
+</html>

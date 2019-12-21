@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Burger shop</title>
+</head>
+
+<body>
+    <div class="container">
+        <form action="#">
+            <fieldset>
+                <legend>Size</legend>
+                <label><input type="radio" name="size" value="small" data-price="50" data-calories="20" checked>Small</label>
+                <label><input type="radio" name="size" value="big" data-price="100" data-calories="40">Big</label>
+            </fieldset>
+            <fieldset>
+                <legend>Fillings</legend>
+                <label><input type="radio" name="fillings" value="cheese" data-price="10" data-calories="20" checked>Сheese</label>
+                <label><input type="radio" name="fillings" value="salad" data-price="20" data-calories="5">Salad</label>
+                <label><input type="radio" name="fillings" value="potato" data-price="15" data-calories="10">Potato</label>
+            </fieldset>
+            <fieldset>
+                <legend>Add</legend>
+                <label><input type="checkbox" name="add" data-price="15" data-calories="0">Flavoring</label>
+                <label><input type="checkbox" name="add" data-price="20" data-calories="5">Mayo</label>
+                <label><input type="checkbox" name="add" data-price="50" data-calories="100">MORE MEAT</label>
+            </fieldset>
+        </form>
+        <button id="calc">Calc</button>
+        <div id="total"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>

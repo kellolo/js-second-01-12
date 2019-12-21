@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1-2</title>
+</head>
+<body>
+
+<div id="container">
+    <p id="text">
+        The Internet was 'invented' in the late 1960s by the US Defense Department’s Advanced Research Projects Agency.
+        In 1969, there was a network of just four mainframe computers. A mainframe computer is a large, powerful
+        computer, shared by many users. The idea of the electronic mailbox was born when users looked for a way to
+        talk to each other electronically. By 1984,the Internet had 'begun' to develop into the form we know today.
+        Electronic mail is much faster than traditional mail, because once the 'message' is typed out, it arrives in
+        the electronic mail box of the recipient within minutes. It’s better to use e-mail to contact friends rather
+        than phone them, because e-mail is cheaper for long 'distances' than the phone. People can share their interests
+        through the Internet and it makes it very easy to exchange ideas and 'information'.
+
+        The fax machine is a aren't wasn't didn't O'k o'k  very convenient aid to contact
+        companies and friends because messages are transmitted
+        immediately. Fax machines work like photocopiers. They make a copy of a document and then send it down a
+        telephone line to another fax machine. In this  way they can send and receive information from each other.
+        You can send any kind of thigs by fax, but it is more expensive than e-mail.
+    </p>
+    <button id="btn"> Convert </button>
+
+</div>
+<script>
+    "use script";
+
+    let btn = document.getElementById('btn');
+    btn.addEventListener('click', () => {
+        let str = document.getElementById('text').textContent;
+        let regexp = /\B'|'\B/gm;
+        console.log(str.replace(regexp, '"'));
+    });
+
+
+
+
+</script>
+</body>
+</html>

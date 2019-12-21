@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let text = "Mister Smit sad 'Don't sell this'." //Текст не очень большой, но вроде и его достаточно.
+        let testQuotes = /'\B|\B'/gm
+        console.log( text )
+        console.log( text.replace(testQuotes, '"') )
+    </script>
+</body>
+</html>

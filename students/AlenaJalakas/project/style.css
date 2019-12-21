@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  line-height: 1.7;
+}
+
+.header {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  font-size: 18px;
+  color: darkmagenta;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.basket__preview {
+  margin-left: 900px;
+  margin-top: 20px;
+}
+.basket__preview_button {
+  border: none;
+  background-color: #f8f9fa;
+  position: relative;
+}
+.basket__preview_button:hover .basket__preview_block {
+  display: flex;
+}
+.basket__preview_block {
+  display: none;
+  flex-direction: column;
+  width: 250px;
+  height: 500px;
+  background-color: white;
+  position: absolute;
+}
+
+.order {
+  width: 150px;
+  height: 40px;
+  background-color: rosybrown;
+  font-size: 18px;
+  color: white;
+  margin-top: 10px;
+  margin-left: 50px;
+}
+
+.fa-shopping-basket {
+  font-size: 30px;
+}
+.fa-shopping-basket:hover {
+  color: darkslategray;
+}
+
+.catalog {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-left: 70px;
+  margin-top: 70px;
+  padding: 50px;
+}
+.catalog__item {
+  width: 250px;
+  height: 300px;
+  margin: 20px;
+  padding: 15px 38px;
+  border-radius: 0.25rem;
+  border: 1px solid gray;
+}
+.catalog__item_name {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.catalog__item_price {
+  color: rosybrown;
+}
+.catalog__item_button {
+  border: 1px solid lightgray;
+  background-color: white;
+  height: 30px;
+  width: 100px;
+}
+.catalog__item_button:hover {
+  background-color: coral;
+}
+.catalog__item_img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.btn {
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid gray;
+  outline: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.basket__item {
+  width: 60px;
+  height: 80px;
+  border-radius: 0.25rem;
+  margin-left: 20px;
+}
+.basket__item_name {
+  font-size: 10px;
+}
+.basket__item_img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 50px;
+  height: 70px;
+}
+.basket__item_quantity {
+  font-size: 10px;
+  border: 1px solid gray;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -3,7 +3,7 @@ class Validator {
         this.patterns = {
             name: /^[a-zа-яё-]+$/i,
             phone: /^\+7\(\d{3}\)\d{3}-\d{4}$/, //+7(000)000-0000
-            email: /^[\w._-]+@\w+\.[a-z]{2, 4}$/ //mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+            email: /^[\w._-]+@\w+\.[a-z]{2,4}$/ //mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
         },
         this.errors = {
             name: 'Имя содержит только буквы',
@@ -43,7 +43,7 @@ class Validator {
 
     _addErrMsg (f) {
         let err = `<div class="${this.errorClass}"> ${this.errors [f.name]}</div>`
-        f.parentNode.innerHTML += err
+        f.parentNode.insertAdjacentHTML('beforeend', err)
     }
 
     _watch (field) {

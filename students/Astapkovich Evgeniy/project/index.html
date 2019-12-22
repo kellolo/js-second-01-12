@@ -21,6 +21,9 @@
                 </form>
                 <button class="btn-cart" @click="isVisibleCart = !isVisibleCart" type="button">Корзина</button>
                 <div class="cart-block" v-show="isVisibleCart">
+                    <div v-show="cartIsEmpty">
+                        Корзина пуста...
+                    </div>
 
                     <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
                         <div class="product-bio">

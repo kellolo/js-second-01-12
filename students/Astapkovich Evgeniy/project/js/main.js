@@ -50,6 +50,12 @@ let app = new Vue ({
     }
   },
 
+  computed: {
+    cartIsEmpty() {
+      return !Boolean(this.cartItems.length)
+    }
+  },
+
   mounted () {
     this.getJSON(this.catalogURL)
           .then ( arr => {

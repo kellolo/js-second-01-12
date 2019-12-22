@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RegExp </title>
+</head>
+<body>
+    <script>
+//1. Дан большой текст, в котором для оформления прямой речи используются одинарные кавычки. Придумать //шаблон, который заменяет одинарные кавычки на двойные.
+//2. Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка не заменялась на //двойную.    	
+
+		 let str = `qwerty '123' qw 12 aren't`;
+		 let reg1 = /'/gi;
+		 let reg2 =/(?!s'|[a-z]'[a-z])([\s\S])'|^'/g;
+		      
+		 let str1 = str.replace (reg1, '"');
+		 let str2 = str.replace (reg2, '"');
+		  console.log(str1);
+		  console.log(str2);
+    </script>
+    
+</body>
+</html>

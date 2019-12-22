@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue test</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <ol>
+            <todo-item
+            v-for='item in groceryList'
+            v-bind:todo='item'
+            v-bind:key='item.id'
+            ></todo-item>
+        </ol>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                groceryList: [
+                    {id: 0, text: 'Овощи'},
+                    {id: 1, text: 'Сыр'},
+                    {id: 2, text: 'Что там ещё люди едят?'}
+                ]
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

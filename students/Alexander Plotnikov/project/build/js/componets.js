@@ -20,20 +20,9 @@ Vue.component('product', {
     methods: {
         addtoCart() {
             this.item.quantity = "1"
-         
-                let find = this.$root.$refs.linkCart.cartItems.find(item => item.id == this.item.id)
-    
-                if (find) {
-                    this.$root.getData(`${this.API}${this.AddToCartURL}`)
-                        .then(data => {
-                            if (data.result == 1) {
-                                find.quantity++
-                            }
-                        })
-                } else {
-                    this.$root.$refs.linkCart.cartItems.push(this.item)
-                }
-
+            console.log(this.item)
+           // this.$root.$refs.linkCart.addItemInCart
+            this.$root.$refs.linkCart.addItemInCart(this.item)
             }
             
         

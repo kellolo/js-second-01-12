@@ -34,7 +34,7 @@
                 </nav>
                 <!-- ******************** компонет корзины  *************************** -->
                 <!-- ******************** компонет корзины  *************************** -->
-                <cart :catalog="cartItems" :sum="sum" :quantity="quantity" :openmenu="openMenu"></cart>
+                <cart ref = "linkCart"></cart>
                 <!-- ******************** компонет корзины  *************************** -->
                 <!-- ******************** компонет корзины  *************************** -->
                 <button class="menuTop__button">Sing in</button>
@@ -271,13 +271,13 @@
                         </div>
                     </div>
                 </aside>
-                <div class="productsPage" id="bodyShop">
+               <!--  <div class="productsPage" id="bodyShop"> -->
                     <!-- ******************** компонет товра в магазине  *************************** -->
                     <!-- ******************** компонет товра в магазине  *************************** -->
-                    <product v-for="item in dataItems" v-bind:key="item.id" v-bind:item="item"></product>
+                    <catalog></catalog>
                     <!-- ******************** компонет товра в магазине  *************************** -->
                     <!-- ******************** компонет товра в магазине  *************************** -->
-                </div>
+              <!--   </div> -->
                 <nav class="navPagination">
                     <ul class="paginationn">
                         <li class="page-item">

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eShop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fontawesome-free-5.10.1-web/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <h2 class="logo">BrandShop</h2>
+    <div class="basket__preview">
+        <div class="basket__preview_button"><i class="fas fa-shopping-basket"></i>
+            <div class="basket__preview_block" id="basket">
+                <div class="basket__item" v-for="item in items" :key="item.id">
+                    <div class="basket__item_img"></div>
+                    <p class="basket__item_name">
+                        {{ item.title }}
+                    </p>
+                    <p class="basket__item_quantity">
+                        {{ item.quantity }}
+                    </p>
+                </div>
+                <button class="order">Order</button>
+            </div>
+        </div>
+
+
+    </div>
+</header>
+<div id="container" class="catalog">
+    <div class="catalog__item" v-for="item in items" :key="item.id">
+        <div class="catalog__item_img"> </div>
+         <div class="catalog__item_name">
+             {{ item.title }}
+         </div>
+        <div class="catalog__item_price">
+            {{ item.price }}
+        </div>
+        <div class="quantity">
+            <button class="inc" @click="counter > 0 ? counter -= 1 : 0">-</button>
+            <span class="quant-text">Quantity: {{ counter }}</span>
+            <button class="inc" @click="counter+=1">+</button>
+        </div>
+        <button class="catalog__item_btn" @click="">Add to cart</button>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="vue.js"></script>
+</body>
+</html>

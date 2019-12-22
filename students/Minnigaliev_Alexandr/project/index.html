@@ -20,7 +20,9 @@
                 <button class="btn-cart" type="button" @click="cartShown = !cartShown">Корзина</button>
                 <div class="cart-block" v-show="cartShown">
 
-                    <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
+                    <cart-item v-for="cartItem of cartItems" :key="cartItem.id_product" :item="cartItem" :img=cartImg></cart-item>
+
+                    <!-- <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
                         <div class="product-bio">
                             <img :src="cartImg" alt="Some image">
                             <div class="product-desc">
@@ -33,22 +35,24 @@
                             <p class="product-price">$ {{ item.quantity * item.price }}</p>
                             <button class="del-btn" @click="delProduct (item)">&times;</button>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
         </header>
         <main>
             <div class="products">
+                
+                <product-item v-for="catItem of catItems" :key="catItem.id_product" :item=catItem :img=catImg></product-item>
 
-                <div class="product-item" v-for="item of catItems" :key="item.id_product">
+                <!-- <div class="product-item" v-for="item of catItems" :key="item.id_product">
                     <img :src="catImg" alt="Some img">
                     <div class="desc">
                         <h3>{{ item.product_name }}</h3>
                         <p>{{ item.price }} $</p>
                         <button class="buy-btn" @click="addProduct (item)">Купить</button>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </main>
@@ -57,6 +61,8 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    
 </body>
 </html>

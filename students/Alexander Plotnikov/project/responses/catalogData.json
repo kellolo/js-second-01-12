@@ -1,0 +1,109 @@
+[{
+    "name": "Monitor",
+    "price": "200",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "1"
+  },
+  {
+    "name": "Phone",
+    "price": "300",
+    "brand": "Aplle",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "2"
+  },
+  {
+    "name": "Monitor",
+    "price": "100",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "3"
+  },
+  {
+    "name": "Monitor",
+    "price": "250",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "4"
+  },
+  {
+    "name": "Phone",
+    "price": "320",
+    "brand": "Aplle",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "5"
+  },
+  {
+    "name": "Monitor",
+    "price": "340",
+    "brand": "lg",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "6"
+  },
+  {
+    "name": "Clock",
+    "price": "410",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "7"
+  },
+  {
+    "name": "Clock",
+    "price": "210",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "8"
+  },
+  {
+    "name": "Phone",
+    "price": "180",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "9"
+  },
+  {
+    "name": "Clock",
+    "price": "150",
+    "brand": "Aplle",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "10"
+  },
+  {
+    "name": "Phone",
+    "price": "240",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "11"
+  },
+  {
+    "name": "Clock",
+    "price": "360",
+    "brand": "Garmin",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "12"
+  }
+]

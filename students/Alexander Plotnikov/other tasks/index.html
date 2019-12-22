@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./build/css/all.css">
+    <style>
+        .contener {
+            width: 1200px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+        }
+
+        .input {
+            display: flex;
+            width: 100%;
+        }
+
+        .output {
+            margin-top: 20px;
+            display: flex;
+            width: 100%;
+        }
+
+        button {
+            width: 20%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contener">
+        <div class="input">
+            If you'd like to learn more about 'Vue before diving in', we 'created' a video's walking through the core
+            principles and a sample project.
+        </div>
+        <div class="output">
+        </div>
+        <button>Коновентировать</button>
+
+    </div>
+    <script>
+        window.onload = () => {
+
+            document.querySelector('button').addEventListener('click', () => {
+                let regExp = /('[^A-zА-я])|([^A-zА-я]')/g
+                let str1 = document.querySelector('.input').innerHTML
+                let arr = [...str1.match(regExp)]
+                let arr1 = []
+                arr.forEach((e, i) => {
+                    arr1.push(e.replace(/[']/, `"`))
+                })
+                arr1.forEach((e, i) => {
+                    str1 = str1.replace(arr[i], arr1[i])
+                })
+                document.querySelector('.output').innerHTML = str1
+            })
+
+        }
+    </script>
+</body>
+
+</html>

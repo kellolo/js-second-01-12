@@ -169,3 +169,8 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+
+.total-sum {
+    text-align: right;
+    font-size: 14px;
+}

@@ -7,7 +7,7 @@ window.onload= () => {
 let bodyShop = new Vue({
     el: '#E-Shop',
     data: {
-        API: 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/lesson3_is_ready/students/Alexander%20Plotnikov/project/responses/',
+        API: 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/master/students/Alexander%20Plotnikov/project/responses/',
         CatURL: 'catalogData.json',
         CartURL: 'getBasket.json',
         AddToCartURL: 'addToBasket.json',

@@ -2,7 +2,7 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'https://raw.githubusercontent.com/pwnyaka/Professional-layout/master';
 
 class List {
   constructor(url, container) {
@@ -99,7 +99,7 @@ class Item {
                         <div class="desc">
                             <h3>${this.product_name}</h3>
                             <p>${this.price} $</p>
-                            <button class="buy-btn" 
+                            <button class="buy-btn"
                             data-id="${this.id_product}"
                             data-name="${this.product_name}"
                             data-image="${this.img}"
@@ -139,9 +139,9 @@ class Cart extends List {
     super(url, container);
   }
   _addListeners() {
-    document.querySelector('.btn-cart').addEventListener('click', () => {
-      document.querySelector('.cart-block').classList.toggle('invisible');
-    });
+    // document.querySelector('.btn-cart').addEventListener('click', () => {
+    //   document.querySelector('.cart-block').classList.toggle('invisible');
+    // });
 
     document.querySelector('.cart-block').addEventListener('click', (evt) => {
       if (evt.target.classList.contains('del-btn')) {

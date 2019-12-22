@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Форма обратной связи</title>
+</head>
+
+<body>
+   
+    <form class="forma" action="#">
+    	<fieldset>
+    		<legend>Введите свои данные</legend>
+        Ваше имя <input class="fullname" type="text" placeholder="Введите ваше имя"><br>
+        Ваш телефон <input class="phone" type="tel" placeholder="Введите ваш телефон"><br>
+        Ваш e-mail <input class="email" type="email" placeholder="Введите ваш e-mail"><br>
+        </fieldset>
+       
+        <div><input class="btn" type="submit" value="Ок">
+        </div>
+    </form>
+<script type="text/javascript">
+	
+	class InputForm {
+		constructor (inputName, inputPhone, inputEmail) {
+			this.userName= document.querySelector(inputName).value;
+			this.userPhone = document.querySelector(inputPhone).value;
+			this.userEmail = document.querySelector(inputEmail).value;
+			}
+
+			filter(strName, strPhone, strEmail) {
+				const regName = /[^a-zа-яё ]/iu;
+				const regPhone = /\+7\(\d{3}\)\d{3}-\d{4}/;
+				const regEmail = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/i;
+				if (regName.test(strName)) {
+					alert ('Неверно введено имя');
+				} else if (!regPhone.test(strPhone)) {
+					alert ('Неверно введен телефон');} 
+				  else if (!regEmail.test(strEmail)) {
+					alert ('Неверно введен e-mail');} 
+				  else return;
+			}
+}		
+    
+    document.querySelector('.btn').addEventListener ('click', () => {
+   let forma = new InputForm('.fullname', '.phone','.email');
+   forma.filter(forma.userName, forma.userPhone, forma.userEmail);
+   });
+</script>
+</body>
+
+</html>

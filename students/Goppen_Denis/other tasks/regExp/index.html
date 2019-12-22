@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок 4: регулярные выражения</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="regExpTest.js" defer></script>
+</head>
+<body>
+  <header><h1>Урок 4: Регулярные выражения</h1></header>
+  <main>
+    <h3>Задание 1 (и 2): Регулярное выражение для &laquo;убийства&raquo; одинарных кавычек.</h3>
+    <form class="regExpForm" action="#">
+      <div class="twoColumnsDiv">
+        <div class="columnDiv">
+          <label for="regExpText">Текст для проверки регулярного выражения:</label>
+          <textarea class="regExpText" id="regExpText" title="Текст для проверки регулярного выражения"></textarea>
+        </div>
+        <div class="columnDiv">
+          <label for="regExpResult">Результат проверки регулярного выражения:</label>
+          <textarea class="regExpText regExpResult" id="regExpResult" readonly title="Результат проверки регулярного выражения"></textarea>
+        </div>
+      </div>
+      <div class="twoColumnsDiv">
+        <div class="columnDiv">
+          <label for="regExpInput">Регулярное выражение для проверки:</label>
+          <input class="regExpValue" id="regExpInput" type="text" title="Регулярное выражение для проверки">
+        </div>
+        <div class="columnDiv">
+          <label for="regExpReplace">Текст для замены:</label>
+          <input class="regExpValue" id="regExpReplace" type="text" title="Текст для замены">
+        </div>
+      </div>
+      <input class="regExpBtn" type="button" title="Жми и всё узнаешь!" value="Проверить" onclick="testRegExp()">
+    </form>
+    <h3>Задание 3: Проверка коректности ввода с использованием регулярных выражений.</h3>
+    <form class="feedbackForm" action="#">
+      Оставьте Ваше мнение о нашей странице
+      <!--Имя, Телефон, E-mail, текст, кнопка Отправить-->
+      <div class="inputPair">
+        <label for="nameText" id="nameTextLabel" class="labelLeft">Ваше имя:</label>
+        <input name="nameText" id="nameTextId" type="text" class="inputText" title="Не менее 3 букв" onblur="checkName()">
+      </div>
+      <div class="inputPair">
+        <label for="mailText" id="mailTextLabel" class="labelLeft">e-mail:</label>
+        <input name="mailText" id="mailTextId" type="text" class="inputText" onblur="checkMail()">
+      </div>
+      <div class="inputPair">
+        <label for="phoneText" id="phoneTextLabel" class="labelLeft">Телефон:</label>
+        <input name="phoneText" id="phoneTextId" type="text" class="inputText" onblur="checkPhone()">
+      </div>
+      <textarea name="feedbackMessage" class="feedbackText" id="feedMsg" cols="30" rows="10"></textarea>
+      <input type="button" name="feedbackBtn" id="feedbackBtnId" class="feedbackBtn" value="Отправить">
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @click="cartShown = !cartShown">Корзина</button>
+                <div class="cart-block" v-show="cartShown">
+                    <cart-item v-for="item of cartItems" :key="item.id_product" :item="item" v-bind:cartItems = "cartItems" ></cart-item>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <product-item v-for="item of catItems" :key="item.id_product" :item="item"></product-item>
+            </div>
+        </main>
+    </div>
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/comp.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

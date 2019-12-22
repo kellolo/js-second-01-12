@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 2px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить. При нажатии на кнопку Отправить
+произвести валидацию полей следующим образом:
+a. Имя содержит только буквы.
+b. Телефон имеет вид +7(000)000-0000.
+c. E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+d. Текст произвольный.
+e. Если одно из полей не прошло валидацию, необходимо выделить это поле красной рамкой и сообщить пользователю об
+ошибке. -->
+
+    <div class="container">
+      <p class="name">Имя</p>
+      <input type="text" name="name" id="name" />
+      <p class="phone">Телефон</p>
+      <input type="text" name="phone" id="phone" />
+      <p class="email">E-mail</p>
+      <input type="text" name="email" id="email" />
+      <p>Дополнительная информация</p>
+      <textarea name="" id="" cols="30" rows="10"></textarea>
+
+      <script>
+        document.querySelector("#name").addEventListener("change", event => {
+          let str = event.target.value;
+          let regexp = /^[A-Za-zА-Яа-я]+$/g;
+          let titleEl = document.querySelector(".name");
+          if (regexp.test(str)) {
+            event.target.style.borderColor = "";
+            titleEl.innerText = "Имя";
+          } else {
+            event.target.style.borderColor = "red";
+            titleEl.innerText = "Имя (некорректный формат данных)";
+          }
+        });
+
+        document.querySelector("#phone").addEventListener("change", event => {
+          let str = event.target.value;
+          let regexp = /^\+\d\s\(\d{3}\)\d{3}\-\d{4}$/g;
+          let titleEl = document.querySelector(".phone");
+          if (regexp.test(str)) {
+            event.target.style.borderColor = "";
+            titleEl.innerText = "Телефон";
+          } else {
+            event.target.style.borderColor = "red";
+            titleEl.innerText = "Телефон (некорректный формат данных)";
+          }
+        });
+
+        document.querySelector("#email").addEventListener("change", event => {
+          let str = event.target.value;
+          let regexp = /^\w+@\w{2,}.\w{2,}$/gi;
+          let titleEl = document.querySelector(".email");
+          if (regexp.test(str)) {
+            event.target.style.borderColor = "";
+            titleEl.innerText = "E-mail";
+          } else {
+            event.target.style.borderColor = "red";
+            titleEl.innerText = "E-mail (некорректный формат данных)";
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>

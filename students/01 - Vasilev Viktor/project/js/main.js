@@ -1,45 +1,27 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-
 const app = new Vue({
 	el: '#app',
 	data: {
 		products: [],
 		cartItems: [],
 		isCartDisplaying: false,
-		image: 'https://placehold.it/200x150',
-		cartImage: 'https://placehold.it/100x80',
 		query: '',
+		GETProductsUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
+		GETCartUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
 	},
 	methods: {
 		fetchProducts() {
-			return fetch(`${API}/catalogData.json`)
+			return fetch(this.GETProductsUrl)
 				.then(response => response.json())
-				.then(products => this.products = products);
-		},
-
-		fetchCart() {
-			return fetch(`${API}/getBasket.json`)
-				.then(response => response.json())
-				.then(cartItems => this.cartItems = cartItems.contents);
-		},
-
-		addProductToCart(product) {
-			fetch(`${API}/addToBasket.json`)
-				.then(response => response.json())
-				.then(data => {
-          if (data.result) {
-						console.log(`Товар ${product.product_name} добавлен в корзину`);
-					}
+				.then(products => {
+					this.products = products;
 				});
 		},
 
-		deleteCartItem(item) {
-			fetch(`${API}/deleteFromBasket.json`)
+		fetchCart() {
+			return fetch(this.GETCartUrl)
 				.then(response => response.json())
-        .then(data => {
-					if (data.result) {
-						console.log(`Товар ${item.product_name} удален из корзины`);
-					}
+				.then(cartItems => {
+					this.cartItems = cartItems.contents;
 				});
 		},
 
@@ -47,16 +29,7 @@ const app = new Vue({
 			this.isCartDisplaying = !this.isCartDisplaying;
 		},
 
-		buyButtonHandler(product) {
-      this.addProductToCart(product);
-		},
-
-		deleteCartItemButtonHandler(item) {
-			this.deleteCartItem(item);
-		},
-	},
-	computed: {
-		filterProducts() {
+		getFilteredProducts() {
 			return this.products.filter(product => {
 				const regexp = new RegExp(this.query, 'i');
 
@@ -64,8 +37,13 @@ const app = new Vue({
 			});
 		},
 	},
+	computed: {
+		filteredProducts() {
+			return this.getFilteredProducts();
+		},
+	},
 	mounted() {
 		this.fetchProducts();
 		this.fetchCart();
-	}
+	},
 });

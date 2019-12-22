@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+      }
+      .input1 {
+        width: 600px;
+        height: 50px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea class="input1">
+'Aren't I?' is commonly used and very acceptable in informal language. 'Am I not?' is grammatical, but extremely formal,
+so in most contexts, 'aren't I?' is the preferred choice. The only exception is when you are writing a formal letter or
+an academic paper, and then you can either use 'am I not?' or even better, restructure the sentence to avoid using
+either of these forms.
+		</textarea
+    >
+    <p class="replaceText"></p>
+    <script>
+      let text = document.querySelector(".input1").defaultValue;
+      document.querySelector(".replaceText").innerText = text.replace(
+        /\B'/g,
+        '"'
+      );
+    </script>
+  </body>
+</html>

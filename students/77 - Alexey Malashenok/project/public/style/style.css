@@ -97,6 +97,10 @@ img {
     border-bottom: 10px solid white;
 }
 
+.cart-block-main {
+    float: right;
+}
+
 .buy-btn, .del-btn{
     margin-top: 5px;
     background-color: #2f2a2d;

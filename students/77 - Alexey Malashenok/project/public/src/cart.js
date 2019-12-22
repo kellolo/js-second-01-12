@@ -1,32 +1,32 @@
 'use strict';
 
-let app = new Vue({
-    el: '.app',
+Vue.component('cart', {
 
-    data: {
+    template: `
+        <div class="cart-block-main">
+            <button class="btn-cart" type="button" @click="cartShown = !cartShown">Корзина</button>
+            <div class="cart-block" v-show="cartShown">            
+                <cart-item v-for="item of cartItems" :key="item.id_product" :purchase="item"></cart-item>
+                <div class="total-sum">
+                <h3>Всего {{ getTotalSum.qnt }} позиции на {{ getTotalSum.sum }} руб.</h3>
+                </div>
+            </div>
+        </div>`,
 
-        catUrl: 'https://raw.githubusercontent.com/malashenok/JS_advanced/master/online-store-api/response/catalogData.json',
-        cartUrl: 'https://raw.githubusercontent.com/malashenok/JS_advanced/master/online-store-api/response/getBasket.json',
-        addUrl: 'https://raw.githubusercontent.com/malashenok/JS_advanced/master/online-store-api/response/addToBasket.json',
-        delUrl: 'https://raw.githubusercontent.com/malashenok/JS_advanced/master/online-store-api/response/deleteFromBasket.json',
-
-        catItems: [],
-        cartItems: [],
-
-        catImg: 'https://placehold.it/200x150',
-        cartImg: 'https://placehold.it/100x80',
-
-        cartShown: false
-
+    data: function () {
+        return {
+            cartItems: [],
+            cartShown: false,
+            cartUrl: '/cart',
+            addUrl: '/addItem',
+            delUrl: '/delItem'
+        }
     },
 
     methods: {
-        getResopnse(url) {
-            return fetch(url);
-        },
 
         addItem(item) {
-            this.getResopnse(this.addUrl)
+            this.$parent.postRequest(this.addUrl, item)
                 .then(d => d.json())
                 .then(response => {
                     if (response.result) {
@@ -40,8 +40,9 @@ let app = new Vue({
                     }
                 })
         },
+
         removeItem(item) {
-            this.getResopnse(this.delUrl)
+            this.$parent.postRequest(this.delUrl, item)
                 .then(d => d.json())
                 .then(response => {
                     if (response.result) {
@@ -53,11 +54,14 @@ let app = new Vue({
                             this.cartItems.splice(this.cartItems.indexOf(find), 1);
                         }
                     }
-                    
                 })
         }
+    },
 
-
+    mounted() {
+        this.$parent.getRequest(this.cartUrl)
+            .then(d => d.json())
+            .then(data => { this.cartItems = data })
     },
     computed: {
         getTotalSum() {
@@ -68,17 +72,7 @@ let app = new Vue({
                 sum += elem.price * elem.quantity;
                 qnt += elem.quantity;
             });
-            return ({ sum, qnt });
+            return { sum, qnt };
         }
-    },
-
-    mounted() {
-        this.getResopnse(this.catUrl)
-            .then(d => d.json())
-            .then(data => { this.catItems = data })
-
-        this.getResopnse(this.cartUrl)
-            .then(d => d.json())
-            .then(data => { this.cartItems = data.contents })
     }
-});
+})

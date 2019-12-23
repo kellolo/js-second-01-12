@@ -1,16 +1,38 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
+const CATALOG = 'server/db/catalogData.json';
+const BASKET = 'server/db/getBasket.json';
+const STATS = 'server/db/stats.json';
 
-//app.get('/', (req, res) => res.send('Hello World!'))
+function readJson(file) {
+  var data = fs.readFileSync(file);
+  var json = JSON.parse(data);
+  return json;
+}
+
+function saveJson(file, data = {}) {
+  fs.writeFileSync(file, JSON.stringify(data));
+}
+
+function updateBasket(basket) {
+  var newBasket = Object.assign(basket);
+  newBasket.countGoods = 0;
+  newBasket.amount = 0;
+  for (var item of newBasket.contents) {
+    newBasket.amount += item.price * item.quantity;
+    newBasket.countGoods += item.quantity;
+  }
+  return newBasket;
+}
+
 app.use(express.json());
 app.use('/', express.static('public'));
 app.use('/db/', express.static('server/db'));
 
 app.get('/catalogData', (req, res) => {
   fs.readFile('server/db/catalogData.json', 'utf-8', (err, data) => {
-    if (err) {
-      // res.set('Content-Type', 'application/json')
+    if (err) { 
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
       res.send(data);
@@ -20,8 +42,7 @@ app.get('/catalogData', (req, res) => {
 
 app.get('/getBasket', (req, res) => {
   fs.readFile('server/db/getBasket.json', 'utf-8', (err, data) => {
-    if (err) {
-      // res.set('Content-Type', 'application/json')
+    if (err) { 
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
       res.send(data);
@@ -30,28 +51,31 @@ app.get('/getBasket', (req, res) => {
 });
 
 app.post('/addToBasket', (req, res) => {
-  var basketData = fs.readFileSync('server/db/getBasket.json');
-  var basket = JSON.parse(basketData);
-  var catalogData = fs.readFileSync('server/db/catalogData.json');
-  var catalog = JSON.parse(catalogData);
-  var addingProductId = req.body.id_product;
-  var findCat = catalog.find(item => item.id_product === addingProductId); 
+
+  var stats = readJson(STATS);
+  stats.push({
+    action: "adding",
+    time: new Date().toString(),
+  });
+  saveJson(STATS, stats); 
+
+  var basket = readJson(BASKET);
+  var catalog = readJson(CATALOG);
+ 
+  var findCat = catalog.find(item => item.id_product === req.body.id_product); 
+  console.log("adding", findCat);
 
   if (findCat) {
     var findCart = basket.contents.find(item => item.id_product === findCat.id_product);
-    console.log("adding", findCat);
     if (findCart) {
       findCart.quantity++;
     } else {
       basket.contents.push(Object.assign({}, findCat, { quantity: 1 }));
     }
-    basket.countGoods = 0;
-    basket.amount = 0;
-    for (var item of basket.contents) {
-      basket.amount += item.price * item.quantity;
-      basket.countGoods += item.quantity;
-    } 
-    fs.writeFileSync('server/db/getBasket.json', JSON.stringify(basket));
+
+    basket = updateBasket(basket);
+    saveJson(BASKET, basket);
+
     res.send(200, JSON.stringify({ result: 1 }));
   } else {
     res.send(403, JSON.stringify({ result: 0 }));
@@ -60,34 +84,33 @@ app.post('/addToBasket', (req, res) => {
 
 
 app.post('/deleteFromBasket', (req, res) => {
-  var basketData = fs.readFileSync('server/db/getBasket.json');
-  var basket = JSON.parse(basketData); 
-  var deletingProductId = req.body.id_product;
-  var find = basket.contents.find(item => item.id_product === deletingProductId); 
+
+  var stats = readJson(STATS);
+  stats.push({
+    action: "deleting",
+    time: new Date().toString(),
+  });
+  saveJson(STATS, stats); 
+
+  var basket = readJson(BASKET); 
+  
+  var find = basket.contents.find(item => item.id_product === req.body.id_product); 
+  console.log("deleting", find);
 
   if (find) {
-    console.log("deleting", find);
     if (find.quantity > 1) {
       find.quantity--;
     } else {
       basket.contents.splice(basket.contents.indexOf(find), 1);
     }
-    basket.countGoods = 0;
-    basket.amount = 0;
-    for (var item of basket.contents) {
-      basket.amount += item.price * item.quantity;
-      basket.countGoods += item.quantity;
-    } 
-    fs.writeFileSync('server/db/getBasket.json', JSON.stringify(basket));
+    
+    basket = updateBasket(basket);
+    saveJson(BASKET, basket); 
+
     res.send(200, JSON.stringify({ result: 1 }));
   } else {
     res.send(403, JSON.stringify({ result: 0 }));
   }
 });
-
-
-
-// let rawdata = fs.readFileSync('student.json');
-// let student = JSON.parse(rawdata);
-
+ 
 app.listen(3000, () => console.log(`server started on port 3000`));

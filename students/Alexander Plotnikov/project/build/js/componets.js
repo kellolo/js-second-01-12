@@ -19,25 +19,28 @@ Vue.component('product', {
     },
     methods: {
         addtoCart() {
-            this.$root.getData(`${this.API}${this.AddToCartURL}`)
-                .then(data => {
-                    if (data.result == 1) {
-                        let find = this.$root.$refs.linkCart.cartItems.find(item => item.id == this.item.id)
-                        let index = this.$root.$refs.linkCart.cartItems.findIndex(item => item.id == this.item.id)
-                        if (find) {
-                            find.quantity++
-                            //this.$root.$refs.linkCartcartItems.push(this.item)
-
-                        } else {
-                            this.item.quantity = '1'
-                            this.$root.$refs.linkCart.cartItems.push(this.item)
-                        }
-                    }
-
-                })
-        }
-
+            this.item.quantity = "1"
+            console.log(this.item)
+            this.$root.$refs.LinkCart.addItemInCart(this.item)
+         
+                /* let find = this.$root.$refs.linkCart.cartItems.find(item => item.id == this.item.id)
+    
+                if (find) {
+                    this.$root.getData(`${this.API}${this.AddToCartURL}`)
+                        .then(data => {
+                            if (data.result == 1) {
+                                find.quantity++
+                            }
+                        })
+                } else {
+                    this.$root.$refs.linkCart.cartItems.push(this.item)
+                }
+ */
+            }
+            
+        
     }
+
 })
 
 Vue.component('catalog', {
@@ -121,28 +124,26 @@ Vue.component('cart', {
     },
     methods: {
         cleanCart() {
-            this.cartItems = []
+            this.$root.cartItems = []
             this.openCart = false
         },
         addItemInCart(prod) {
+            
+           
+            let find = this.cartItems.find(item => item.id == prod.id)
 
-            this.$root.getData(`${this.API}${this.AddToCartURL}`)
-                .then(data => {
-                    if (data.result == 1) {
-                        let find = this.cartItems.find(item => item.id == prod.id)
-                        let index = this.cartItems.findIndex(item => item.id == prod.id)
-                        if (find) {
+            if (find) {
+                this.$root.getData(`${this.API}${this.AddToCartURL}`)
+                    .then(data => {
+                        if (data.result == 1) {
                             find.quantity++
-                            //this.cartItems.push(prod)
-
-                        } else {
-                            prod.quantity = '1'
-                            this.cartItems.push(prod)
                         }
-                    }
-                    this.cartItems = this.cartItems
-                    console.log(this.cartItems)
-                })
+                    })
+            } else {
+                this.cartItems.push(prod)
+            }
+           
+
         },
         delItemInCart(prod) {
             let find = this.cartItems.find(item => item.id == prod.id)
@@ -156,6 +157,7 @@ Vue.component('cart', {
                         }
                     }
                 })
+
         }
 
     },
@@ -243,7 +245,7 @@ Vue.component('search', {
                 }
             }
             if (arr.length > 0) {
-                this.$root.dataItems = arr
+               this.$root.dataItems = arr
             }
         }
     },

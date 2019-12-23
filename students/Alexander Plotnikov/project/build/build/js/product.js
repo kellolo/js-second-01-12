@@ -9,13 +9,5 @@ Vue.component('product', {
                 v-bind:data-id="item.id">
                 add to cart</button>
     </div>
-    `,
-    data() {
-        return {
-            API: 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/master/students/Alexander%20Plotnikov/project/responses/',
-            CartURL: 'getBasket.json',
-            AddToCartURL: 'addToBasket.json'
-        }
-    }
-    
+    `   
 })

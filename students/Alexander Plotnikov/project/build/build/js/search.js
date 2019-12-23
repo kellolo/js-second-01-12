@@ -17,8 +17,7 @@ Vue.component('search', {
     data() {
         return {
             searchWord: '',
-            API: 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/master/students/Alexander%20Plotnikov/project/responses/',
-            CatURL: 'catalogData.json',
+            CatURL: '/catalogData.json',
             catalog: []
         }
     },
@@ -57,7 +56,7 @@ Vue.component('search', {
     },
 
     mounted() {
-        this.getData(`${this.API}${this.CatURL}`)
+        this.getData(this.CatURL)
             .then(data => {
                 this.catalog = data
             })

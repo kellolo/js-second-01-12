@@ -8,8 +8,7 @@ Vue.component('catalog', {
     `,
     data() {
         return {
-            API: 'https://raw.githubusercontent.com/lotostoi/js-second-01-12/master/students/Alexander%20Plotnikov/project/responses/',
-            CatURL: 'catalogData.json',
+            CatURL: '/catalogData.json',
             catalogItems: []
         }
     },
@@ -17,7 +16,7 @@ Vue.component('catalog', {
 
     },
     mounted() {
-        this.$root.getData(`${this.API}${this.CatURL}`)
+        this.$root.getData(this.CatURL)
             .then(data => {
                 this.catalogItems = data
             })

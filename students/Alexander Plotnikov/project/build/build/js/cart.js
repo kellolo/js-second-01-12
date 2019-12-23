@@ -34,23 +34,43 @@ Vue.component('cart', {
     },
     methods: {
         cleanCart() {
-            this.cartItems = []
             this.openCart = false
+            this.$root.getData(this.DeleteFromCartURL)
+                .then(data => {
+                    if (data.result == 1) {
+                        this.cartItems = []
+                    }
+                    this.postFetch(this.DeleteFromCartURL)
+                })
+        },
+        postFetch(url) {
+            return fetch(url, { // отправляем новый файл корзины на сервер
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: this.jsonCart
+                })
+                .then(data => data.json())
+                .then(data => {
+                    if (data.result == 1) {
+                        console.log('Зарос прошел!')
+                    }
+                })
         },
         addItemInCart(prod) {
             this.$root.getData(this.AddToCartURL)
                 .then(data => {
-                    if (data.result == 1) {
+                    if (data.result == 1) { // если сервер ответил
                         let find = this.cartItems.find(item => item.id == prod.id)
-                        let index = this.cartItems.findIndex(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
                         } else {
-                            prod.quantity = '1'
-                            this.cartItems.push(Object.assign({}, prod, quantity = "1"))
+                            prod.quantity = "1"
+                            this.cartItems.push(Object.assign({}, prod))
                         }
+                        this.postFetch(this.AddToCartURL)
                     }
-                    this.cartItems = this.cartItems
                 })
         },
         delItemInCart(prod) {
@@ -63,6 +83,7 @@ Vue.component('cart', {
                             this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
                         }
                     }
+                    this.postFetch(this.DeleteFromCartURL)
                 })
         }
     },
@@ -78,7 +99,6 @@ Vue.component('cart', {
             this.cartItems.forEach(e => {
                 summ += +e.price * e.quantity
             })
-
             return summ
         },
         quantity: function () {
@@ -90,6 +110,14 @@ Vue.component('cart', {
                 quat = 0
             }
             return quat
+        },
+        jsonCart: function () { // собираем новый фалл корзины
+            let data = JSON.stringify({
+                amount: this.sum,
+                countGoods: this.quantity,
+                contents: this.cartItems
+            })
+            return data
         }
     }
 })

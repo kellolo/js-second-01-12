@@ -1,1 +1,0 @@
-class ProductItem extends Item { }

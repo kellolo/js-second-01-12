@@ -12,9 +12,7 @@ Vue.component('catalog', {
       catalogDataUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/catalogData.json", 
       items: [],
     }
-  },
-  ref: ["catalog"],
-  refs: ["catalog"],
+  }, 
   methods: {
     catAddProduct(prod) {
       this.$root.$refs.cart.addToBasket(prod);

@@ -19,10 +19,7 @@ Vue.component('cart', {
       addToBasketUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/addToBasket.json",
       items: [],
     }
-  },
-  ref: ["cart"],
-  refs: ["cart"],
-  // props: ['product'],
+  }, 
   methods: {
     deleteFromBasket(prod) {
       fetch(this.deleteFromBasketUrl)

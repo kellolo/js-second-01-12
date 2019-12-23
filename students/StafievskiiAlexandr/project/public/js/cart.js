@@ -14,15 +14,22 @@ Vue.component('cart', {
   data() {
     return {
       cartVisibility: false,
-      getBasketUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/getBasket.json",
-      deleteFromBasketUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/deleteFromBasket.json",
-      addToBasketUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/addToBasket.json",
+      getBasketUrl: "/getBasket",
+      deleteFromBasketUrl: "/deleteFromBasket",
+      addToBasketUrl: "/addToBasket",
       items: [],
     }
-  }, 
+  },
   methods: {
     deleteFromBasket(prod) {
-      fetch(this.deleteFromBasketUrl)
+      fetch(this.deleteFromBasketUrl, {
+        method: "POST",
+        body: JSON.stringify({ id_product: prod.id_product }),
+        cache: "no-cache",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
         .then(d => d.json())
         .then(ans => {
           if (ans.result) {
@@ -36,7 +43,14 @@ Vue.component('cart', {
         });
     },
     addToBasket(prod) {
-      fetch(this.addToBasketUrl)
+      fetch(this.addToBasketUrl, {
+        method: "POST",
+        body: JSON.stringify({ id_product: prod.id_product }),
+        cache: "no-cache",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
         .then(d => d.json())
         .then(ans => {
           if (ans.result) {
@@ -61,7 +75,7 @@ Vue.component('cart', {
       return amount;
     },
     getCountGoods() {
-      return this.items.length;
+      return this.items.length > 0 ? this.items.map(item => item.quantity).reduce((a, b) => a + b) : 0;
     }
   },
   created() {

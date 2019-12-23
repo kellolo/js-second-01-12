@@ -9,7 +9,7 @@ Vue.component('catalog', {
   `, 
   data() {
     return {
-      catalogDataUrl: "https://raw.githubusercontent.com/heatmosk/online-store-api/master/responses/catalogData.json", 
+      catalogDataUrl: "/catalogData", 
       items: [],
     }
   }, 

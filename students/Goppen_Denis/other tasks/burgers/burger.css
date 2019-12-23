@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'Kelly Slab';
+  src: url('KellySlab-Regular.ttf') format('truetype');
+}
+
+* {
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+body {
+  margin: auto;
+  background-color: whitesmoke;
+}
+
+header {
+  font-size: 2rem;
+  font-family: 'Kelly Slab', cursive;
+  color: darkslategrey;
+  text-shadow: 0 0 0.3rem lightyellow;
+  padding: 0.5rem;
+  background: linear-gradient(to bottom left, darkslategrey, whitesmoke, darkslategrey);
+}
+
+#main-div {
+  padding: 0.5rem;
+  display: flex;
+  align-content: space-between;
+}
+
+#burgerImg {
+  width: 160px;
+  height: 160px;
+}
+
+.formFields {
+  display: flex;
+  align-content: space-between;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+#caloriesShow {
+  width: 40%;
+}
+
+#priceShow {
+  width: 40%;
+}
+
+#submitOrder {
+  width: 20%;
+}

@@ -2,35 +2,48 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Интернет-магазин</title>
-  <link rel="stylesheet" href="style/normalize.css">
-  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/normalize.css" />
+  <link rel="stylesheet" href="style/style.css" />
 </head>
 
 <body>
-  <header>
-    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="/favicon.ico">
-    <div class="logo">E-shop</div>
-    <div class="cart">
-      <form action="#" class="search-form">
-        <input type="text" class="search-field">
-        <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-      </form>
-      <button class="btn-cart" type="button">Корзина</button>
-      <div class="cart-block invisible"></div>
-    </div>
-  </header>
-  <main>
-    <div class="products"></div>
-  </main>
+  <div id="app">
+    <header>
+      <div class="logo">E-shop</div>
+      <div class="cart">
+        <form action="#" class="search-form">
+          <input type="text" class="search-field" />
+          <button class="btn-search" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        <button class="btn-cart" type="button" @click="cartVisibility = !cartVisibility">
+          Корзина
+        </button>
+        <div class="cart-block" v-show="cartVisibility">
+          <template v-if="cartItems.length > 0">
+            <cart v-for="cartItem of cartItems" :key="cartItem.id_product" :product="cartItem"></cart>
+          </template>
+          <div>Total items: {{ getCountGoods }}</div>
+          <div>Amount: {{ getAmount }}</div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div v-if="catItems.length == 0">Нет данных</div>
+      <div v-else class="products">
+        <catalog v-for="catItem in catItems" :key="catItem.id_product" :product="catItem"></catalog>
+      </div>
+    </main>
+  </div>
 
-
-
-  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
+  <script async src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+    integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script defer src="js/main.js"></script>
 </body>
 
 </html>

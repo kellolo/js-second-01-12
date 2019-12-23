@@ -12,59 +12,6 @@ class List {
     this._init();
   }
 
-//variant #1 - callback
-//   fetchData() {
-//     this._makeGETRequest('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json', (items) => {
-//       this.list = JSON.parse(items);
-//       this._renderProducts();
-//     });
-//   }
-//
-//   _makeGETRequest(url, callback) {
-//     let xhr;
-//     xhr = new XMLHttpRequest();
-//     xhr.onreadystatechange = function () {
-//       if (xhr.readyState === 4) {
-//         if (xhr.status === 200) {
-//           callback(xhr.responseText);
-//         } else {
-//           throw 'error: resource not found, check URL';
-//         }
-//       }
-//     };
-//     xhr.open('GET', url, true);
-//     xhr.send();
-//   };
-
-  // variant #2 - Promise
-  // async fetchData() {
-  //   await this._makeGETRequest('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json')
-  //       .then(items => {
-  //         this.list = JSON.parse(items);
-  //         // this._renderProducts(); (без async await)
-  //       })
-  //       .catch((error) => {throw error});
-  //   this._renderProducts();
-  // }
-  //
-  // _makeGETRequest(url) {
-  //   return new Promise((resolve, reject) => {
-  //     let xhr;
-  //     xhr = new XMLHttpRequest();
-  //     xhr.onreadystatechange = function () {
-  //       if (xhr.readyState === 4) {
-  //         if (xhr.status === 200) {
-  //           resolve(xhr.responseText);
-  //         } else {
-  //           reject('error: resource not found, check URL');
-  //         }
-  //       }
-  //     };
-  //     xhr.open('GET', url, true);
-  //     xhr.send();
-  //   })
-  // }
-
   _init() {
     return false;
   }

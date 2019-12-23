@@ -39,7 +39,6 @@ Vue.component('cart', {
             this.openCart = false
         },
         addItemInCart(prod) {
-
             this.$root.getData(`${this.API}${this.AddToCartURL}`)
                 .then(data => {
                     if (data.result == 1) {
@@ -47,15 +46,12 @@ Vue.component('cart', {
                         let index = this.cartItems.findIndex(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
-                            //this.cartItems.push(prod)
-
                         } else {
                             prod.quantity = '1'
-                            this.cartItems.push(prod)
+                            this.cartItems.push(Object.assign({}, prod, quantity = "1"))
                         }
                     }
                     this.cartItems = this.cartItems
-                    console.log(this.cartItems)
                 })
         },
         delItemInCart(prod) {
@@ -65,13 +61,11 @@ Vue.component('cart', {
                     if (data.result == 1) {
                         find.quantity--
                         if (find.quantity === 0) {
-
                             this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
                         }
                     }
                 })
         }
-
     },
     mounted() {
         this.$root.getData(`${this.API}${this.CartURL}`)

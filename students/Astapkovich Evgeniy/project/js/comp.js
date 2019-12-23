@@ -15,21 +15,20 @@ Vue.component('catalog-item', {
   data() {
     return {
       catalogImage: 'https://placehold.it/200x150',
-      addURL: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json'
     }
   },
 
   methods: {
     addProduct(product) {
-      this.getJSON(this.addURL)
+      this.$root.getJSON(this.$root.addURL)
         .then(ans => {
           if (ans.result === 1) {
-            let find = this.cartItems.find(item => item.id_product === product.id_product)
+            let find = this.$root.cartItems.find(item => item.id_product === product.id_product)
 
             if (find) {
               find.quantity++
             } else {
-              this.cartItems.push(Object.assign({}, product, { quantity: 1 }))
+              this.$root.cartItems.push(Object.assign({}, product, { quantity: 1 }))
             }
           }
         })
@@ -58,9 +57,25 @@ Vue.component('cart-item', {
     data() {
       return {
         cartImage: 'https://placehold.it/100x80',
-        delURL: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json',
       }
     },
 
-    props: ['item']
+    props: ['item'],
+
+    methods: {
+      delProduct (product) {
+        this.$root.getJSON (this.$root.delURL)
+              .then( ans => {
+                if (ans.result) {
+                  let find = this.$root.cartItems.find (item => item.id_product === product.id_product)
+  
+                  if (find.quantity > 1) {
+                    find.quantity--
+                  } else {
+                    this.$root.cartItems.splice (this.$root.cartItems.indexOf(find), 1)
+                  }
+                }
+              })
+      }
+    }
 })

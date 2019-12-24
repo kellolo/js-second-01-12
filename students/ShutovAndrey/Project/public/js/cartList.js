@@ -27,17 +27,15 @@ Vue.component("cart", {
     },
     data() {
         return {
-            addUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/addToBasket.json',
-            delUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/deleteFromBasket.json',
+            delUrl: '/delFromBasket',
         }
     },
     methods: {
         delProduct(pr) {
-            this.$root.getJson(this.delUrl)
+            this.$root.postJson(this.delUrl)
                 .then(ans => {
                     if (ans.result) {
                         let find = this.$root.cartItems.find(item => item.id_product === pr.id_product)
-
                         if (find.quantity > 1) {
                             find.quantity--
                         } else {
@@ -45,7 +43,7 @@ Vue.component("cart", {
                         }
                     }
                 })
-        },
+        }
 
     }
 });

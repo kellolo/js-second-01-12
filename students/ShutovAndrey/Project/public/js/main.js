@@ -1,9 +1,10 @@
 let app = new Vue({
     el: '#app',
     data: {
-      //  catUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/StudyDB.json',
+        //  catUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/StudyDB.json',
         catUrl: '/catalog',
-        cartUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/getBasket.json',
+        // cartUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/getBasket.json',
+        cartUrl: '/cart',
         catItems: [],
         cartItems: [],
         cartShown: false,
@@ -15,6 +16,17 @@ let app = new Vue({
             return fetch(url)
                 .then(d => d.json())
         },
+
+        postJson(url, data) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json());
+        }
 
     },
     computed: {
@@ -40,7 +52,7 @@ let app = new Vue({
 
         this.getJson(this.cartUrl)
             .then(items => {
-                this.cartItems = items.contents
+                this.cartItems = items
             })
         //console.log(this)
     }

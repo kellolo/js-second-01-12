@@ -17,23 +17,25 @@ Vue.component("products", {
     },
     data() {
         return {
-            addUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/addToBasket.json',
+            // addUrl: 'https://raw.githubusercontent.com/ShutovAndrey/Study/master/addToBasket.json',
+            addUrl: '/addToBasket',
         }
     },
     methods: {
-                addProduct (pr) {
-            this.$root.getJson (this.addUrl)
-                .then (ans => {
-                    if (ans.result) {
-                        let find = this.$root.cartItems.find (item => item.id_product === pr.id_product) 
-
-                        if (find) {
-                            find.quantity++
-                        } else {
-                            this.$root.cartItems.push (Object.assign ({}, pr, {quantity: 1}))
-                        }
-                    }
-                })
+        addProduct(pr) {
+            this.$root.postJson(this.addUrl, pr)
+                // .then(ans => {
+                //     if (ans.result) {
+                //         let find = this.$root.cartItems.find(item => item.id_product === pr.id_product)
+                //
+                //         if (find) {
+                //             find.quantity++
+                //         } else {
+                //             // console.log('smth')
+                //             this.$root.cartItems.push(Object.assign({}, pr, {quantity: 1}))
+                //         }
+                //     }
+                // })
         }
 
     },

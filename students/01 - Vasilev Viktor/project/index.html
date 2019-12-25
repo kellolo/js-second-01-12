@@ -8,36 +8,9 @@
 </head>
 <body>
   <div id="app">
-    <HeaderComponent />
-<!--    <header>-->
-<!--      <div class="logo">E-shop</div>-->
-<!--      <div class="cart">-->
-<!--        <SearchLine />-->
-<!--        <form action="#" class="search-form">-->
-<!--          <input class="search-field"-->
-<!--                 v-model="query"-->
-<!--                 type="text"-->
-<!--          >-->
-<!--          <button class="btn-search" type="submit">-->
-<!--            <i class="fas fa-search"></i>-->
-<!--          </button>-->
-<!--        </form>-->
+    <header-component ref="headercomp"></header-component>
 
-<!--        <button class="btn-cart"-->
-<!--                type="button"-->
-<!--                @click="cartButtonHandler"-->
-<!--        >Корзина</button>-->
-
-<!--        <div class="cart-block"-->
-<!--             v-show="isCartDisplaying"-->
-<!--        >-->
-<!--          <Cart :items="cartItems"-->
-<!--                ref="cart"-->
-<!--          />-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </header>-->
-    <Catalog ref="catalog" />
+    <catalog ref="catalog"></catalog>
   </div>
 
   <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
@@ -45,11 +18,11 @@
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="./js/HeaderComponent.js"></script>
-  <script src="./js/SearchLine.js"></script>
-  <script src="./js/Cart.js"></script>
   <script src="./js/CartItem.js"></script>
-  <script src="./js/Catalog.js"></script>
   <script src="./js/CatalogItem.js"></script>
+  <script src="./js/Catalog.js"></script>
+  <script src="./js/Cart.js"></script>
+  <script src="./js/SearchLine.js"></script>
   <script src="./js/main.js"></script>
 </body>
 </html>

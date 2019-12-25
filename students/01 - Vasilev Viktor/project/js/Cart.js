@@ -1,15 +1,14 @@
 Vue.component ('Cart', {
 	template: `
 		<div>
-			<CartItem class="cart-item"
-								v-for="item in items" 
-								:key="item.id_product"
-								:item="item"
-								@delete="deleteCartItemButtonHandler"
+			<cart-item class="cart-item"
+								 v-for="item in cartItems" 
+								 :key="item.id_product"
+								 :item="item"
+								 @delete="deleteCartItemButtonHandler"
 	    />
 		</div>
 	`,
-	props: ['items'],
 	data() {
 		return {
 			cartItems: [],
@@ -33,7 +32,7 @@ Vue.component ('Cart', {
 				.then(response => response.json())
 				.then(data => {
           if (data.result) {
-						this.items.push({...product, quantity: 1});
+						this.cartItems.push({...product, quantity: 1});
 					}
 				});
 		},
@@ -56,7 +55,7 @@ Vue.component ('Cart', {
 						if (item.quantity > 1) {
 							item.quantity--;
 						} else {
-							this.items.splice(this.items.indexOf(item), 1);
+							this.cartItems.splice(this.cartItems.indexOf(item), 1);
 						}
 					}
 				});
@@ -67,7 +66,7 @@ Vue.component ('Cart', {
 		},
 
 		getCurrentCartItem(product) {
-			return this.items.find(cartItem => cartItem.id_product === product.id_product);
+			return this.cartItems.find(cartItem => cartItem.id_product === product.id_product);
 		},
 	},
 	mounted() {

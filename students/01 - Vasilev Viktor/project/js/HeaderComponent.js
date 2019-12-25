@@ -1,9 +1,9 @@
-Vue.component ('HeaderComponent', {
+Vue.component ('header-component', {
 	template: `
     <header>
       <div class="logo">E-shop</div>
       <div class="cart">
-        <SearchLine />
+        <search-line></search-line>
 
         <button class="btn-cart"
                 type="button"
@@ -13,9 +13,7 @@ Vue.component ('HeaderComponent', {
         <div class="cart-block"
              v-show="isCartDisplaying"
         >
-          <Cart :items="cartItems"
-                ref="cart"
-          />
+          <cart ref="cart"></cart>
         </div>
       </div>
     </header>

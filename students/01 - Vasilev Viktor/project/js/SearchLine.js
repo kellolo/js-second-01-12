@@ -1,14 +1,11 @@
-Vue.component ('SearchLine', {
+Vue.component ('search-line', {
 	template: `
-		<form action="#" class="search-form">
+		<form action="#" class="search-form" @submit.prevent="filterProducts">
 			<input class="search-field"
-						 v-model="query"
 						 type="text"
+						 v-model="query"
 			>
-			<button class="btn-search"
-							type="submit"
-							@submit.prevent="filterProducts"
-			>
+			<button class="btn-search" type="submit">
 				<i class="fas fa-search"></i>
 			</button>
 		</form>
@@ -21,6 +18,6 @@ Vue.component ('SearchLine', {
 	methods: {
 		filterProducts() {
 			this.$root.$refs.catalog.filterProducts(this.query);
-		}
+		},
 	},
 });

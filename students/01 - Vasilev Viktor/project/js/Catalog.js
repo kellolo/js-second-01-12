@@ -1,7 +1,7 @@
 Vue.component ('catalog', {
 	template: `
 		<div class="products">
-      <CatalogItem v-if="filteredProducts.length"
+      <catalog-item v-if="filteredProducts.length"
 							     v-for="product in filteredProducts"
 							     :key="product.id_product"
 							     :product="product"
@@ -28,11 +28,8 @@ Vue.component ('catalog', {
 		},
 
 		filterProducts(query) {
-			this.filteredProducts = this.products.filter(product => {
-				const regexp = new RegExp(query, 'i');
-
-				return regexp.test(product.product_name);
-			});
+			const regexp = new RegExp(query, 'i');
+			this.filteredProducts = this.products.filter(product => regexp.test(product.product_name));
 		},
 	},
 	mounted() {

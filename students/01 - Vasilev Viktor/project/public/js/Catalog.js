@@ -13,13 +13,12 @@ Vue.component ('catalog', {
 		return {
 			products: [],
 			filteredProducts: [],
-			GETProductsUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
 			POSTUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
 		};
 	},
 	methods: {
 		fetchProducts() {
-			return fetch(this.GETProductsUrl)
+			return fetch('/products')
 				.then(response => response.json())
 				.then(products => {
 					this.products = products;

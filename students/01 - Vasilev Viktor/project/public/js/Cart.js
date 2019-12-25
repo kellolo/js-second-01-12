@@ -12,15 +12,11 @@ Vue.component ('cart', {
 	data() {
 		return {
 			cartItems: [],
-			GETCartUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
-			POSTUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
-			PATCHUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
-			DELETEUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json',
 		};
 	},
 	methods: {
 		fetchCart() {
-			return fetch(this.GETCartUrl)
+			return fetch('/cart')
 				.then(response => response.json())
 				.then(cartItems => {
 					this.cartItems = cartItems.contents;
@@ -28,7 +24,7 @@ Vue.component ('cart', {
 		},
 
 		addProductToCart(product) {
-			fetch(this.POSTUrl)
+			fetch('/cart')
 				.then(response => response.json())
 				.then(data => {
           if (data.result) {
@@ -38,7 +34,13 @@ Vue.component ('cart', {
 		},
 
 		updateCartItem(cartItem) {
-        fetch(this.PATCHUrl)
+        fetch(`/cart/${cartItem.id_product}`, {
+          method: 'PATCH',
+          body: JSON.stringify({qty: cartItem.quantity++}),
+          headers: {
+            'Content-type': 'application/json',
+          },
+        })
           .then(response => response.json())
 					.then(data => {
 						if (data.result) {
@@ -47,15 +49,17 @@ Vue.component ('cart', {
           });
       },
 
-		deleteCartItem(item) {
-			fetch(this.DELETEUrl)
+		deleteCartItem(cartItem) {
+			fetch(`/cart/${cartItem.id_product}`, {
+          method: 'DELETE',
+        })
 				.then(response => response.json())
         .then(data => {
 					if (data.result) {
-						if (item.quantity > 1) {
-							item.quantity--;
+						if (cartItem.quantity > 1) {
+							cartItem.quantity--;
 						} else {
-							this.cartItems.splice(this.cartItems.indexOf(item), 1);
+							this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
 						}
 					}
 				});

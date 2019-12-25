@@ -1,4 +1,4 @@
-Vue.component ('Cart', {
+Vue.component ('cart', {
 	template: `
 		<div>
 			<cart-item class="cart-item"

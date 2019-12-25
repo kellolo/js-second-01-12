@@ -12,12 +12,22 @@ Vue.component ('Cart', {
 	props: ['items'],
 	data() {
 		return {
+			cartItems: [],
+			GETCartUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
 			POSTUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
 			PATCHUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
 			DELETEUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json',
 		};
 	},
 	methods: {
+		fetchCart() {
+			return fetch(this.GETCartUrl)
+				.then(response => response.json())
+				.then(cartItems => {
+					this.cartItems = cartItems.contents;
+				});
+		},
+
 		addProductToCart(product) {
 			fetch(this.POSTUrl)
 				.then(response => response.json())
@@ -60,4 +70,7 @@ Vue.component ('Cart', {
 			return this.items.find(cartItem => cartItem.id_product === product.id_product);
 		},
 	},
+	mounted() {
+		this.fetchCart();
+	}
 });

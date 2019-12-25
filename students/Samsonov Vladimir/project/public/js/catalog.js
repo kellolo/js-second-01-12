@@ -6,8 +6,8 @@ Vue.component ('catalog', {
     `,
     data () {
         return {
-            url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
-            // url: '/catalog',
+            // url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json',
+            url: '/catalog',
             items: [],
             filtered: [],
         }

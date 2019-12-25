@@ -40,20 +40,22 @@ Vue.component('cart', {
                     if (data.result == 1) {
                         this.cartItems = []
                     }
+                    this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod = 0, 'alldel'))) //отправляем данные для файла статистики
                     this.postFetch(this.DeleteFromCartURL)
                 })
         },
-        postFetch(url) {
-            return fetch(url, { // отправляем новый файл корзины на сервер
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: this.jsonCart
-                })
+        postFetch(url, data) { // метод для отправки данных на сервер
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
                 .then(data => data.json())
                 .then(data => {
                     if (data.result == 1) {
+
                         console.log('Зарос прошел!')
                     }
                 })
@@ -65,11 +67,15 @@ Vue.component('cart', {
                         let find = this.cartItems.find(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
+                            this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'quant+'))) //отправляем данные для файла статистики
                         } else {
                             prod.quantity = "1"
                             this.cartItems.push(Object.assign({}, prod))
+                            this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'addToCart'))) //отправляем данные для файла статистики
                         }
-                        this.postFetch(this.AddToCartURL)
+                        this.postFetch(this.AddToCartURL, this.jsonCart) // отправляем новый массив элементов корзины
+
+
                     }
                 })
         },
@@ -83,8 +89,35 @@ Vue.component('cart', {
                             this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
                         }
                     }
-                    this.postFetch(this.DeleteFromCartURL)
+                    this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'quant-'))) //отправляем данные для файла статистики
+                    this.postFetch(this.DeleteFromCartURL, this.jsonCart) //отправляем новый массив элементов корзины
                 })
+        },
+        createObjForStats: function (item, action) {
+            if (action === 'alldel') {
+                return {
+                    data: new Date(),
+                    action: 'Полная очистка корзины'
+                }
+            } else {
+                let obj = {
+                    data: new Date(),
+                    productName: item.name,
+                    id: item.id
+                }
+                if (action === 'addToCart') {
+                    obj.action = "Добавлен в корзину"
+                    return obj
+                }
+                if (action === 'quant+') {
+                    obj.action = `Увеличил количество в корзине с ${item.quantity - 1} до ${item.quantity}`
+                    return obj
+                }
+                if (action === 'quant-') {
+                    obj.action = `Уменьшил количество в корзине с ${item.quantity} до ${item.quantity - 1}`
+                    return obj
+                }
+            }
         }
     },
     mounted() {

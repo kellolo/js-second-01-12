@@ -60,7 +60,7 @@ Vue.component('feed-back-form', {
                 mail: true
             },
             fl: false,
-            flagSend: false
+            flagSend: false,   
         }
     },
     methods: {

@@ -9,7 +9,7 @@ app.listen(3040, function () {
     console.log('Example app listening on port 3040!')
 });
 //  отображаем наш проект
-app.use ('/', express.static ('build'))
+app.use('/', express.static('build'))
 // закидываем данные в req.body
 app.use(bodyParser.json())
 
@@ -20,7 +20,7 @@ app.get('/catalogData.json', function (req, res) {
         else {
             res.send(data)
         }
-    })   
+    })
 })
 // обработка запроса к cart
 app.get('/cart', function (req, res) {
@@ -29,7 +29,7 @@ app.get('/cart', function (req, res) {
         else {
             res.send(data)
         }
-    })  
+    })
 })
 
 // обработка запроса к на получение разрешения добавления товра в корзину
@@ -40,7 +40,7 @@ app.get('/addToBasket', function (req, res) {
             res.send(data)
             console.log('good')
         }
-    });   
+    });
 });
 
 
@@ -50,14 +50,14 @@ app.post('/addToBasket', function (req, res) {
     fs.writeFile('server/bd/responses/getBasket.json', JSON.stringify(req.body), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
-      });
+    });
 
     fs.readFile('server/bd/responses/addToBasket.json', 'utf-8', (err, data) => {
         if (err) { console.log('err') }
         else {
-            res.send(data)         
+            res.send(data)
         }
-    }) 
+    })
 })
 
 // обработка запроса к на получение разрешения на удаление товра из корзины
@@ -65,24 +65,50 @@ app.get('/deleteFromBasket', function (req, res) {
     fs.readFile('server/bd/responses/deleteFromBasket.json', 'utf-8', (err, data) => {
         if (err) { console.log('err') }
         else {
-             res.send(data)
-             // переписываем файл
+            res.send(data)
+            // переписываем файл
         }
-    });   
-});
+    })
+})
 
 // перезаписываем json файл корзины при удалении товара в корзину 
 app.post('/deleteFromBasket', function (req, res) {
 
     fs.writeFile('server/bd/responses/getBasket.json', JSON.stringify(req.body), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-      });
+        if (err) throw err
+        console.log('The file has been saved!')
+    })
 
     fs.readFile('server/bd/responses/addToBasket.json', 'utf-8', (err, data) => {
         if (err) { console.log('err') }
         else {
-            res.send(data)         
+            res.send(data)
         }
-    }) 
+    })
 })
+
+// формируем файл статистики
+app.post('/stats', function (req, res) {
+  
+    fs.readFile('server/bd/responses/stats.json', 'utf-8', (err, data) => {
+       
+        if (data.length == 0) { 
+            fs.writeFile('server/bd/responses/stats.json', JSON.stringify(req.body), (err) => {
+                if (err) throw err
+                console.log('The file has been saved!')
+            })
+        } else {
+            let arr = JSON.parse(data)
+            arr.push(req.body)
+            console.log('test')
+            fs.writeFile('server/bd/responses/stats.json', JSON.stringify(arr), (err) => {
+                if (err) throw err
+                console.log('The file has been saved!')
+            })
+        }
+    })
+
+
+
+
+}) 

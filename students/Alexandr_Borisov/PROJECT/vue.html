@@ -12,17 +12,7 @@
       <header>
         <div class="logo">E-shop</div>
         <div class="cart">
-          <form action="#" class="search-form">
-            <input
-              type="text"
-              class="search-field"
-              v-model="searchLine"
-              @input="setFilterGoods"
-            />
-            <button class="btn-search" type="submit" @click="setFilterGoods">
-              Q
-            </button>
-          </form>
+          <search :globaldata="this"></search>
 
           <button
             class="btn-cart"
@@ -32,34 +22,7 @@
             Корзина ({{ qtyGoodsInCart }})
           </button>
 
-          <div class="cart-block" v-if="cartShow">
-            <div class="cart-item" data-id="4" v-for="goodInCart in cartList">
-              <div class="product-bio">
-                <img src="https://placehold.it/100x80" alt="Some image" />
-                <div class="product-desc">
-                  <p class="product-title">{{ goodInCart.product_name }}</p>
-                  <p class="product-quantity">{{ goodInCart.qty }}</p>
-                  <p class="product-single-price">
-                    {{ goodInCart.price }}
-                  </p>
-                </div>
-              </div>
-
-              <div class="right-block">
-                <p class="product-price">
-                  {{ goodInCart.qty * goodInCart.price }}
-                </p>
-                <button
-                  class="del-btn"
-                  :data-id="goodInCart.id_product"
-                  @click="delGoodFromCart"
-                >
-                  ×
-                </button>
-              </div>
-            </div>
-            <p>Полная стоимость: {{ totalPrice }}</p>
-          </div>
+          <cart :globaldata="this"></cart>
         </div>
       </header>
       <!--  КАТАЛОГ -->
@@ -94,6 +57,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="./js/search.js"></script>
+    <script src="./js/cart.js"></script>
     <script>
       // Объект с данными
       const data = {
@@ -104,7 +69,8 @@
         cartList: [],
         dataLoadingStatus: false,
         cartShow: false,
-        searchLine: ""
+        searchLine: "",
+        test: "Test"
       };
 
       const vue = new Vue({
@@ -112,14 +78,6 @@
         data: data,
 
         computed: {
-          totalPrice: function() {
-            let total = 0;
-            this.cartList.forEach(function(val) {
-              total += val.price * val.qty;
-            });
-            return total;
-          },
-
           qtyGoodsInCart: function() {
             let qty = 0;
             this.cartList.forEach(function(val) {
@@ -171,16 +129,6 @@
             } else {
               this.cartList[indexInCart].qty++;
             }
-          },
-          //Фильрация каталога
-          setFilterGoods: function() {
-            let reg = new RegExp(this.searchLine, "gi");
-
-            let arr = this.goodList.filter(function(val, index, arr) {
-              return reg.test(arr[index].product_name);
-            });
-
-            this.filteredGoods = [...arr];
           }
         },
 

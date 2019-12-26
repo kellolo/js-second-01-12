@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/style.css">
 </head>
-<body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
 
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+               
+                <button class="btn-cart" type="button" @click="cartShown = !cartShown">Корзина</button>
+                <div class="cart-block" v-show="cartShown">
+                 <cart v-for="itm of cartItems" :key="itm.id_product" :item="itm"></cart>
+                     <div class="cart_footer">
+                         <h5>Всего товаров {{getSum.qua}}</h5>
+                         <h5>Итоговая стоимость {{getSum.sum}} денег</h5>         
+                     </div>
+
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <products v-for="itm of catItems" :key="itm.id_product" :item="itm"></products>
+            </div>
+        </main>
+    </div>
 
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/productList.js"></script>
+     <script src="js/cartList.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

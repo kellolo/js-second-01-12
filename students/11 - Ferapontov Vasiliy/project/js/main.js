@@ -2,7 +2,7 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'https://raw.githubusercontent.com/pwnyaka/Professional-layout/master';
 
 class List {
   constructor(url, container) {
@@ -11,59 +11,6 @@ class List {
     this.url = url;
     this._init();
   }
-
-//variant #1 - callback
-//   fetchData() {
-//     this._makeGETRequest('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json', (items) => {
-//       this.list = JSON.parse(items);
-//       this._renderProducts();
-//     });
-//   }
-//
-//   _makeGETRequest(url, callback) {
-//     let xhr;
-//     xhr = new XMLHttpRequest();
-//     xhr.onreadystatechange = function () {
-//       if (xhr.readyState === 4) {
-//         if (xhr.status === 200) {
-//           callback(xhr.responseText);
-//         } else {
-//           throw 'error: resource not found, check URL';
-//         }
-//       }
-//     };
-//     xhr.open('GET', url, true);
-//     xhr.send();
-//   };
-
-  // variant #2 - Promise
-  // async fetchData() {
-  //   await this._makeGETRequest('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json')
-  //       .then(items => {
-  //         this.list = JSON.parse(items);
-  //         // this._renderProducts(); (без async await)
-  //       })
-  //       .catch((error) => {throw error});
-  //   this._renderProducts();
-  // }
-  //
-  // _makeGETRequest(url) {
-  //   return new Promise((resolve, reject) => {
-  //     let xhr;
-  //     xhr = new XMLHttpRequest();
-  //     xhr.onreadystatechange = function () {
-  //       if (xhr.readyState === 4) {
-  //         if (xhr.status === 200) {
-  //           resolve(xhr.responseText);
-  //         } else {
-  //           reject('error: resource not found, check URL');
-  //         }
-  //       }
-  //     };
-  //     xhr.open('GET', url, true);
-  //     xhr.send();
-  //   })
-  // }
 
   _init() {
     return false;
@@ -99,7 +46,7 @@ class Item {
                         <div class="desc">
                             <h3>${this.product_name}</h3>
                             <p>${this.price} $</p>
-                            <button class="buy-btn" 
+                            <button class="buy-btn"
                             data-id="${this.id_product}"
                             data-name="${this.product_name}"
                             data-image="${this.img}"
@@ -139,9 +86,9 @@ class Cart extends List {
     super(url, container);
   }
   _addListeners() {
-    document.querySelector('.btn-cart').addEventListener('click', () => {
-      document.querySelector('.cart-block').classList.toggle('invisible');
-    });
+    // document.querySelector('.btn-cart').addEventListener('click', () => {
+    //   document.querySelector('.cart-block').classList.toggle('invisible');
+    // });
 
     document.querySelector('.cart-block').addEventListener('click', (evt) => {
       if (evt.target.classList.contains('del-btn')) {

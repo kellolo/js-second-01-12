@@ -89,23 +89,30 @@ app.post('/deleteFromBasket', function (req, res) {
 
 // формируем файл статистики
 app.post('/stats', function (req, res) {
-  
+
     fs.readFile('server/bd/responses/stats.json', 'utf-8', (err, data) => {
-       
-        if (data.length == 0) { 
+
+        if (data.length == 0) {
             fs.writeFile('server/bd/responses/stats.json', JSON.stringify(req.body), (err) => {
                 if (err) throw err
                 console.log('The file has been saved!')
             })
         } else {
             let arr = JSON.parse(data)
-            arr.push(req.body)
-            console.log('test')
+            if (arr.length == undefined) {
+                arr = [JSON.parse(data), req.body]
+            } else {
+                arr.push(req.body)
+            }
+
+            console.log(arr.length)
+
             fs.writeFile('server/bd/responses/stats.json', JSON.stringify(arr), (err) => {
                 if (err) throw err
                 console.log('The file has been saved!')
             })
         }
+        res.send(data)
     })
 
 

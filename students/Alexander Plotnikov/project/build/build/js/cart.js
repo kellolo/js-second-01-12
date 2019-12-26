@@ -40,13 +40,13 @@ Vue.component('cart', {
                     if (data.result == 1) {
                         this.cartItems = []
                     }
-                    this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod = 0, 'alldel'))) //отправляем данные для файла статистики
-                    this.postFetch(this.DeleteFromCartURL)
+                    this.typeFetch('/stats','POST', JSON.stringify(this.createObjForStats(prod = 0, 'alldel'))) //отправляем данные для файла статистики
+                    this.typeFetch(this.DeleteFromCartURL,'POST', this.jsonCart)
                 })
         },
-        postFetch(url, data) { // метод для отправки данных на сервер
+        typeFetch(url, type, data) { // метод для отправки данных на сервер
             return fetch(url, {
-                method: 'POST',
+                method: type,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -64,22 +64,24 @@ Vue.component('cart', {
             this.$root.getData(this.AddToCartURL)
                 .then(data => {
                     if (data.result == 1) { // если сервер ответил
+                        if (this.cartItems == undefined) {  this.cartItems = [] } 
                         let find = this.cartItems.find(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
-                            this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'quant+'))) //отправляем данные для файла статистики
+                            this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'quant+'))) //отправляем данные для файла статистики
                         } else {
                             prod.quantity = "1"
                             this.cartItems.push(Object.assign({}, prod))
-                            this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'addToCart'))) //отправляем данные для файла статистики
+                            this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'addToCart'))) //отправляем данные для файла статистики
                         }
-                        this.postFetch(this.AddToCartURL, this.jsonCart) // отправляем новый массив элементов корзины
+                        this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) // отправляем новый массив элементов корзины
 
 
                     }
                 })
         },
         delItemInCart(prod) {
+            if (this.cartItems == undefined) {  this.cartItems = [] } 
             let find = this.cartItems.find(item => item.id == prod.id)
             this.$root.getData(this.DeleteFromCartURL)
                 .then(data => {
@@ -89,8 +91,8 @@ Vue.component('cart', {
                             this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
                         }
                     }
-                    this.postFetch('/stats', JSON.stringify(this.createObjForStats(prod, 'quant-'))) //отправляем данные для файла статистики
-                    this.postFetch(this.DeleteFromCartURL, this.jsonCart) //отправляем новый массив элементов корзины
+                    this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'quant-'))) //отправляем данные для файла статистики
+                    this.typeFetch(this.DeleteFromCartURL,'POST', this.jsonCart) //отправляем новый массив элементов корзины
                 })
         },
         createObjForStats: function (item, action) {
@@ -129,20 +131,28 @@ Vue.component('cart', {
     computed: {
         sum: function () {
             let summ = null
-            this.cartItems.forEach(e => {
-                summ += +e.price * e.quantity
-            })
-            return summ
+            if (this.cartItems == undefined) {
+                return 0
+            } else {
+                this.cartItems.forEach(e => {
+                    summ += +e.price * e.quantity
+                })
+                return summ
+            }
         },
         quantity: function () {
             let quat = null
-            this.cartItems.forEach(e => {
-                quat += +e.quantity
-            })
-            if (this.cartItems.length === 0) {
-                quat = 0
+            if (this.cartItems == undefined) {
+                return 0
+            } else {
+                this.cartItems.forEach(e => {
+                    quat += +e.quantity
+                })
+                if (this.cartItems.length === 0) {
+                    quat = 0
+                }
+                return quat
             }
-            return quat
         },
         jsonCart: function () { // собираем новый фалл корзины
             let data = JSON.stringify({

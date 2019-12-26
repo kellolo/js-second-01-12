@@ -13,7 +13,6 @@ Vue.component ('catalog', {
 		return {
 			products: [],
 			filteredProducts: [],
-			POSTUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json',
 		};
 	},
 	methods: {

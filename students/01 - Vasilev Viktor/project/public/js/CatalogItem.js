@@ -20,8 +20,8 @@ Vue.component ('catalog-item', {
 	methods: {
 		buyButtonHandler(product) {
 			const cart = this.$root.$refs.headercomp.$refs.cart;
-			const currentCartItem = cart.getCurrentCartItem(product);
-			currentCartItem ? cart.updateCartItem(currentCartItem) : cart.addProductToCart(product);
+			const currentItem = cart.getCurrentCartItem(product);
+			currentItem ? cart.updateCartItem(currentItem, currentItem.quantity + 1) : cart.addProductToCart(product);
 		},
 	},
 });

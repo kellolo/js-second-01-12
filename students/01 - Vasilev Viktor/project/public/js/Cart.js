@@ -19,54 +19,56 @@ Vue.component ('cart', {
 			return fetch('/cart')
 				.then(response => response.json())
 				.then(cartItems => {
-					this.cartItems = cartItems.contents;
+					this.cartItems = cartItems;
 				});
 		},
 
 		addProductToCart(product) {
-			fetch('/cart')
-				.then(response => response.json())
-				.then(data => {
-          if (data.result) {
-						this.cartItems.push({...product, quantity: 1});
-					}
-				});
-		},
-
-		updateCartItem(cartItem) {
-        fetch(`/cart/${cartItem.id_product}`, {
-          method: 'PATCH',
-          body: JSON.stringify({qty: cartItem.quantity++}),
+			fetch('/cart', {
+          method: 'POST',
+          body: JSON.stringify({...product, quantity: 1}),
           headers: {
             'Content-type': 'application/json',
           },
         })
-          .then(response => response.json())
-					.then(data => {
-						if (data.result) {
-							cartItem.quantity++;
-						}
-          });
-      },
+				.then(response => response.json())
+				.then(parsedData => {
+					this.cartItems.push({...parsedData, quantity: 1});
+				});
+		},
+
+		updateCartItem(cartItem, newQty) {
+			fetch(`/cart/${cartItem.id_product}`, {
+				method: 'PATCH',
+				body: JSON.stringify({quantity: newQty}),
+				headers: {
+					'Content-type': 'application/json',
+				},
+			})
+				.then(response => response.json())
+				.then(data => {
+					const currentCartItem = this.getCurrentCartItem(data);
+					currentCartItem.quantity = data.quantity;
+				});
+		},
 
 		deleteCartItem(cartItem) {
 			fetch(`/cart/${cartItem.id_product}`, {
           method: 'DELETE',
         })
 				.then(response => response.json())
-        .then(data => {
-					if (data.result) {
-						if (cartItem.quantity > 1) {
-							cartItem.quantity--;
-						} else {
-							this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
-						}
+        .then(parsedData => {
+					if (parsedData.quantity > 1) {
+						cartItem.quantity--;
+					} else {
+						this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
 					}
 				});
 		},
 
 		deleteCartItemButtonHandler(item) {
-			this.deleteCartItem(item);
+			let newQty = item.quantity - 1;
+			newQty < 1 ? this.deleteCartItem(item) : this.updateCartItem(item, newQty);
 		},
 
 		getCurrentCartItem(product) {

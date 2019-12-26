@@ -122,6 +122,9 @@ img {
 .product-bio{
     display: flex;
 }
+.cart-button{
+    float:left;
+}
 .cart-item img{
     align-self: flex-start;
     margin-right: 15px;
@@ -155,7 +158,8 @@ img {
 .search-form{
     position: relative;
     margin-right: 50px;
-    display: inline-block;
+    /* display: inline-block; */
+    float: left;
 }
 .search-field:focus{
     outline: none;

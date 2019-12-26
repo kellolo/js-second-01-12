@@ -67,6 +67,7 @@ img {
     padding: 15px
 }
 .cart{
+    display: flex;
     position: relative;
 }
 .cart-block{
@@ -79,7 +80,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    min-width: 300px;
+    width: 300px;
 }
 
 .invisible{
@@ -131,8 +132,7 @@ img {
     font-size: 0.5em;
 }
 .product-price{
-    /* margin-left: 30px; */
-    min-width: 100px;
+    margin-left: 30px;
 }
 .product-desc{
     max-width: 150px;
@@ -143,8 +143,6 @@ img {
 }
 .right-block{
     text-align: right;
-    min-width: 30px;
-    padding-left: 20px;
 }
 .btn-search {
     background-color: transparent;
@@ -171,4 +169,30 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+.error-msg {
+    padding: 30px 20px;
+    background-color: red;
+    color: white;
+    position: relative;
+}
+.error-block {
+    background-color: rgba(0,0,0, .5);
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+.close-btn {
+    font-size: 1.5em;
+    top: -40px;
+    position: absolute;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
 }

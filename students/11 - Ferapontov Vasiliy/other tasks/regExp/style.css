@@ -13,8 +13,13 @@ form {
 fieldset {
   width: 400px;
   padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border: 4px solid dodgerblue;
 }
 
@@ -25,8 +30,11 @@ input {
 }
 
 .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   margin-top: 20px;
 }
 
@@ -39,5 +47,4 @@ p {
   font-size: 10px;
   display: none;
 }
-
 /*# sourceMappingURL=style.css.map */

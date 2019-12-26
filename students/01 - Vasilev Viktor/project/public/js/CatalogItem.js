@@ -1,4 +1,4 @@
-Vue.component ('CatalogItem', {
+Vue.component ('catalog-item', {
 	template: `
 		<div class="product-item">
 			<img :src="image" alt="Some img">
@@ -19,9 +19,9 @@ Vue.component ('CatalogItem', {
 	},
 	methods: {
 		buyButtonHandler(product) {
-			const cart = this.$root.$refs.cart;
-			const currentCartItem = cart.getCurrentCartItem(product);
-			currentCartItem ? cart.updateCartItem(currentCartItem) : cart.addProductToCart(product);
+			const cart = this.$root.$refs.headercomp.$refs.cart;
+			const currentItem = cart.getCurrentCartItem(product);
+			currentItem ? cart.updateCartItem(currentItem, currentItem.quantity + 1) : cart.addProductToCart(product);
 		},
 	},
 });

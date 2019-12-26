@@ -40,18 +40,18 @@ Vue.component('cart', {
                     if (data.result == 1) {
                         this.cartItems = []
                     }
-                    this.typeFetch('/stats','POST', JSON.stringify(this.createObjForStats(prod = 0, 'alldel'))) //отправляем данные для файла статистики
-                    this.typeFetch(this.DeleteFromCartURL,'DELETE', this.jsonCart) // новый файл корзины
+                    this.typeFetch(this.DeleteFromCartURL, 'DELETE', this.jsonCart) // новый файл корзины
+                    this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(null, 'alldel')))
                 })
         },
         typeFetch(url, type, data) { // метод для отправки данных на сервер
             return fetch(url, {
-                method: type,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: data
-            })
+                    method: type,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: data
+                })
                 .then(data => data.json())
                 .then(data => {
                     if (data.result == 1) {
@@ -64,7 +64,9 @@ Vue.component('cart', {
             this.$root.getData(this.AddToCartURL)
                 .then(data => {
                     if (data.result == 1) { // если сервер ответил
-                        if (this.cartItems == undefined) {  this.cartItems = [] } 
+                        if (this.cartItems == undefined) {
+                            this.cartItems = []
+                        }
                         let find = this.cartItems.find(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
@@ -72,17 +74,16 @@ Vue.component('cart', {
                         } else {
                             prod.quantity = "1"
                             this.cartItems.push(Object.assign({}, prod))
-                            this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'addToCart'))) //отправляем данные для файла статистики
-                            this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart)
+                            this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
+                            this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
                         }
-                        // отправляем новый массив элементов корзины
-
-
                     }
                 })
         },
         delItemInCart(prod) {
-            if (this.cartItems == undefined) {  this.cartItems = [] } 
+            if (this.cartItems == undefined) {
+                this.cartItems = []
+            }
             let find = this.cartItems.find(item => item.id == prod.id)
             this.$root.getData(this.DeleteFromCartURL)
                 .then(data => {
@@ -92,8 +93,7 @@ Vue.component('cart', {
                             this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
                         }
                     }
-                    this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'quant-'))) //отправляем данные для файла статистики
-                    this.typeFetch(this.DeleteFromCartURL,'PUT', this.jsonCart) //отправляем новый массив элементов корзины
+                    this.typeFetch(this.DeleteFromCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant-')))
                 })
         },
         createObjForStats: function (item, action) {
@@ -113,11 +113,11 @@ Vue.component('cart', {
                     return obj
                 }
                 if (action === 'quant+') {
-                    obj.action = `Увеличил количество в корзине с ${item.quantity - 1} до ${item.quantity}`
+                    obj.action = `Увеличил количество  товара в корзине до ${item.quantity}`
                     return obj
                 }
                 if (action === 'quant-') {
-                    obj.action = `Уменьшил количество в корзине с ${item.quantity} до ${item.quantity - 1}`
+                    obj.action = `Уменьшил количество в товара в корзине до ${item.quantity}`
                     return obj
                 }
             }

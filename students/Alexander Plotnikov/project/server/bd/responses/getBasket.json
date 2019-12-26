@@ -1,1 +1,14 @@
-{"amount":1600,"countGoods":8,"contents":[{"name":"Monitor","price":"200","brand":"samsung","country":"Russa","ship":"Free","img":"build/img/Photo1.png","id":"1","quantity":8}]}
+{
+  "amount": 1050,
+  "countGoods": 5,
+  "contents": [{
+    "name": "Clock",
+    "price": "210",
+    "brand": "samsung",
+    "country": "Russa",
+    "ship": "Free",
+    "img": "build/img/Photo1.png",
+    "id": "8",
+    "quantity": 5
+  }]
+}

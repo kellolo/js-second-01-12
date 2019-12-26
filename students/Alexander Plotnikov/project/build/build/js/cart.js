@@ -41,7 +41,7 @@ Vue.component('cart', {
                         this.cartItems = []
                     }
                     this.typeFetch('/stats','POST', JSON.stringify(this.createObjForStats(prod = 0, 'alldel'))) //отправляем данные для файла статистики
-                    this.typeFetch(this.DeleteFromCartURL,'POST', this.jsonCart)
+                    this.typeFetch(this.DeleteFromCartURL,'DELETE', this.jsonCart) // новый файл корзины
                 })
         },
         typeFetch(url, type, data) { // метод для отправки данных на сервер
@@ -68,13 +68,14 @@ Vue.component('cart', {
                         let find = this.cartItems.find(item => item.id == prod.id)
                         if (find) {
                             find.quantity++
-                            this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'quant+'))) //отправляем данные для файла статистики
+                            this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+')))
                         } else {
                             prod.quantity = "1"
                             this.cartItems.push(Object.assign({}, prod))
                             this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'addToCart'))) //отправляем данные для файла статистики
+                            this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart)
                         }
-                        this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) // отправляем новый массив элементов корзины
+                        // отправляем новый массив элементов корзины
 
 
                     }
@@ -92,7 +93,7 @@ Vue.component('cart', {
                         }
                     }
                     this.typeFetch('/stats', 'POST', JSON.stringify(this.createObjForStats(prod, 'quant-'))) //отправляем данные для файла статистики
-                    this.typeFetch(this.DeleteFromCartURL,'POST', this.jsonCart) //отправляем новый массив элементов корзины
+                    this.typeFetch(this.DeleteFromCartURL,'PUT', this.jsonCart) //отправляем новый массив элементов корзины
                 })
         },
         createObjForStats: function (item, action) {

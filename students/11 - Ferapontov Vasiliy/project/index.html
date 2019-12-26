@@ -1,32 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
+  <meta charset="UTF-8">
+  <title>Интернет-магазин</title>
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+<div id="app">
+  <header>
+    <div class="logo">E-shop</div>
+    <cart ref="cart" :content="cartItems" :image="cartImage" :cart-error="cartErr"></cart>
+  </header>
+  <main>
+    <catalog ref="catalog" :content="items" :image="catImage"></catalog>
+  </main>
+</div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+<script src="js/comp.js"></script>
+<script>
+  let vm = new Vue({
+    el: '#app',
+    data: {
+      searchMsgShown: false,
+      searchMsg: 'Такого товара в нашем каталоге нет :(',
+      API: 'https://raw.githubusercontent.com/pwnyaka/Professional-layout/master',
+      items: [],
+      cartErr: false,
+      cartShown: false,
+      cartItems: [],
+      cartImage: 'https://placehold.it/100x80',
+      catImage: 'https://placehold.it/200x150',
+      totalCost: 0
+    },
+    methods: {
+      getJSON(url) {
+        return fetch(url)
+            .then(d => d.json())
+      }
+    },
+    mounted() {
+      this.getJSON(this.API + '/catalogData.json')
+          .then(data => {
+            vm.items = data;
+          });
 
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+      this.getJSON(this.API + '/getBasket.json')
+          .then(data => {
+            vm.totalCost = data.amount;
+            vm.cartItems = data.contents;
+          })
+          .catch(() => {
+            this.cartErr = true;
+          });
+    }
+  })
+</script>
 </body>
 </html>

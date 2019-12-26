@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <err v-if="serverError"></err>
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input class="search-field" v-model="search" type="text">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" @click="toggleCart" type="button">Корзина</button>
+                <div class="cart-block" v-show="isVisibleCart">
+                    <item v-for="item of cartItems" :key="item.id_product" :item="item"></item>
+                    <div v-if="getSum.summary > 0">
+                        <p>Total price: $ {{ getSum.summary }}</p>
+                        <p>Total quantity: {{ getSum.quantity }} pcs</p>
+                    </div>
+                    <div v-else>
+                        <p>Cart is empty.</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <product v-for="prod of getSearch" :key="prod.id_product" :prod="prod"></product>
+            </div>
+        </main>
+    </div>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="./js/product.js"></script>
+    <script src="./js/cart-item.js"></script>
+    <script src="./js/error.js"></script>
+    <script src="./js/main-4.js"></script>
+</body>
+
+</html>

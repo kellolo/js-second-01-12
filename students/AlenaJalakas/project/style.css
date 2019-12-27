@@ -1,5 +1,6 @@
 * {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -12,8 +13,13 @@ body {
 
 .header {
   height: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .logo {
@@ -27,17 +33,25 @@ body {
   margin-left: 900px;
   margin-top: 20px;
 }
+
 .basket__preview_button {
   border: none;
   background-color: #f8f9fa;
   position: relative;
 }
+
 .basket__preview_button:hover .basket__preview_block {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
+
 .basket__preview_block {
   display: none;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 250px;
   height: 500px;
   background-color: white;
@@ -57,43 +71,56 @@ body {
 .fa-shopping-basket {
   font-size: 30px;
 }
+
 .fa-shopping-basket:hover {
   color: darkslategray;
 }
 
 .catalog {
   list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   margin-left: 70px;
   margin-top: 70px;
   padding: 50px;
 }
+
 .catalog__item {
   width: 250px;
   height: 300px;
   margin: 20px;
   padding: 15px 38px;
-  border-radius: 0.25rem;
+  border-radius: .25rem;
   border: 1px solid gray;
 }
+
 .catalog__item_name {
   font-weight: bold;
   text-transform: uppercase;
 }
+
 .catalog__item_price {
   color: rosybrown;
 }
+
 .catalog__item_button {
   border: 1px solid lightgray;
   background-color: white;
   height: 30px;
   width: 100px;
 }
+
 .catalog__item_button:hover {
   background-color: coral;
 }
+
 .catalog__item_img {
   background-repeat: no-repeat;
   background-position: center;
@@ -114,12 +141,14 @@ body {
 .basket__item {
   width: 60px;
   height: 80px;
-  border-radius: 0.25rem;
+  border-radius: .25rem;
   margin-left: 20px;
 }
+
 .basket__item_name {
   font-size: 10px;
 }
+
 .basket__item_img {
   background-repeat: no-repeat;
   background-position: center;
@@ -127,6 +156,7 @@ body {
   width: 50px;
   height: 70px;
 }
+
 .basket__item_quantity {
   font-size: 10px;
   border: 1px solid gray;
@@ -134,5 +164,4 @@ body {
   height: 15px;
   text-align: center;
 }
-
 /*# sourceMappingURL=style.css.map */

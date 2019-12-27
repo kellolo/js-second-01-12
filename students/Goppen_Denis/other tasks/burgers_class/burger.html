@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Burger: meal, c & quick</title>
+  <link rel="icon" href="../burgers/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="../burgers/burger.css">
+  <script src="burger.js" defer></script>
+</head>
+<body>
+
+<header>The Burger: meal, strong & quick</header>
+
+<div id="main-div">
+  <img src="../burgers/burger_medium.png" alt="medium burger" id="burgerImg">
+  <form id="buildForm" action="">
+    <div class="formFields">
+      <fieldset id="sizeSelect">
+        <legend>Select size</legend>
+        <div>
+          <input type="radio" name="burgerSize" id="burgerBig" value="Big" data-calories="40" data-price="100">
+          <label for="burgerBig">Big</label>
+        </div>
+        <div>
+          <input type="radio" name="burgerSize" id="burgerMedium" value="Medium"  data-calories="30" data-price="75" checked>
+          <label for="burgerMedium">Medium</label>
+        </div>
+        <div>
+          <input type="radio" name="burgerSize" id="burgerSmall" value="Small" data-calories="20" data-price="50">
+          <label for="burgerSmall">Small</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Select filling</legend>
+        <label>
+          <input type="radio" name="filling" id="cheeseFilling" value="cheese" data-calories="10" data-price="20" checked>Cheese
+        </label>
+        <label>
+          <input type="radio" name="filling" id="saladFilling" value="salad" data-calories="20" data-price="5">Salad
+        </label>
+        <label>
+          <input type="radio" name="filling" id="potatoFilling" value="potato" data-calories="15" data-price="10">Potato
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Select topping</legend>
+        <label>
+          <input type="checkbox" name="topping" id="toppingSpice" value="spice" data-calories="0" data-price="15">Spices
+        </label>
+        <label>
+          <input type="checkbox" name="topping" id="toppingMayo" value="mayo" data-calories="5" data-price="20">Mayonnaise
+        </label>
+      </fieldset>
+    </div>
+    <div class="formFields">
+      <div id="caloriesShow">Calories:</div>
+      <div id="priceShow">Price:</div>
+      <input type="submit" name="submitBtn" id="submitOrder" value="Add">
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

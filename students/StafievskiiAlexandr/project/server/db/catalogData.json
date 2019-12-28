@@ -1,0 +1,44 @@
+[
+  {
+    "id_product": 123,
+    "product_name": "Ноутбук",
+    "price": 45600,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  },
+  {
+    "id_product": 456,
+    "product_name": "Мышка",
+    "price": 1000,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  },
+  {
+    "id_product": 789,
+    "product_name": "Монитор",
+    "price": 20000,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  },
+  {
+    "id_product": 1011,
+    "product_name": "Системный блок",
+    "price": 35000,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  },
+  {
+    "id_product": 1213,
+    "product_name": "Патчкорд 100м",
+    "price": 5000,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  },
+  {
+    "id_product": 1415,
+    "product_name": "Флешка",
+    "price": 1500,
+    "product_image_big" : "/db/200x150.png",
+    "product_image_small" : "/db/100x80.png"
+  }
+]

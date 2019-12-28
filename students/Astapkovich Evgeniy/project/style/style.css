@@ -22,7 +22,7 @@ button:focus{
     border: 1px solid transparent;
     color: #2f2a2d;
     border-radius: 5px;
-    transition: all ease-in-out .4s;
+    transition: all ease-in-out .2s;
     cursor: pointer;
 }
 .btn-cart:hover{
@@ -104,7 +104,7 @@ img {
     border: 1px solid transparent;
     color: #fafafa;
     border-radius: 5px;
-    transition: all ease-in-out .4s;
+    transition: all ease-in-out .2s;
     cursor: pointer;
 }
 .buy-btn:hover, .del-btn:hover{

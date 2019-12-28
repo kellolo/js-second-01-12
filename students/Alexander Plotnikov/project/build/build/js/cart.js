@@ -25,7 +25,7 @@ Vue.component('cart', {
     data() {
         return {
             cartURL: '/cart',
-            AddToCartURL: '/addToBasket',
+            addToCart: '/addToBasket',
             DeleteFromCartURL: '/deleteFromBasket',
             cartItems: [],
             openCart: false,
@@ -34,51 +34,48 @@ Vue.component('cart', {
     },
     methods: {
         cleanCart() {
-            this.openCart = false
-            this.$root.getData(this.DeleteFromCartURL)
-                .then(data => {
-                    if (data.result == 1) {
-                        this.cartItems = []
-                    }
-                    this.typeFetch(this.DeleteFromCartURL, 'DELETE', this.jsonCart) // новый файл корзины
-                    this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(null, 'alldel')))
-                })
-        },
-        typeFetch(url, type, data) { // метод для отправки данных на сервер
-            return fetch(url, {
-                    method: type,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: data
-                })
-                .then(data => data.json())
-                .then(data => {
-                    if (data.result == 1) {
-
-                        console.log('Зарос прошел!')
-                    }
-                })
+            /*   this.openCart = false
+              this.$root.getData(this.DeleteFromCartURL)
+                  .then(data => {
+                      if (data.result == 1) {
+                          this.cartItems = []
+                      }
+                      this.typeFetch(this.DeleteFromCartURL, 'DELETE', this.jsonCart) // новый файл корзины
+                      this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(null, 'alldel')))
+                  }) */
         },
         addItemInCart(prod) {
-            this.$root.getData(this.AddToCartURL)
-                .then(data => {
-                    if (data.result == 1) { // если сервер ответил
-                        if (this.cartItems == undefined) {
-                            this.cartItems = []
-                        }
-                        let find = this.cartItems.find(item => item.id == prod.id)
-                        if (find) {
-                            find.quantity++
-                            this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+')))
-                        } else {
-                            prod.quantity = "1"
-                            this.cartItems.push(Object.assign({}, prod))
-                            this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
-                            this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
-                        }
-                    }
-                })
+            let find = this.cartItems.find(item => item.id == prod.id)
+            if (find) {
+                find.quantity++
+                this.$parent.allFetch(this.addToCart +params(prod.id), 'PUT', '{"quantity":"1"}')
+
+                /* this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+'))) */
+            } else {
+                prod.quantity = "1"
+                this.cartItems.push(Object.assign({}, prod))
+                this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
+                this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
+            }
+
+            /*  this.$root.getData(this.AddToCartURL)
+                 .then(data => {
+                     if (data.result == 1) { // если сервер ответил
+                         if (this.cartItems == undefined) {
+                             this.cartItems = []
+                         }
+                         let find = this.cartItems.find(item => item.id == prod.id)
+                         if (find) {
+                             find.quantity++
+                             this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+')))
+                         } else {
+                             prod.quantity = "1"
+                             this.cartItems.push(Object.assign({}, prod))
+                             this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
+                             this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
+                         }
+                     }
+                 }) */
         },
         delItemInCart(prod) {
             if (this.cartItems == undefined) {

@@ -54,7 +54,9 @@ app.post('/addToBasket', function (req, res) {
 // обрботка запроса на увеличение количества товра в корзине
 app.put('/addToBasket', function (req, res) {
 
-    addDelFronCart(cartFile, statsFile, 'add', req) // переаписываем файл корзины и формируем файл статистики
+    console.log(req)
+
+   // addDelFronCart(cartFile, statsFile, 'add', req) // переаписываем файл корзины и формируем файл статистики
 
     creatRespons(addToCart, res) // отправляем ответ
 })

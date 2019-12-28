@@ -1,0 +1,42 @@
+[
+    {
+      "id_product": 123,
+      "product_name": "Ноутбук",
+      "price": 45600
+    },
+    {
+      "id_product": 456,
+      "product_name": "Мышка",
+      "price": 1000
+    },
+    {
+      "id_product": 222,
+      "product_name": "Монитор",
+      "price": 400
+    },
+    {
+      "id_product": 124,
+      "product_name": "Клавиатура",
+      "price": 332
+    },
+    {
+      "id_product": 543,
+      "product_name": "Колонки",
+      "price": 150
+    },
+    {
+      "id_product": 256,
+      "product_name": "Телефон",
+      "price": 1199
+    },
+    {
+      "id_product": 767,
+      "product_name": "Зарядное устройство",
+      "price": 12
+    },
+    {
+      "id_product": 656,
+      "product_name": "Компьютерное кресло",
+      "price": 499
+    }
+]

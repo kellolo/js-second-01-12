@@ -1,0 +1,42 @@
+[
+  {
+    "id_product": 1,
+    "product_name": "Ноутбук",
+    "price": 45600
+  },
+  {
+    "id_product": 2,
+    "product_name": "Монитор",
+    "price": 14600
+  },
+  {
+    "id_product": 3,
+    "product_name": "Клавиатура",
+    "price": 1200
+  },
+  {
+    "id_product": 4,
+    "product_name": "Роутер",
+    "price": 2250
+  },
+  {
+    "id_product": 5,
+    "product_name": "USB-камера",
+    "price": 1800
+  },
+  {
+    "id_product": 6,
+    "product_name": "Геймпад",
+    "price": 3300
+  },
+  {
+    "id_product": 7,
+    "product_name": "Флешка",
+    "price": 1100
+  },
+  {
+    "id_product": 8,
+    "product_name": "Мышка",
+    "price": 1000
+  }
+]

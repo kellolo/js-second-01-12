@@ -1,4 +1,8 @@
-Vue.component('cart', {
+import item from './cart-item'
+import search from './search-comp'
+
+let cart = {
+  components: { item, search },
   template: `
     <div class="cart">
       <search></search>
@@ -6,7 +10,7 @@ Vue.component('cart', {
       <div v-show="cartShown" class="cart-block">
         <p v-if="cartErr">Ошибка получения данных от сервера</p>
         <template v-show="items.length > 0">
-          <cart-item v-for="product of items" :key="product.id_product" :item="product"></cart-item>
+          <item v-for="product of items" :key="product.id_product" :item="product"></item>
           <div v-show="items.length > 0" class="total-cost">Total cost: {{ getSum.sum }} RUB</div>
         </template>
       </div>
@@ -25,55 +29,31 @@ Vue.component('cart', {
   },
   methods: {
     postData(url = '', data = {}) {
-      // Значения по умолчанию обозначены знаком *
       return fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
       })
-          .then(response => response.json()); // парсит JSON ответ в Javascript объект
     },
     putData(url = '', data = {}) {
-      // Значения по умолчанию обозначены знаком *
       return fetch(url, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
       })
-          .then(response => response.json()); // парсит JSON ответ в Javascript объект
     },
     deleteData(url = '', data = {}) {
-      // Значения по умолчанию обозначены знаком *
       return fetch(url, {
         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
       })
-          .then(response => response.json()); // парсит JSON ответ в Javascript объект
     },
     removeProduct(prod) {
       this.$root.getJSON(this.delUrl)
@@ -86,14 +66,12 @@ Vue.component('cart', {
                 this.putData('/putData', {"amount": this.getSum.sum,
                   "countGoods": this.getSum.qua,
                   "contents": this.items})
-                    .then(data => console.log(JSON.stringify(data)));
               } else {
-                this.items.splice(this.items.indexOf(find), 1);
-                document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+                this.items.splice(this.items.indexOf(prod), 1);
+                // document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
                 this.deleteData('/deleteData', {"amount": this.getSum.sum,
                   "countGoods": this.getSum.qua,
                   "contents": this.items})
-                    .then(data => console.log(JSON.stringify(data)));
               }
               console.log(`Товар id = ${prod['id_product']} удален из корзины`);
             }
@@ -101,7 +79,7 @@ Vue.component('cart', {
     },
     addProduct(prod) {
       this.$root.getJSON(this.addUrl)
-          .then(d => {
+          .then((d) => {
             if (d.result) {
               let productId = +prod['id_product'];
               let find = this.items.find(element => element.id_product === productId); //товар или false
@@ -110,16 +88,15 @@ Vue.component('cart', {
                 this.postData('/postData', {"amount": this.getSum.sum,
                   "countGoods": this.getSum.qua,
                   "contents": this.items})
-                    .then(data => console.log(JSON.stringify(data)));
               } else {
                 find.quantity++;
                 this.putData('/putData', {"amount": this.getSum.sum,
                   "countGoods": this.getSum.qua,
                   "contents": this.items})
-                    .then(data => console.log(JSON.stringify(data)));
               }
-
               console.log(`Товар ${prod['product_name']} добавлен в корзину`);
+            } else {
+              console.log('error');
             }
           })
     }
@@ -144,4 +121,6 @@ Vue.component('cart', {
       return {sum, qua}
     }
   }
-});
+};
+
+export default cart;

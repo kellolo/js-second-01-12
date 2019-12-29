@@ -1,4 +1,4 @@
-Vue.component('catalog-item', {
+export default {
   template: `
         <div class="product-item" :data-id="item.id_product">
           <img :src="image" alt="Some img">
@@ -21,4 +21,4 @@ Vue.component('catalog-item', {
       image: 'https://placehold.it/200x150'
     }
   }
-});
+};

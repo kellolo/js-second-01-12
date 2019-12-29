@@ -1,4 +1,4 @@
-Vue.component('cart-item', {
+export default {
   template: `
         <div class="cart-item" :data-id="item.id_product">
             <div class="product-bio">
@@ -22,4 +22,4 @@ Vue.component('cart-item', {
       image: 'https://placehold.it/100x80'
     }
   }
-});
+};

@@ -1,9 +1,12 @@
-Vue.component('catalog', {
+import item from './catalog-item'
+
+let catalog = {
+  components: { item },
   template: `
     <div class="products">
       <p v-show="searchMsgShown" class="search-message">{{searchErrMsg}}</p>
       <template v-if="items.length > 0">
-        <catalog-item v-for="product of filtered" :key="product.id_product" :item="product"></catalog-item>
+        <item v-for="product of filtered" :key="product.id_product" :item="product"></item>
       </template>
       <p v-else class="server-error">Нет ответа от сервера</p>
     </div>
@@ -30,4 +33,6 @@ Vue.component('catalog', {
           this.filtered = data;
         });
   }
-});
+};
+
+export default catalog;

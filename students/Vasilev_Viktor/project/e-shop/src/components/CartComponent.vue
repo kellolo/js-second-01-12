@@ -21,7 +21,7 @@
     },
     methods: {
       fetchCart() {
-        return fetch('/cart')
+        return fetch('/api/cart')
           .then(response => response.json())
           .then(cartItems => {
             this.cartItems = cartItems;
@@ -29,7 +29,7 @@
       },
 
       addProductToCart(product) {
-        fetch('/cart', {
+        fetch('/api/cart', {
           method: 'POST',
           body: JSON.stringify({...product, quantity: 1}),
           headers: {
@@ -43,7 +43,7 @@
       },
 
       updateCartItem(cartItem, newQty) {
-        fetch(`/cart/${cartItem.id_product}`, {
+        fetch(`/api/cart/${cartItem.id_product}`, {
           method: 'PATCH',
           body: JSON.stringify({quantity: newQty}),
           headers: {
@@ -58,7 +58,7 @@
       },
 
       deleteCartItem(cartItem) {
-        fetch(`/cart/${cartItem.id_product}`, {
+        fetch(`/api/cart/${cartItem.id_product}`, {
           method: 'DELETE',
         })
           .then(response => response.json())

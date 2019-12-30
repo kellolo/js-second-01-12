@@ -25,7 +25,7 @@
     },
     methods: {
       fetchProducts() {
-        return fetch('/products')
+        return fetch('/api/products')
           .then(response => response.json())
           .then(products => {
             this.products = products;

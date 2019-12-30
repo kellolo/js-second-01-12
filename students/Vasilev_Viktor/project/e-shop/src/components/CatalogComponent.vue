@@ -1,14 +1,12 @@
 <template>
-  <div class="products">
-    <div class="wrapper"
-         v-if="filteredProducts.length"
-    >
-      <CatalogItemComponent v-for="product in filteredProducts"
-                            :key="product.id_product"
-                            :product="product"
-      />
-    </div>
-    <div v-if="!filteredProducts.length">Нет данных</div>
+  <div>
+    <div class="products" v-if="filteredProducts.length">
+        <CatalogItemComponent v-for="product in filteredProducts"
+                              :key="product.id_product"
+                              :product="product"
+        />
+      </div>
+    <div v-else>Нет данных</div>
   </div>
 </template>
 

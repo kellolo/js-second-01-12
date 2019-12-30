@@ -26,7 +26,7 @@ Vue.component('cart', {
         return {
             cartURL: '/cart',
             addToCart: '/addToBasket',
-            DeleteFromCartURL: '/deleteFromBasket',
+            delFromCart: '/deleteFromBasket',
             cartItems: [],
             openCart: false,
             openMenu: false
@@ -34,91 +34,69 @@ Vue.component('cart', {
     },
     methods: {
         cleanCart() {
-            /*   this.openCart = false
-              this.$root.getData(this.DeleteFromCartURL)
-                  .then(data => {
-                      if (data.result == 1) {
-                          this.cartItems = []
-                      }
-                      this.typeFetch(this.DeleteFromCartURL, 'DELETE', this.jsonCart) // новый файл корзины
-                      this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(null, 'alldel')))
-                  }) */
+            this.$parent.allFetch(this.delFromCart, 'DELETE', '{"allQuntity":"0"}')
+                .then(data => {
+                    if (data.result == 1) {
+                        this.cartItems = []
+                    } else {
+                        console.log('Сервер не отвечает - 404!')
+                    }
+                })
         },
         addItemInCart(prod) {
             let find = this.cartItems.find(item => item.id == prod.id)
             if (find) {
-                find.quantity++
-                this.$parent.allFetch(this.addToCart +params(prod.id), 'PUT', '{"quantity":"1"}')
-
-                /* this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+'))) */
+                this.$parent.allFetch(this.addToCart + '/' + prod.id, 'PUT', '{"quantity":"1"}')
+                    .then(data => {
+                        if (data.result == 1) {
+                            find.quantity++
+                        } else {
+                            console.log('Сервер не отвечает - 404!')
+                        }
+                    })
             } else {
-                prod.quantity = "1"
-                this.cartItems.push(Object.assign({}, prod))
-                this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
-                this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
+                this.$parent.allFetch(this.addToCart, 'POST', JSON.stringify(Object.assign({}, prod, {
+                        quantity: '1'
+                    })))
+                    .then(data => {
+                        if (data.result == 1) {
+                            this.cartItems.push(Object.assign({}, prod, {
+                                quantity: '1'
+                            }))
+                        } else {
+                            console.log('Сервер не отвечает - 404!')
+                        }
+                    })
             }
-
-            /*  this.$root.getData(this.AddToCartURL)
-                 .then(data => {
-                     if (data.result == 1) { // если сервер ответил
-                         if (this.cartItems == undefined) {
-                             this.cartItems = []
-                         }
-                         let find = this.cartItems.find(item => item.id == prod.id)
-                         if (find) {
-                             find.quantity++
-                             this.typeFetch(this.AddToCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant+')))
-                         } else {
-                             prod.quantity = "1"
-                             this.cartItems.push(Object.assign({}, prod))
-                             this.typeFetch('/stats', 'PUT', JSON.stringify(this.createObjForStats(prod, 'addToCart')))
-                             this.typeFetch(this.AddToCartURL, 'POST', this.jsonCart) //отправляем данные для файла статистики
-                         }
-                     }
-                 }) */
         },
         delItemInCart(prod) {
             if (this.cartItems == undefined) {
                 this.cartItems = []
             }
             let find = this.cartItems.find(item => item.id == prod.id)
-            this.$root.getData(this.DeleteFromCartURL)
-                .then(data => {
-                    if (data.result == 1) {
-                        find.quantity--
-                        if (find.quantity === 0) {
-                            this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
+            if (find.quantity > 1) {
+                this.$parent.allFetch(this.delFromCart + '/' + prod.id, 'PUT', '{"quantity":"-1"}')
+                    .then(data => {
+                        if (data.result == 1) {
+                            find.quantity--
+                        } else {
+                            console.log('Сервер не отвечает - 404!')
                         }
-                    }
-                    this.typeFetch(this.DeleteFromCartURL, 'PUT', JSON.stringify(this.createObjForStats(prod, 'quant-')))
-                })
-        },
-        createObjForStats: function (item, action) {
-            if (action === 'alldel') {
-                return {
-                    data: new Date(),
-                    action: 'Полная очистка корзины'
-                }
+                    })
             } else {
-                let obj = {
-                    data: new Date(),
-                    productName: item.name,
-                    id: item.id
-                }
-                if (action === 'addToCart') {
-                    obj.action = "Добавлен в корзину"
-                    return obj
-                }
-                if (action === 'quant+') {
-                    obj.action = `Увеличил количество  товара в корзине до ${item.quantity}`
-                    return obj
-                }
-                if (action === 'quant-') {
-                    obj.action = `Уменьшил количество в товара в корзине до ${item.quantity}`
-                    return obj
-                }
+                this.$parent.allFetch(this.delFromCart, 'DELETE', JSON.stringify({
+                        id: prod.id
+                    }))
+                    .then(data => {
+                        if (data.result == 1) {
+                            this.cartItems.splice(this.cartItems.findIndex(index => index.id == find.id), 1)
+                        } else {
+                            console.log('Сервер не отвечает - 404!')
+                        }
+                    })
             }
         }
+
     },
     mounted() {
         this.$root.getData(this.cartURL)
@@ -151,14 +129,6 @@ Vue.component('cart', {
                 }
                 return quat
             }
-        },
-        jsonCart: function () { // собираем новый фалл корзины
-            let data = JSON.stringify({
-                amount: this.sum,
-                countGoods: this.quantity,
-                contents: this.cartItems
-            })
-            return data
         }
     }
 })

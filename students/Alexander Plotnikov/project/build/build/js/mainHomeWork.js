@@ -24,14 +24,7 @@ let bodyShop = new Vue({
                     body: data
                 })
                 .then(data => data.json())
-                .then(data => {
-                    if (data.result == 1) {
-                        console.log('Зарос прошел!')
-                    } else {
-                        console.log('Error - 404')
-                    }
-    
-                })
+                
         }
 
     }

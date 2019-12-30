@@ -36,6 +36,11 @@
     margin: 20px 0;
   }
 
+  .desc {
+    border: 1px solid #c0c0c040;
+    padding: 15px
+  }
+
   .buy-btn {
     margin-top: 5px;
     background-color: #2f2a2d;

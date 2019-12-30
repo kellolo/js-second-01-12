@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "runserver": "nodemon server/server.js"
   },
   "dependencies": {
     "core-js": "^3.4.4",
@@ -18,7 +19,8 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "nodemon": "^2.0.2"
   },
   "eslintConfig": {
     "root": true,

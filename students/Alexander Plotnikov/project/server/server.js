@@ -80,12 +80,7 @@ app.put(LINKFRONT.dellCart + '/:id', function (req, res) {
     })
 })
 
-app.put(LINKFRONT.stats, function (req, res) {
-    addToStats(statsFile, req) // редактируем фал статистики
-    workFile.anyRespons(LINKFRONT.stats, res) // отправляем ответ
-})
-
-// обрабатываем запрос на полную очистку карзины удаление элемента из корзины
+// обрабатываем запрос на полную очистку карзины и удаление элемента из корзины
 app.delete(LINKFRONT.dellCart, function (req, res) {
     fs.readFile(LINKBACK.cart, 'utf-8', (err, data) => {
         if (err) {

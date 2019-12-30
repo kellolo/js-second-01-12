@@ -27,26 +27,7 @@ let workFile = {
 
             }
         })
-    },
-    /* readWritRespons(link,linkStats, req, res, type) {
-        let cont = this
-        this.fs.readFile(link, 'utf-8', (err, data) => {
-            let writeValue
-            if (type == 'PUT') {
-                writeValue = cont.cart.chengeQuantity(data, req.params, req.body)
-            }
-            if (type == 'POST') {
-                writeValue = cont.cart.addToCart(data, req.body)
-            }
-            if (err) {
-                console.log('err')
-            } else {
-                cont.write(link, writeValue.valueForFileCart, res)
-                cont.statsFile(linkStats, writeValue.valueForFileStats)
-            }
-
-        })
-    }, */
+    },  
     statsFile(linkStats, action, res) {
         console.log(action)
         let cont = this

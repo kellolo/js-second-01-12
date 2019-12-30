@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
+  <meta charset="UTF-8">
+  <title>Интернет-магазин</title>
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
+  <div id="app">
     <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+      <div class="logo">E-shop</div>
+      <div class="cart">
+        <form action="#" class="search-form">
+          <input type="text" class="search-field">
+          <button class="btn-search" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        <button class="btn-cart" @click="isVisibleCart = !isVisibleCart" type="button">Корзина</button>
+        <div class="cart-block" v-show="isVisibleCart">
+          <div v-show="cartIsEmpty">
+            Корзина пуста...
+          </div>
+          <cart-item v-for="item of cartItems" :key="item.id_product" :item="item"></cart-item>
         </div>
+      </div>
     </header>
     <main>
-        <div class="products"></div>
+      <div class="products">
+        <catalog-item v-for="item in catalogItems" :key="item.id_product" :item="item"></catalog-item>
+      </div>
     </main>
-
-
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+    integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+    crossorigin="anonymous"></script>
+  <script src="js/comp.js"></script>
+  <script src="js/main.js"></script>
+  
 </body>
+
 </html>

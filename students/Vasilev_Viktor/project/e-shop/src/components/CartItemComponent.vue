@@ -37,6 +37,7 @@
 
   .product-desc {
     max-width: 150px;
+    margin-left: 10px;
   }
 
   .product-quantity {

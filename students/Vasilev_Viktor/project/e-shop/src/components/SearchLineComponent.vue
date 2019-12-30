@@ -20,7 +20,7 @@
     },
     methods: {
       filterProducts() {
-        this.$root.$refs.catalog.filterProducts(this.query);
+        this.$root.$children[0].$refs.catalog.filterProducts(this.query);
       },
     },
   }

@@ -18,7 +18,7 @@
     props: ['product'],
     methods: {
       buyButtonHandler(product) {
-        const cart = this.$root.$refs.headercomp.$refs.cart;
+        const cart = this.$root.$children[0].$refs.headercomp.$refs.cart;
         const currentItem = cart.getCurrentCartItem(product);
         currentItem ? cart.updateCartItem(currentItem, currentItem.quantity + 1) : cart.addProductToCart(product);
       },

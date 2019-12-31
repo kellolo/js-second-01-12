@@ -1,7 +1,10 @@
-Vue.component ('catalog', {
+import item from './catalog-item'
+
+let catalog = {
+    components: { item },
     template: `
     <div class="products">
-        <itemcat v-for="prod of filtered" :key="prod.id_product" :item="prod"></itemcat>
+        <item v-for="prod of filtered" :key="prod.id_product" :item="prod"></item>
     </div>
     `,
     data () {
@@ -31,4 +34,6 @@ Vue.component ('catalog', {
                 this.filtered = data
             })
     }
-})
+}
+
+export default catalog

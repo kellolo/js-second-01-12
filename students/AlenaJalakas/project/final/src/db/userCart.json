@@ -1,0 +1,19 @@
+{
+  "totalAmount": 530,
+  "quantity": 2,
+  "contents": [
+
+    {
+      "id": 3,
+      "title": "Boots",
+      "price": 280,
+      "quantity": 1
+    },
+    {
+      "id": 2,
+      "title": "Coat",
+      "price": 250,
+      "quantity": 1
+    }
+  ]
+}

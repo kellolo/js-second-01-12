@@ -4,36 +4,56 @@
     <meta charset="UTF-8">
     <title>eShop</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="fontawesome-free-5.10.1-web/css/all.min.css">
 </head>
 <body>
 <div id="app">
     <header class="header">
-        <h2 class="logo">BrandShop</h2>
-        <div class="basket__preview" v-if="state === 'default'" @click="changeState ('edit')">
-            <div class="basket__preview_button"><i class="fas fa-shopping-basket"></i>
-                <div class="basket__preview_block">
-                    <basket-item v-for="item in basket" :shopItem="item" :key="item.id"></basket-item>
-                </div>
-            </div>
+        <div class="logo">BrandShop</div>
+        <div class="basket__preview">
+            <filteritem></filteritem>
+            <basket ref="basket"></basket>
+
         </div>
     </header>
 
-    <div class="catalog">
-        <catalog-item v-for="item in catalog" :catalogItem="item" :key="item.id"></catalog-item>
-    </div>
+<main>
+    <catalog ref="catalog"></catalog>
+</main>
 
 </div>
+<script type="text/x-template" id="basket-template">
+<div class="basket">
+    <button class="basket__button" type="button" @click="basketShown = !basketShown"><img src="cart.svg" alt="cart"></button>
+    <div class="basket__block" v-show="basketShown">
+        <p class="basket__info">In your basket:{{ getSum.qua }} items </p>
+        <basket-item v-for="item in basket" :shop-item="item" :key="item.id"></basket-item>
+        <p class="basket__pay">Total: $ {{ getSum.sum }} </p>
+    </div>
+</div>
+</script>
 <script type="text/x-template" id="basket-item-template">
     <div class="basket__item">
         <div class="basket__item_img"></div>
-        <p class="basket__item_name">
-            {{ shopItem.title }}
-        </p>
-        <p class="basket__item_quantity">
-            {{ shopItem.quantity }}
-        </p>
+           <p class="basket__item_name"> {{ shopItem.title }}</p>
+           <p class="basket__item_quantity">{{ shopItem.quantity }}</p>
+           <p class="basket__item_price"> {{ shopItem.price }}</p>
+        <div class="basket__item_right">
+            <p class="basket__item_total">${{shopItem.quantity * shopItem.price }}</p>
+            <button class="basket__item_delete" @click="$parent.delProduct (item)">&times;</button>
+        </div>
     </div>
+
+</script>
+<script type="text/x-template" id="filter-template">
+<form action="#" class="search__form" @submit.prevent="$root.$refs.catalog.filter (str)">
+    <input type="text" class="search__form_input" v-model="str">
+    <button class="search__form_button">Search</button>
+</form>
+</script>
+<script type="text/x-template" id="catalog-template">
+<div class="catalog">
+    <catalog-item v-for="item in catalog" :catalog-item="item" :key="item.id"></catalog-item>
+</div>
 </script>
 <script type="text/x-template" id="catalog-item-template">
     <div class="catalog__item">
@@ -44,15 +64,10 @@
         <div class="catalog__item_price">
             {{ catalogItem.price }}
         </div>
-        <div class="quantity">
-            <button class="inc" @click="counter > 0 ? counter -= 1 : 0">-</button>
-            <span class="quant-text">Quantity: {{ counter }}</span>
-            <button class="inc" @click="counter+=1">+</button>
-        </div>
         <button class="catalog__item_btn" @click="">Add to cart</button>
     </div>
 </script>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="components.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

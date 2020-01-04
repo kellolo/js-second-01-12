@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 300px;	
 }
 
 .invisible{
@@ -95,10 +95,6 @@ img {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid white;
-}
-
-.cart-block-main {
-    float: right;
 }
 
 .buy-btn, .del-btn{
@@ -174,7 +170,6 @@ img {
     border-bottom: 2px solid #fafafa;
 }
 
-.total-sum {
-    text-align: right;
-    font-size: 14px;
+.cart-block-main {
+    float: right;
 }

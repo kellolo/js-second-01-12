@@ -1,17 +1,15 @@
-'use strict';
-
-Vue.component('filtercomp', {
+export default {
     template: `
-    <form action="#" class="search-form" @submit.prevent="$root.$refs.catalog.filter(str)">
+    <form action="#" class="search-form" @submit.prevent="$root.$refs.catalog.filter (str)">
         <input type="text" class="search-field" v-model="str">
         <button class="btn-search" type="submit">
             <i class="fas fa-search"></i>
         </button>
     </form>
     `,
-    data() {
+    data () {
         return {
             str: ''
         }
     }
-})
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "id_product": 1,
+        "product_name": "Mouse ZOWIE FK2",
+        "price": 75
+    },
+    {
+        "id_product": 2,
+        "product_name": "ZOWIE XL2430 144Hz 24 inch e-Sports Monitor",
+        "price": 400
+    },
+    {
+        "id_product": 3,
+        "product_name": "ZOWIE P TF-X Mouse Pad",
+        "price": 35
+    },
+    {
+        "id_product": 4,
+        "product_name": "ZOWIE CAMADE Cable Management Device",
+        "price": 40
+    },
+    {
+        "id_product": 5,
+        "product_name": "Keyboard HyperX Alloy FPS (MX Red)",
+        "price": 120
+    },
+    {
+        "id_product": 6,
+        "product_name": "CPU Intel i9 9900k",
+        "price": 900
+    },
+    {
+        "id_product": 7,
+        "product_name": "ASRock Z390 Taichi Motherboard",
+        "price": 410
+    },
+    {
+        "id_product": 8,
+        "product_name": "HyperX Predator DDR4 RGB RAM",
+        "price": 240
+    }
+]

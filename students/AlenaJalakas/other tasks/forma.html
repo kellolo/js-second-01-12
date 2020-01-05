@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+        .h2 {
+            margin-top: 100px;
+            margin-left: 300px;
+            font-size: 24px;
+            color: lightseagreen;
+        }
+        input {
+            width: 250px;
+            height: 40px;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin: 10px 0;
+        }
+        input:focus{
+            outline: none;
+        }
+        button{
+            border: none;
+            background: lightseagreen;
+            color: white;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-left: 80px;
+        }
+        form {
+            margin-left: 300px;
+            margin-top: 50px;
+        }
+        .error-msg{
+            color: red;
+            margin: 10px 0;
+        }
+        .invalid{
+            border: 2px solid red;
+        }
+        .valid{
+            border: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+<h2 class="h2">We appreciate your feedback</h2>
+<form action="#" method="post" class="some" id="myform">
+    <div>
+        <label>
+            <input type="text" name="name" id="name" placeholder="Your name, please">
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="tel" name="phone" id="phone" placeholder="Your phone, please">
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="email" name="email" id="email" placeholder="Your email">
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="text" placeholder="Your comment...">
+        </label>
+    </div>
+    <button id="val-btn">Submit</button>
+</form>
+
+
+<script src="forma.js"></script>
+<script>
+    window.onload = () => {
+        document.getElementById('myform').addEventListener('submit', e => {
+            let valid = new Validator('myform');
+            console.log (valid);
+            if(!valid.valid){
+                e.preventDefault();
+            }
+        })
+    }
+</script>
+</body>

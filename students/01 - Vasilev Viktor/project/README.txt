@@ -1,1 +1,0 @@
-e-shop via vue.js and node.js

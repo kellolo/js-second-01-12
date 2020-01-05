@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">E-shop</div>
+        <div class="cart">
+          <search :globaldata="this"></search>
+          <button
+            class="btn-cart"
+            type="button"
+            v-on:click="cartShow = !cartShow"
+          >
+            Корзина
+          </button>
+          <cart ref="cart"></cart>
+        </div>
+      </header>
+      <catalog ref="catalog"></catalog>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/search.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/catalog.js"></script>
+    <script src="./js/good.js"></script>
+    <script>
+      const vue = new Vue({
+        el: "#app",
+        data: {
+          cartShow: false
+        },
+
+        mounted() {
+          this.$refs.catalog.fetchGoods();
+          this.$refs.cart.fetchCart();
+        }
+      });
+    </script>
+  </body>
+</html>

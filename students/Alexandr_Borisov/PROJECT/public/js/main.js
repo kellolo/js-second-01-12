@@ -2,7 +2,6 @@
 const image = "https://placehold.it/200x150";
 const cartImage = "https://placehold.it/100x80";
 
-
 let userCart = [];
 let list = fetchData();
 
@@ -49,25 +48,25 @@ let list = fetchData();
 
 // Загрузка данных через fetch
 function fetchData() {
-	const url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json";
-	fetch(url)
-		.then(function (data) {
-			return data.json();
-		})
-		.then(function (data) {
-			list = data;
-			renderProducts();
-			getTotalPrice();
-		})
+  const url = "/catalog";
+  fetch(url)
+    .then(function(data) {
+      return data.json();
+    })
+    .then(function(data) {
+      list = data;
+      renderProducts();
+      getTotalPrice();
+    });
 }
 
 //рендер списка товаров (каталога)
 function renderProducts() {
-	let catalogEl = document.querySelector(".products");
-	let str = "";
-	catalogEl.innerHTML = "";
-	for (item of list) {
-		str += `<div class="product-item" data-id="${item.id_product}">
+  let catalogEl = document.querySelector(".products");
+  let str = "";
+  catalogEl.innerHTML = "";
+  for (item of list) {
+    str += `<div class="product-item" data-id="${item.id_product}">
                         <img src="${image}" alt="Some img">
                         <div class="desc">
                             <h3>${item.product_name}</h3>
@@ -79,52 +78,52 @@ function renderProducts() {
                             data - price = "${item.price}">Купить</button>
                         </div>
                     </div>`;
-	}
-	catalogEl.innerHTML = str;
+  }
+  catalogEl.innerHTML = str;
 }
 
 //Определение общей стоимости продуктов
 function getTotalPrice() {
-	let total = 0;
-	for (item of list) {
-		total += item.price;
-	}
-	renderTotalPrice(total);
+  let total = 0;
+  for (item of list) {
+    total += item.price;
+  }
+  renderTotalPrice(total);
 }
 
 // Вывод стоимости всех товаров в каталоге
 function renderTotalPrice(total) {
-	document
-		.querySelector(".products")
-		.insertAdjacentHTML(
-			"beforebegin",
-			`<p class="toal-price">Общая стоимость товаров к каталоге: ${total} $</p>`
-		);
+  document
+    .querySelector(".products")
+    .insertAdjacentHTML(
+      "beforebegin",
+      `<p class="toal-price">Общая стоимость товаров к каталоге: ${total} $</p>`
+    );
 }
 
 // CART
 
 // Класс корзины
 class Cart {
-	constructor() {}
+  constructor() {}
 
-	// Очистка корзины
-	clearCart() {}
+  // Очистка корзины
+  clearCart() {}
 
-	// Общая стоимость товаров в корзине
-	totalPrice() {}
+  // Общая стоимость товаров в корзине
+  totalPrice() {}
 }
 
 // Класс товара в корзине
 class GoodsInCart {
-	constructor() {}
+  constructor() {}
 
-	// Увеличение колиечства товара в корзине
-	quantityUp() {}
+  // Увеличение колиечства товара в корзине
+  quantityUp() {}
 
-	// Уменьшение количества товара в корзине
-	quantityDown() {}
+  // Уменьшение количества товара в корзине
+  quantityDown() {}
 
-	// Удаление товара из корзины
-	removeGoodFromCart() {}
+  // Удаление товара из корзины
+  removeGoodFromCart() {}
 }

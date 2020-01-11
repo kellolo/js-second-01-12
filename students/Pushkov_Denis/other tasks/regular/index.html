@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<form action="#" class="validate-form">
+    <input type="text" id="name" placeholder="text only">
+    <input type="text" id="phone" placeholder="+7(999)999-9999" maxlength="15">
+    <input type="text" id="email" placeholder="m.y.e-mail@mail.ru">
+    <button id="validate">Validate</button>
+</form>
+<script>
+
+    class Validate {
+        constructor() {
+            this.name = document.getElementById('name');
+            this.phone = document.getElementById('phone');
+            this.email = document.getElementById('email');
+            this.regulars = {
+                name: /\D/g,
+                phone: /\+\d\(\d{3}\)\d{3}-\d{4}/g,
+                email: /[a-zA-Z-._0-9]*@\w{2,63}\.\D{2,5}/g
+            };
+            this._init();
+        }
+
+        _init() {
+            document.getElementById('validate').addEventListener("click", () => {
+                this._validate();
+            })
+        }
+
+        _validate() {
+            this._checkField(this.name);
+            this._checkField(this.phone);
+            this._checkField(this.email);
+        }
+
+        _checkField(field) {
+            let regular = null;
+            switch (field.id) {
+                case 'name':
+                    regular = this.regulars.name;
+                    break;
+                case 'phone':
+                    regular = this.regulars.phone;
+                    break;
+                case 'email':
+                    regular = this.regulars.email;
+            }
+            if (regular.test(field.value)) {
+                if (field.classList.contains('red')) {
+                    field.className = '';
+                }
+                console.log(field.id +' valid');
+            } else {
+                field.classList.add('red');
+                console.log(field.id +' invalid');
+            }
+        }
+    }
+
+   let validate = new  Validate();
+
+    let str = 'JavaScript\'s regular expression engine defines a specific set of charactersto be \'word\' characters. ' +
+        'Any character not in that set is considered a word break. This set of characters is fairly limited: it\'s ' +
+        'consists solely of the \'Roman\' alphabet in both upper- and lower-case, decimal digits, and the underscore ' +
+        'character. Accented characters, such as \'é\' or \'ü\' are, unfortunately, treated as word breaks.';
+    console.log(str);
+    let reg = /\s(')/gmi;
+    str = str.replace(reg, ' "');
+    reg = /'(?=\s)/gmi;
+    str = str.replace(reg, '"');
+    console.log(str);
+
+    // phone \+\d\(\d{3}\)\d{3}-\d{4}
+    // mail [a-zA-Z-._0-9]*@\w{2,63}\.\D{2,5}
+
+</script>
+</body>
+</html>

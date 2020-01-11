@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Shirt",
+    "price": 90
+  },
+  {
+    "id": 2,
+    "title": "Dress",
+    "price": 150
+  },
+  {
+    "id": 3,
+    "title": "Boots",
+    "price": 280
+  },
+  {
+    "id": 4,
+    "title": "Coat",
+    "price": 250
+  },
+  {
+    "id": 5,
+    "title": "Belt",
+    "price": 50
+  },
+  {
+    "id": 6,
+    "title": "Skirt",
+    "price": 100
+  }
+]

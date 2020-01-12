@@ -1,4 +1,6 @@
-Vue.component("catalog", {
+import good from "./good";
+
+const catalog = {
   template: `
 			<main>
         <div class="products" v-if="!dataLoadingStatus">
@@ -7,7 +9,7 @@ Vue.component("catalog", {
         <good :goods="filteredGoods" v-else></good>
       </main>	
 	`,
-
+  component: { good },
   data: function() {
     return {
       goodList: [],
@@ -30,4 +32,6 @@ Vue.component("catalog", {
         });
     }
   }
-});
+};
+
+export default catalog;

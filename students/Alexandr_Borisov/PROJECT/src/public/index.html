@@ -3,8 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css" />
-    <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
     <div id="app">
@@ -25,22 +23,5 @@
       <catalog ref="catalog"></catalog>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="./js/search.js"></script>
-    <script src="./js/cart.js"></script>
-    <script src="./js/catalog.js"></script>
-    <script src="./js/good.js"></script>
-    <script>
-      const vue = new Vue({
-        el: "#app",
-        data: {
-          cartShow: false
-        },
-
-        mounted() {
-          this.$refs.catalog.fetchGoods();
-          this.$refs.cart.fetchCart();
-        }
-      });
-    </script>
   </body>
 </html>

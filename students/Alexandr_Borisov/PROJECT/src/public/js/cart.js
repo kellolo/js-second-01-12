@@ -1,4 +1,4 @@
-Vue.component("cart", {
+const cart = {
   template: `
 		<div class="cart-block" v-if="$root.cartShow">
 			<div class="cart-item" v-for="goodInCart in cartList">
@@ -101,4 +101,6 @@ Vue.component("cart", {
         });
     }
   }
-});
+};
+
+export default cart;

@@ -1,4 +1,4 @@
-Vue.component("good", {
+const good = {
   template: `
 		<div class="products">
 			<div
@@ -23,4 +23,6 @@ Vue.component("good", {
 	`,
 
   props: ["goods"]
-});
+};
+
+export default good;

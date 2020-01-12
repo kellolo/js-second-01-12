@@ -5,10 +5,10 @@ const port = 3000;
 
 // app.get("/", (req, res) => res.send("Hello world!"));
 app.use(express.json());
-app.use("/", express.static("public"));
+app.use("/", express.static("./src/public/"));
 
 app.get("/catalog", (req, res) => {
-  fs.readFile("server/db/catalog.json", "UTF-8", (err, data) => {
+  fs.readFile("./src/server/db/catalog.json", "UTF-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
@@ -18,7 +18,7 @@ app.get("/catalog", (req, res) => {
 });
 
 app.get("/cart", (req, res) => {
-  fs.readFile("server/db/cart.json", "UTF-8", (err, data) => {
+  fs.readFile("./src/server/db/cart.json", "UTF-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
@@ -28,7 +28,7 @@ app.get("/cart", (req, res) => {
 });
 
 app.post("/addtocart", (req, res) => {
-  fs.readFile("server/db/cart.json", "UTF-8", (err, data) => {
+  fs.readFile("./src/server/db/cart.json", "UTF-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
@@ -42,7 +42,7 @@ app.post("/addtocart", (req, res) => {
         good.qty = 1;
         productInCart.push(good);
         fs.writeFile(
-          "server/db/cart.json",
+          "./src/server/db/cart.json",
           JSON.stringify(productInCart),
           err => {
             if (err) {
@@ -56,7 +56,7 @@ app.post("/addtocart", (req, res) => {
       } else {
         ++productInCart[findProductIndexCart].qty;
         fs.writeFile(
-          "server/db/cart.json",
+          "./src/server/db/cart.json",
           JSON.stringify(productInCart),
           err => {
             if (err) {
@@ -76,7 +76,7 @@ app.post("/addtocart", (req, res) => {
 });
 
 app.delete("/delfromcart", (req, res) => {
-  fs.readFile("server/db/cart.json", "UTF-8", (err, data) => {
+  fs.readFile("./src/server/db/cart.json", "UTF-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 }));
     } else {
@@ -91,7 +91,7 @@ app.delete("/delfromcart", (req, res) => {
       ) {
         --productInCart[findProductIndexCart].qty;
         fs.writeFile(
-          "server/db/cart.json",
+          "./src/server/db/cart.json",
           JSON.stringify(productInCart),
           err => {
             if (err) {
@@ -108,7 +108,7 @@ app.delete("/delfromcart", (req, res) => {
       ) {
         productInCart.splice(findProductIndexCart, 1);
         fs.writeFile(
-          "server/db/cart.json",
+          "./src/server/db/cart.json",
           JSON.stringify(productInCart),
           err => {
             if (err) {

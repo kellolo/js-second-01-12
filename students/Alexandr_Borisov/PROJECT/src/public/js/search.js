@@ -1,4 +1,4 @@
-Vue.component("search", {
+const search = {
   template: `
 		<form action="#" class="search-form">
 			<input
@@ -34,4 +34,6 @@ Vue.component("search", {
       this.$root.$refs.catalog.filteredGoods = [...arr];
     }
   }
-});
+};
+
+export default search;

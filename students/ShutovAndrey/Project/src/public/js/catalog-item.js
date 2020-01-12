@@ -1,4 +1,4 @@
-Vue.component ('itemcat', {
+export default {
     template: `
     <div class="product-item">
         <img :src="image" alt="Some img">
@@ -19,4 +19,4 @@ Vue.component ('itemcat', {
             default: () => ({})
         }
     }
-})
+}

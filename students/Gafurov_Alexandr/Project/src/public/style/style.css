@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 300px;	
 }
 
 .invisible{
@@ -168,4 +168,8 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+
+.cart-block-main {
+    float: right;
 }

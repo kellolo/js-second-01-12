@@ -1,4 +1,4 @@
-Vue.component ('itemcart', {
+export default {
     template: `
     <div class="cart-item">
         <div class="product-bio">
@@ -25,4 +25,4 @@ Vue.component ('itemcart', {
             default: () => ({})
         }
     }
-})
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Интернет-магазин</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">E-shop</div>
+        <div class="cart">
+          <search :globaldata="this"></search>
+          <button
+            class="btn-cart"
+            type="button"
+            v-on:click="cartShow = !cartShow"
+          >
+            Корзина
+          </button>
+          <cart ref="cart"></cart>
+        </div>
+      </header>
+      <catalog ref="catalog"></catalog>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </body>
+</html>
